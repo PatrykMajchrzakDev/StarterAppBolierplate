@@ -1,0 +1,68 @@
+// =======================================
+// ============= BREAKPOINTS =============
+// =======================================
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-laptop: 1024px;
+$breakpoint-desktop: 1300px;
+// =======================================
+// ================ COLORS ===============
+// =======================================
+
+// Light theme variables
+:root {
+  // Text colors
+  --default-text-color: black;
+  --secondary-text-color: white;
+  // Background colors
+  --background-color: white;
+  --secondary-bg-color: #242424;
+}
+
+// Dark theme variables
+[data-theme="dark"] {
+  // Text colors
+  --default-text-color: white;
+  --secondary-text-color: black;
+  // Background colors
+  --background-color: #333;
+  --secondary-bg-color: #242424;
+}
+// =======================================
+// ============= FONTS ===================
+// =======================================
+
+// Font size
+$text-size: 1.7rem;
+$headings-size: 2rem;
+$section-size: 2.4rem;
+
+// Font styles
+
+// Roboto Regular
+@font-face {
+  font-family: "Roboto Regular";
+  src: url("~@fontsource/roboto/files/roboto-latin-400-normal.woff2")
+      format("woff2"),
+    url("~@fontsource/roboto/files/roboto-latin-400-normal.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+$regular-font: "Roboto Regular", sans-serif;
+
+// Roboto Bold
+@font-face {
+  font-family: "Roboto Bold";
+  src: url("~@fontsource/roboto/files/roboto-latin-700-normal.woff2")
+      format("woff2"),
+    url("~@fontsource/roboto/files/roboto-latin-700-normal.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+$bold-font: "Roboto Bold", sans-serif;
+
+// =======================================
+// ============= CUSTOM ==================
+// =======================================
+$default-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+  0 4px 6px -4px rgb(0 0 0 / 0.1);

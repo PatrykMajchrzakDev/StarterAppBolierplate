@@ -1,0 +1,46 @@
+// Resetting margins and paddings
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background-color);
+  font-family: $regular-font;
+  position: relative;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+div,
+p {
+  font-size: $text-size;
+}
+
+a {
+  color: var(--default-text-color);
+  text-decoration: none;
+}
+
+li {
+  list-style-type: none;
+}
