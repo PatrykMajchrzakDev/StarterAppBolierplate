@@ -17,6 +17,6 @@ app.get("/test", async (req: Request, res: Response) => {
   res.json({ message: "Hello" });
 });
 
-app.listen(3000, () => {
-  console.log("Server started on localhost:3000");
+app.listen(process.env.PORT || 4000, () => {
+  console.log(`Server started on localhost:${process.env.PORT}`);
 });
