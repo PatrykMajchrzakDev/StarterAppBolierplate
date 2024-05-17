@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import "dotenv/config";
+import authRoutes from "@/routes/authRoutes";
 
 const app = express();
 
@@ -13,6 +14,13 @@ app.use(express.json());
 // Cors to handle cross domain resource sharing
 app.use(cors());
 
+// <!-- ======================== -->
+// <!-- ======== ROUTING ======= -->
+// <!-- ======================== -->
+
+app.use("/auth", authRoutes);
+
+// TEST
 app.get("/test", async (req: Request, res: Response) => {
   res.json({ message: "Hello" });
 });
