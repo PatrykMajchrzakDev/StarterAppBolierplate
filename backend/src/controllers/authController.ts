@@ -51,7 +51,7 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ error: "Invalid Password" });
 
     const token = jwt.sign({ userId: user.id, role: user.role }, SECRET);
-    res.json({ token, role: user.role });
+    res.json({ token: token, user: user });
   } catch (error) {
     if (isErrorWithMessage(error)) {
       res.status(400).json({ error: error.message });
