@@ -14,7 +14,6 @@ const ThemeToggler: React.FC<ThemeTogglerType> = ({ id }) => {
     toggleTheme();
   };
 
-  console.log(theme);
   return (
     <div className={styles.togglerWrapper}>
       <button
