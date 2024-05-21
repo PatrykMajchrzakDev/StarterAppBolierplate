@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 // ======= COMPONENTS =========
 // ============================
 import ThemeToggler from "@/components/UI/ThemeToggler/ThemeToggler";
+import Button from "@mui/material/Button";
 
 const Header = () => {
   return (
@@ -21,6 +22,9 @@ const Header = () => {
             <li>1</li>
             <li>2</li>
             <li>3</li>
+            <Link to={"/signin"}>
+              <Button variant="outlined">LOGIN</Button>
+            </Link>
           </ul>
         </div>
       </div>
