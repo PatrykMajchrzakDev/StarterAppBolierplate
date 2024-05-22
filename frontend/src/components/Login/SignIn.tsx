@@ -1,7 +1,6 @@
 // ============================
 // ========= MODULES ==========
 // ============================
-import styles from "./styles/SignIn.module.scss";
 // ============================
 // ======= COMPONENTS =========
 // ============================
@@ -25,6 +24,7 @@ function Copyright(props: any) {
       color="text.secondary"
       align="center"
       {...props}
+      sx={{ fontSize: "1.4rem", mt: 2 }}
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
@@ -48,7 +48,7 @@ const SignIn = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs" id={styles.signInContainer}>
+    <Container component="main" maxWidth="xs" sx={{ fontSize: 1.7 }}>
       <CssBaseline />
       <Box
         sx={{
@@ -61,7 +61,7 @@ const SignIn = () => {
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" sx={{ fontSize: "1.7rem" }}>
           Sign in
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -74,6 +74,8 @@ const SignIn = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            InputLabelProps={{ style: { fontSize: "1.7rem" } }}
+            inputProps={{ style: { fontSize: "1.7rem" } }}
           />
           <TextField
             margin="normal"
@@ -84,27 +86,44 @@ const SignIn = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            InputLabelProps={{ style: { fontSize: "1.7rem" } }}
+            inputProps={{ style: { fontSize: "1.7rem" } }}
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={
+              <Checkbox
+                value="remember"
+                color="primary"
+                sx={{
+                  "& .MuiSvgIcon-root": {
+                    fontSize: 20,
+                  },
+                }}
+              />
+            }
             label="Remember me"
+            sx={{
+              "& .MuiFormControlLabel-label": {
+                fontSize: "1.7rem",
+              },
+            }}
           />
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2, fontSize: "1.7rem" }}
           >
             Sign In
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href="#" variant="body2" sx={{ fontSize: "1.3rem" }}>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/signup" variant="body2">
+              <Link href="/signup" variant="body2" sx={{ fontSize: "1.3rem" }}>
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
