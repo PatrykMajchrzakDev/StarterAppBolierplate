@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/server.ts",
   "scripts": {
-    "dev": "nodemon"
+    "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +27,7 @@
     "@types/node": "^20.12.12",
     "prisma": "^5.14.0",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.4.5"
   }
 }
