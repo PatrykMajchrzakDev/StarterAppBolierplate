@@ -8,7 +8,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 // ============================
 import Layout from "./layouts/Layout";
 import SignIn from "@/components/Login/SignIn";
-import Register from "@/components/Login/SignUp";
+import SignUp from "@/components/Login/SignUp";
 
 const AppRoutes = () => {
   return (
@@ -33,10 +33,10 @@ const AppRoutes = () => {
         }
       ></Route>
       <Route
-        path="/register"
+        path="/signup"
         element={
           <Layout>
-            <Register />
+            <SignUp />
           </Layout>
         }
       ></Route>
