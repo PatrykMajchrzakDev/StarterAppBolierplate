@@ -1,12 +1,27 @@
-export interface User {
+export type BaseEntity = {
   id: string;
+  createdAt: number;
+};
+
+export type Entity<T> = {
+  [K in keyof T]: T[K];
+} & BaseEntity;
+
+export type User = Entity<{
+  name: string;
   email: string;
-  role: "user" | "admin";
-}
+  role: "ADMIN" | "USER" | "MOD";
+}>;
+
+export type AuthResponse = {
+  jwt: string;
+  user: User;
+};
 
 export interface AuthState {
   user: User | null;
   token: string | null;
-  login: (email: string, password: string) => Promise<void>;
+  signin: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string, name: string) => Promise<void>;
   logout: () => void;
 }
