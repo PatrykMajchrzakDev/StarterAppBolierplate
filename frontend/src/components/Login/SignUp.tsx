@@ -1,138 +1,121 @@
+// ========= MODULES ==========
+import { useState } from "react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { signUpInputSchema } from "@/lib/auth";
+import { useRegister } from "@/lib/auth";
 // ============================
 // ======= COMPONENTS =========
 // ============================
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import { Typography, TextField, Button, Grid, Box } from "@mui/material";
 
 const SignUp = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  // Define types for form data
+  type FormData = z.infer<typeof signUpInputSchema>;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({
+    resolver: zodResolver(signUpInputSchema),
+    defaultValues: {
+      email: "",
+      name: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  const { mutateAsync: registerUser, isLoading } = useRegister();
+  const [apiError, setApiError] = useState<string | null>(null);
+
+  const onSubmit = async (data: FormData) => {
+    console.log(data);
+    try {
+      await registerUser(data);
+      // TBD Handle successful registration (e.g., redirect, display success message)
+    } catch (error) {
+      if (error instanceof Error) {
+        setApiError(error.message);
+      } else {
+        setApiError("An unknown error occurred.");
+      }
+    }
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5" sx={{ fontSize: "1.7rem" }}>
-          Sign up
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Box sx={{ maxWidth: 400, mx: "auto", p: 3 }}>
+        <Typography variant="h4" gutterBottom>
+          Signup
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="given-name"
-                name="firstName"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-                InputLabelProps={{ style: { fontSize: "1.7rem" } }}
-                inputProps={{ style: { fontSize: "1.7rem" } }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="family-name"
-                InputLabelProps={{ style: { fontSize: "1.7rem" } }}
-                inputProps={{ style: { fontSize: "1.7rem" } }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                InputLabelProps={{ style: { fontSize: "1.7rem" } }}
-                inputProps={{ style: { fontSize: "1.7rem" } }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="new-password"
-                InputLabelProps={{ style: { fontSize: "1.7rem" } }}
-                inputProps={{ style: { fontSize: "1.7rem" } }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value="allowExtraEmails"
-                    color="primary"
-                    sx={{
-                      "& .MuiSvgIcon-root": {
-                        fontSize: 20,
-                      },
-                    }}
-                  />
-                }
-                label="I want to receive inspiration, marketing promotions and updates via email."
-                sx={{
-                  "& .MuiFormControlLabel-label": {
-                    fontSize: "1.2rem",
-                  },
-                }}
-              />
-            </Grid>
+
+        {apiError && (
+          <Typography color="error" gutterBottom>
+            {apiError}
+          </Typography>
+        )}
+
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              label="Email"
+              fullWidth
+              margin="normal"
+              {...register("email")}
+              error={!!errors.email}
+              helperText={errors.email?.message}
+            />
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2, fontSize: "1.7rem" }}
-          >
-            Sign Up
-          </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="/signin" variant="body2" sx={{ fontSize: "1.7rem" }}>
-                Already have an account? Sign in
-              </Link>
-            </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="First Name"
+              fullWidth
+              margin="normal"
+              {...register("name")}
+              error={!!errors.name}
+              helperText={errors.name?.message}
+            />
           </Grid>
-        </Box>
+          <Grid item xs={12}>
+            <TextField
+              label="Password"
+              type="password"
+              fullWidth
+              margin="normal"
+              {...register("password")}
+              error={!!errors.password}
+              helperText={errors.password?.message}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Confirm Password"
+              type="password"
+              fullWidth
+              margin="normal"
+              {...register("confirmPassword")}
+              error={!!errors.confirmPassword}
+              helperText={errors.confirmPassword?.message}
+            />
+          </Grid>
+        </Grid>
+
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          disabled={isSubmitting || isLoading}
+          sx={{ mt: 3 }}
+        >
+          Submit
+        </Button>
       </Box>
-    </Container>
+    </form>
   );
 };
 
