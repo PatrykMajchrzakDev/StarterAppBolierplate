@@ -18,8 +18,8 @@ app.use(cors());
 // <!-- ======== ROUTING ======= -->
 // <!-- ======================== -->
 
-// 
-app.use("api/auth", authRoutes);
+//
+app.use("/auth", authRoutes);
 
 // TEST
 app.get("/test", async (req: Request, res: Response) => {
