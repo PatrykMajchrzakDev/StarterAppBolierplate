@@ -72,11 +72,7 @@ const SignUp = () => {
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography
-          component="h1"
-          variant="h5"
-          sx={{ fontSize: "1.7rem", textAlign: "center" }}
-        >
+        <Typography component="h1" variant="h5" sx={{ textAlign: "center" }}>
           Sign up
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -97,9 +93,6 @@ const SignUp = () => {
                   {...register("email")}
                   error={!!errors.email}
                   helperText={errors.email?.message}
-                  InputLabelProps={{ style: { fontSize: "1.7rem" } }}
-                  inputProps={{ style: { fontSize: "1.7rem" } }}
-                  FormHelperTextProps={{ style: { fontSize: "1.4rem" } }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -111,9 +104,6 @@ const SignUp = () => {
                   {...register("name")}
                   error={!!errors.name}
                   helperText={errors.name?.message}
-                  InputLabelProps={{ style: { fontSize: "1.7rem" } }}
-                  inputProps={{ style: { fontSize: "1.7rem" } }}
-                  FormHelperTextProps={{ style: { fontSize: "1.4rem" } }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -126,9 +116,6 @@ const SignUp = () => {
                   {...register("password")}
                   error={!!errors.password}
                   helperText={errors.password?.message}
-                  InputLabelProps={{ style: { fontSize: "1.7rem" } }}
-                  inputProps={{ style: { fontSize: "1.7rem" } }}
-                  FormHelperTextProps={{ style: { fontSize: "1.4rem" } }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -141,9 +128,6 @@ const SignUp = () => {
                   {...register("confirmPassword")}
                   error={!!errors.confirmPassword}
                   helperText={errors.confirmPassword?.message}
-                  InputLabelProps={{ style: { fontSize: "1.7rem" } }}
-                  inputProps={{ style: { fontSize: "1.7rem" } }}
-                  FormHelperTextProps={{ style: { fontSize: "1.4rem" } }}
                 />
               </Grid>
             </Grid>
@@ -153,19 +137,19 @@ const SignUp = () => {
               fullWidth
               variant="contained"
               disabled={isSubmitting || isLoading}
-              sx={{ mt: 3, mb: 2, fontSize: "1.7rem" }}
+              sx={{ mt: 3, mb: 2 }}
             >
               Sign In
             </Button>
           </Box>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2" sx={{ fontSize: "1.3rem" }}>
+              <Link href="#" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/signin" variant="body2" sx={{ fontSize: "1.3rem" }}>
+              <Link href="/signin" variant="body2">
                 {"Already have account? Sign in"}
               </Link>
             </Grid>
@@ -186,7 +170,7 @@ function Copyright(props: any) {
       color="text.secondary"
       align="center"
       {...props}
-      sx={{ fontSize: "1.4rem", mt: 2 }}
+      sx={{ mt: 2 }}
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
