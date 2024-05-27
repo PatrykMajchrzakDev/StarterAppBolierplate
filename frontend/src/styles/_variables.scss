@@ -17,6 +17,8 @@ $breakpoint-desktop: 1300px;
   // Background colors
   --background-color: white;
   --secondary-bg-color: #242424;
+  //Custom
+  --default-shadow-color: rgb(0 0 0 / 0.1);
 }
 
 // Dark theme variables
@@ -27,6 +29,8 @@ $breakpoint-desktop: 1300px;
   // Background colors
   --background-color: #333;
   --secondary-bg-color: #242424;
+  //Custom
+  --default-shadow-color: rgb(255 255 255 / 0.1);
 }
 // =======================================
 // ============= FONTS ===================
@@ -64,5 +68,12 @@ $bold-font: "Roboto Bold", sans-serif;
 // =======================================
 // ============= CUSTOM ==================
 // =======================================
-$default-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-  0 4px 6px -4px rgb(0 0 0 / 0.1);
+// Light theme variables
+$default-shadow: 0 10px 15px -3px var(--default-shadow-color),
+  0 4px 6px -4px var(--default-shadow-color);
+
+// Dark theme variables
+[data-theme="dark"] {
+  $default-shadow: 0 10px 15px -3px var(--default-shadow-color),
+    0 4px 6px -4px var(--default-shadow-color);
+}
