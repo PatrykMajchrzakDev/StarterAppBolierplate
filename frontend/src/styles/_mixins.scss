@@ -22,3 +22,9 @@
     @content;
   }
 }
+
+@mixin large-screen {
+  @media (min-width: $breakpoint-desktop) {
+    @content;
+  }
+}
