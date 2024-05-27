@@ -4,7 +4,7 @@
   .wrapper {
     display: flex;
     justify-content: space-between;
-    padding: 2rem 4rem;
+    padding: 1.5rem 2.5rem;
 
     .logo {
       font-size: $headings-size;
@@ -23,10 +23,17 @@
       height: 20px;
     }
 
-    .list {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
+    .mainNav {
+      @include tablet {
+        display: none;
+      }
+    }
+
+    .mobileNav {
+      display: none;
+      @include tablet {
+        display: block;
+      }
     }
   }
 }

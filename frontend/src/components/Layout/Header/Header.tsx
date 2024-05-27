@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 // ======= COMPONENTS =========
 // ============================
 import ThemeToggler from "@/components/UI/ThemeToggler/ThemeToggler";
-import Button from "@mui/material/Button";
+import MobileNav from "@/components/UI/MobileNavigation/MobileNav";
+import MainNav from "@/components/UI/MainNavigation/MainNav";
 
 const Header = () => {
   return (
@@ -18,14 +19,12 @@ const Header = () => {
         </Link>
         <div className={styles.navActions}>
           <ThemeToggler id="1" />
-          <ul className={styles.list}>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <Link to={"/signin"}>
-              <Button variant="outlined">LOGIN</Button>
-            </Link>
-          </ul>
+          <div className={styles.mainNav}>
+            <MainNav />
+          </div>
+          <div className={styles.mobileNav}>
+            <MobileNav />
+          </div>
         </div>
       </div>
     </div>
