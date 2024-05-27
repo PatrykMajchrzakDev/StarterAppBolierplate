@@ -10,7 +10,7 @@ const SECRET =
   process.env.JWT_SECRET || "rMk,E(6SvKw;5q=[CTf!pN+?hY<d@$.Ha47B%8zg";
 
 interface JwtPayload {
-  userId: string;
+  userId: number;
   role: string;
 }
 
