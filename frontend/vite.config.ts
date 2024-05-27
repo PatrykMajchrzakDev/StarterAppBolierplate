@@ -8,8 +8,8 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        // Globals are imported in main.tsx
-        additionalData: `@import "./src/styles/_variables.scss"; @import "./src/styles/_mixins.scss";`,
+        // _globals are imported in main.tsx
+        additionalData: `@import "@/styles/_variables.scss"; @import "@/styles/_mixins.scss";`,
       },
     },
   },

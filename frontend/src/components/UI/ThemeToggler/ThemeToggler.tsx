@@ -1,5 +1,5 @@
 // ============= Import Modules =============
-import ThemeStore from "@/store/ThemeStore";
+import ThemeStore from "@/store/Theme/ThemeStore";
 // ============= Import Components =============
 import styles from "./ThemeToggler.module.scss";
 

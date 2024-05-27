@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { configureAuth } from "react-query-auth";
-// import { Navigate, useLocation } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import { AuthResponse, User } from "@/types/Auth/Auth";
 
@@ -84,6 +84,7 @@ const authConfig = {
   userFn: getUser,
   loginFn: async (data: SignInInput) => {
     const response = await loginWithEmailAndPassword(data);
+    Cookies.set("token", response.token, { expires: 7 });
     return response.user;
   },
   registerFn: async (data: SignUpInput) => {
@@ -95,21 +96,3 @@ const authConfig = {
 
 export const { useUser, useLogin, useLogout, useRegister, AuthLoader } =
   configureAuth(authConfig);
-
-//TBD Protected paths
-
-// export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-//   const user = useUser();
-//   const location = useLocation();
-
-//   if (!user.data) {
-//     return (
-//       <Navigate
-//         to={`/auth/login?redirectTo=${encodeURIComponent(location.pathname)}`}
-//         replace
-//       />
-//     );
-//   }
-
-//   return children;
-// };

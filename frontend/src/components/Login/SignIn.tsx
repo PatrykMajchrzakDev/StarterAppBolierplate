@@ -2,11 +2,11 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { signInInputSchema } from "@/lib/auth";
 import { useLogin } from "@/lib/auth";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 
 // ============================
 // ======= COMPONENTS =========
@@ -48,7 +48,7 @@ const SignIn = () => {
     try {
       console.log(data);
       await loginUser(data);
-      navigate("/");
+      navigate("/app");
       // TBD Handle successful registration (e.g., redirect, display success message)
     } catch (error) {
       if (error instanceof Error) {
@@ -60,7 +60,7 @@ const SignIn = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs" sx={{ fontSize: 1.7 }}>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
         sx={{
@@ -73,7 +73,7 @@ const SignIn = () => {
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5" sx={{ fontSize: "1.7rem" }}>
+        <Typography component="h1" variant="h5">
           Sign in
         </Typography>
 
@@ -94,8 +94,6 @@ const SignIn = () => {
               helperText={errors.email?.message}
               autoComplete="email"
               autoFocus
-              InputLabelProps={{ style: { fontSize: "1.7rem" } }}
-              inputProps={{ style: { fontSize: "1.7rem" } }}
             />
             <TextField
               margin="normal"
@@ -107,8 +105,6 @@ const SignIn = () => {
               error={!!errors.password}
               helperText={errors.password?.message}
               autoComplete="current-password"
-              InputLabelProps={{ style: { fontSize: "1.7rem" } }}
-              inputProps={{ style: { fontSize: "1.7rem" } }}
             />
             <FormControlLabel
               control={
@@ -124,9 +120,7 @@ const SignIn = () => {
               }
               label="Remember me"
               sx={{
-                "& .MuiFormControlLabel-label": {
-                  fontSize: "1.7rem",
-                },
+                "& .MuiFormControlLabel-label": {},
               }}
             />
             <Button
@@ -134,22 +128,18 @@ const SignIn = () => {
               fullWidth
               variant="contained"
               disabled={isSubmitting || isLoading}
-              sx={{ mt: 3, mb: 2, fontSize: "1.7rem" }}
+              sx={{ mt: 3, mb: 2 }}
             >
               Sign In
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2" sx={{ fontSize: "1.3rem" }}>
+                <Link href="#" variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link
-                  href="/signup"
-                  variant="body2"
-                  sx={{ fontSize: "1.3rem" }}
-                >
+                <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
@@ -171,7 +161,7 @@ function Copyright(props: any) {
       color="text.secondary"
       align="center"
       {...props}
-      sx={{ fontSize: "1.4rem", mt: 2 }}
+      sx={{ mt: 2 }}
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">

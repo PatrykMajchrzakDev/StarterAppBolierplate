@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
@@ -14,7 +14,7 @@ const isErrorWithMessage = (error: any): error is { message: string } => {
 
 // Register user when called from frontend
 export const register = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { email, password, name } = req.body;
   try {
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser)
@@ -26,6 +26,7 @@ export const register = async (req: Request, res: Response) => {
         email,
         password: hashedPassword,
         role: "USER", // Assign 'USER' role by default
+        name,
       },
     });
 
@@ -51,6 +52,7 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ error: "Invalid Password" });
 
     const token = jwt.sign({ userId: user.id, role: user.role }, SECRET);
+    console.log("login successfull");
     res.json({ token: token, user: user });
   } catch (error) {
     if (isErrorWithMessage(error)) {
@@ -59,4 +61,39 @@ export const login = async (req: Request, res: Response) => {
       res.status(400).json({ error: "An unexpected error occurred" });
     }
   }
+};
+
+// Get authenticated user details - authorization is done via middleware
+export const getUserDetails = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user?.userId;
+    if (!userId) {
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
+
+    if (typeof userId !== "number") {
+      return res.status(400).json({ error: "Invalid user ID (not a number)" });
+    }
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching user details" });
+  }
+};
+// Just a test routing
+export const test2 = async (req: Request, res: Response) => {
+  console.log("test2 accessed");
+  const user = {
+    id: "123asdasd",
+    name: "test2",
+    role: "USER",
+  };
+  const token = "1231231133121";
+  res.json({ user, token });
 };

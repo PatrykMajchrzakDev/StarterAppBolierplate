@@ -1,24 +1,17 @@
-// ============================
 // ========= MODULES ==========
-// ============================
 import { Route, Routes, Navigate } from "react-router-dom";
 
-// ============================
 // ======= COMPONENTS =========
-// ============================
-import Layout from "./layouts/Layout";
+import Layout from "../../layouts/Layout";
 import SignIn from "@/components/Login/SignIn";
 import SignUp from "@/components/Login/SignUp";
+import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoutes = () => {
   return (
     <Routes>
       {/* IF USER TYPES WRONG ROUTE THEN REDIRECT TO "/" */}
       <Route path="*" element={<Navigate to="/" />}></Route>
-
-      {/* ====================== */}
-      {/* ======= ROUTES ======= */}
-      {/* ====================== */}
 
       {/* ======= ROOT =======*/}
       <Route path="/" element={<Layout>HOME PAGE</Layout>}></Route>
@@ -46,6 +39,16 @@ const AppRoutes = () => {
         path="/user-profile"
         element={<span>USER PROFILE PAGE</span>}
       ></Route>
+
+      {/* ======= APP ======= */}
+      <Route
+        path="/app"
+        element={
+          <ProtectedRoute>
+            <Layout>LOGGED IN USER</Layout>
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 };

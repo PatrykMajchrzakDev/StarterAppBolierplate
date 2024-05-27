@@ -11,10 +11,11 @@ export type User = Entity<{
   name: string;
   email: string;
   role: "ADMIN" | "USER" | "MOD";
+  token: string;
 }>;
 
 export type AuthResponse = {
-  jwt: string;
+  token: string;
   user: User;
 };
 
