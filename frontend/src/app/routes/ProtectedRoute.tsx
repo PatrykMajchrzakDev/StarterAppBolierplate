@@ -2,9 +2,12 @@
 import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
+import styles from "./styles/ProtectedRoute.module.scss";
+
 import { useUser } from "@/lib/auth";
 // ======= COMPONENTS =========
 import CircularProgress from "@mui/material/CircularProgress";
+import { useNotificationState } from "@/store/UI/NotificationStore";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -15,13 +18,21 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   if (isLoading) {
     return (
-      <div>
+      <div className={styles.centeredContent}>
         <CircularProgress />
       </div>
     );
   }
 
   if (!user) {
+    // font and center
+    useNotificationState
+      .getState()
+      .setNotification(
+        `This route is not allowed! Sign in or contact support for permissions`,
+        "error",
+        "outlined"
+      );
     return <Navigate to="/signin" />;
   }
 
