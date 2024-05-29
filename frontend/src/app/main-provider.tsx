@@ -8,7 +8,7 @@ import { queryClient } from "@/lib/react-query";
 
 // ======= COMPONENTS =========
 import CircularProgress from "@mui/material/CircularProgress";
-// import { Notifications } from '@/components/ui/notifications';
+import Notification from "@/components/UI/Notification/Notification";
 
 type AppProviderProps = {
   children: React.ReactNode;
@@ -24,7 +24,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       }
     >
       <QueryClientProvider client={queryClient}>
-        {/*TBD <Notifications /> */}
+        {<Notification />}
         {import.meta.env.DEV && <ReactQueryDevtools />}
         {children}
       </QueryClientProvider>

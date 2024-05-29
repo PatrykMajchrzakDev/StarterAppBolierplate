@@ -18,7 +18,15 @@ export const register = async (req: Request, res: Response) => {
   try {
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser)
-      return res.status(400).json({ error: "User already exists" });
+      return res
+        .status(400)
+        .json({ error: "User with this email already exists" });
+
+    const existingUserName = await prisma.user.findUnique({ where: { name } });
+    if (existingUserName)
+      return res
+        .status(400)
+        .json({ error: "User with this name already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
@@ -52,7 +60,6 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ error: "Invalid Password" });
 
     const token = jwt.sign({ userId: user.id, role: user.role }, SECRET);
-    console.log("login successfull");
     res.json({ token: token, user: user });
   } catch (error) {
     if (isErrorWithMessage(error)) {
@@ -67,6 +74,7 @@ export const login = async (req: Request, res: Response) => {
 export const getUserDetails = async (req: Request, res: Response) => {
   try {
     const userId = req.user?.userId;
+    const token = req.header("Authorization")?.replace("Bearer ", "");
     if (!userId) {
       return res.status(400).json({ error: "Invalid user ID" });
     }
@@ -79,7 +87,7 @@ export const getUserDetails = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-    res.json(user);
+    res.json({ user, token });
   } catch (error) {
     res
       .status(500)
