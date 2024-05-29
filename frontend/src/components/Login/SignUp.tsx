@@ -1,9 +1,9 @@
 // ========= MODULES ==========
-import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useNotificationState } from "@/store/UI/NotificationStore";
 
 import { signUpInputSchema } from "@/lib/auth";
 import { useRegister } from "@/lib/auth";
@@ -26,7 +26,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 const SignUp = () => {
   // Define types for form data
   type FormData = z.infer<typeof signUpInputSchema>;
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -42,19 +42,16 @@ const SignUp = () => {
   });
 
   const { mutateAsync: registerUser, isLoading } = useRegister();
-  const [apiError, setApiError] = useState<string | null>(null);
 
   const onSubmit = async (data: FormData) => {
     try {
       await registerUser(data);
-      redirect("/signin");
-      // TBD Handle successful registration (e.g., redirect, display success message)
+      navigate("/signin");
+      useNotificationState
+        .getState()
+        .setNotification("Sign up successfull", "success", "outlined");
     } catch (error) {
-      if (error instanceof Error) {
-        setApiError(error.message);
-      } else {
-        setApiError("An unknown error occurred.");
-      }
+      console.error(error);
     }
   };
 
@@ -77,12 +74,6 @@ const SignUp = () => {
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box sx={{ maxWidth: 400, mx: "auto", p: 3 }}>
-            {apiError && (
-              <Typography color="error" gutterBottom>
-                {apiError}
-              </Typography>
-            )}
-
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField

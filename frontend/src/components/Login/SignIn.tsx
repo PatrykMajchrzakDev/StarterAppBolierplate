@@ -1,12 +1,12 @@
 // ========= MODULES ==========
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { signInInputSchema } from "@/lib/auth";
 import { useLogin } from "@/lib/auth";
+import { useNotificationState } from "@/store/UI/NotificationStore";
 
 // ============================
 // ======= COMPONENTS =========
@@ -28,7 +28,6 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 const SignIn = () => {
   type FormData = z.infer<typeof signInInputSchema>;
-  const [apiError, setApiError] = useState<string | null>(null);
   const navigate = useNavigate();
   const {
     register,
@@ -46,16 +45,13 @@ const SignIn = () => {
   // SEND DATA
   const onSubmit = async (data: FormData) => {
     try {
-      console.log(data);
       await loginUser(data);
       navigate("/app");
-      // TBD Handle successful registration (e.g., redirect, display success message)
+      useNotificationState
+        .getState()
+        .setNotification("Sign in successfull", "success", "outlined");
     } catch (error) {
-      if (error instanceof Error) {
-        setApiError(error.message);
-      } else {
-        setApiError("An unknown error occurred.");
-      }
+      console.error(error);
     }
   };
 
@@ -79,11 +75,6 @@ const SignIn = () => {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box sx={{ maxWidth: 400, mx: "auto", p: 3 }}>
-            {apiError && (
-              <Typography color="error" gutterBottom>
-                {apiError}
-              </Typography>
-            )}
             <TextField
               margin="normal"
               required
