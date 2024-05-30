@@ -78,7 +78,7 @@ const loginWithEmailAndPassword = (
 
 // ============================
 // ======= AUTH CONFIG ========
-// ============================
+// === for react-query-auth ===
 
 const authConfig = {
   userFn: getUser,

@@ -8,10 +8,16 @@ import {
 import { auth } from "@/middleware/Auth/Authorization";
 
 const router = Router();
-
+// Register user
 router.post("/register", register);
+
+// Login user
 router.post("/login", login);
+
+// Get user details
 router.get("/me", auth, getUserDetails);
+
+// Test route to check if route works
 router.post("/test2", test2);
 
 export default router;

@@ -18,14 +18,15 @@ app.use(cors());
 // <!-- ======== ROUTING ======= -->
 // <!-- ======================== -->
 
-//
+// Auth routes
 app.use("/auth", authRoutes);
 
-// TEST
+// TEST routes
 app.get("/test", async (req: Request, res: Response) => {
   res.json({ message: "Hello" });
 });
 
+// Server start with PORT .env
 app.listen(process.env.PORT || 4000, () => {
   console.log(`Server started on localhost:${process.env.PORT}`);
 });

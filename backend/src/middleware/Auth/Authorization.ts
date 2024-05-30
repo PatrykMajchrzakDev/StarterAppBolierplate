@@ -6,15 +6,19 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
+// Used to decode token
 const SECRET =
   process.env.JWT_SECRET || "rMk,E(6SvKw;5q=[CTf!pN+?hY<d@$.Ha47B%8zg";
 
+// JWT types
 interface JwtPayload {
   userId: number;
   role: string;
 }
 
+// Middleware function to check if user is authorized
 export const auth = (req: Request, res: Response, next: NextFunction) => {
+  // Get token from header prop "Authorization" and remove "bearer"
   const token = req.header("Authorization")?.replace("Bearer ", "");
 
   if (!token) {
@@ -22,6 +26,7 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
+    // Verify and if user is ok then pass it to protected route
     const decoded = jwt.verify(token, SECRET) as JwtPayload;
     req.user = decoded;
     next();

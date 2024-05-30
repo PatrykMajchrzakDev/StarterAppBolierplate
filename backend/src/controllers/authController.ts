@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+// SECRET is used to later create token using this string
 const SECRET =
   process.env.JWT_SECRET || "rMk,E(6SvKw;5q=[CTf!pN+?hY<d@$.Ha47B%8zg";
 
@@ -15,20 +16,26 @@ const isErrorWithMessage = (error: any): error is { message: string } => {
 // Register user when called from frontend
 export const register = async (req: Request, res: Response) => {
   const { email, password, name } = req.body;
+
   try {
+    // checks db for existing user email
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser)
       return res
         .status(400)
         .json({ error: "User with this email already exists" });
 
+    // checks db for existing user name
     const existingUserName = await prisma.user.findUnique({ where: { name } });
     if (existingUserName)
       return res
         .status(400)
         .json({ error: "User with this name already exists" });
 
+    // Hashing password
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    // If everything OK then create user in db
     const user = await prisma.user.create({
       data: {
         email,
@@ -52,13 +59,20 @@ export const register = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   try {
+    // check if email exists
     const user = await prisma.user.findUnique({ where: { email } });
+
+    // if not exists then return error
     if (!user) return res.status(404).json({ error: "User not found" });
 
+    // validate password
     const validPassword = await bcrypt.compare(password, user.password);
+
+    // if not identical then return error
     if (!validPassword)
       return res.status(401).json({ error: "Invalid Password" });
 
+    // if all good then create token and send it with response
     const token = jwt.sign({ userId: user.id, role: user.role }, SECRET);
     res.json({ token: token, user: user });
   } catch (error) {
@@ -73,20 +87,26 @@ export const login = async (req: Request, res: Response) => {
 // Get authenticated user details - authorization is done via middleware
 export const getUserDetails = async (req: Request, res: Response) => {
   try {
+    // checks if user has id
     const userId = req.user?.userId;
+
+    // get token from headers
     const token = req.header("Authorization")?.replace("Bearer ", "");
+
+    // check if ID is present and if it's number
     if (!userId) {
       return res.status(400).json({ error: "Invalid user ID" });
     }
-
     if (typeof userId !== "number") {
       return res.status(400).json({ error: "Invalid user ID (not a number)" });
     }
 
+    // If ID is present then search db
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
+    // If all good then return response with user info and token
     res.json({ user, token });
   } catch (error) {
     res
@@ -94,6 +114,7 @@ export const getUserDetails = async (req: Request, res: Response) => {
       .json({ error: "An error occurred while fetching user details" });
   }
 };
+
 // Just a test routing
 export const test2 = async (req: Request, res: Response) => {
   console.log("test2 accessed");

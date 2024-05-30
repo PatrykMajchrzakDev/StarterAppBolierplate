@@ -1,3 +1,6 @@
+// react-query setup config boilerplate
+// got it from bulletproof-react
+
 import {
   UseMutationOptions,
   DefaultOptions,
