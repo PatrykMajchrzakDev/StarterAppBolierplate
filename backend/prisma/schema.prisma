@@ -36,9 +36,11 @@ model User {
   password String
   name     String @unique
   role     Role   @default(USER)
+  created_at DateTime @default(now())
 }
 
 enum Role {
   USER
   ADMIN
+  MOD
 }
