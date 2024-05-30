@@ -3,8 +3,9 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
-import { useNotificationState } from "@/store/UI/NotificationStore";
+import { Link as RouterLink } from "react-router-dom";
 
+import { useNotificationState } from "@/store/UI/NotificationStore";
 import { signUpInputSchema } from "@/lib/auth";
 import { useRegister } from "@/lib/auth";
 // ============================
@@ -135,12 +136,12 @@ const SignUp = () => {
           </Box>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link to="#" component={RouterLink} variant="body2">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/signin" variant="body2">
+              <Link to="/signin" component={RouterLink} variant="body2">
                 {"Already have account? Sign in"}
               </Link>
             </Grid>

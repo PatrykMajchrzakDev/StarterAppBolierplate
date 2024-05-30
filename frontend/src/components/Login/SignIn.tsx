@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Link as RouterLink } from "react-router-dom";
 
 import { signInInputSchema } from "@/lib/auth";
 import { useLogin } from "@/lib/auth";
@@ -125,12 +126,12 @@ const SignIn = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link to="#" variant="body2" component={RouterLink}>
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/signup" variant="body2">
+                <Link to="/signup" component={RouterLink} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
