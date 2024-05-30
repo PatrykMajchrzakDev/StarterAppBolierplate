@@ -1,3 +1,6 @@
+//This components functionality is to protect different routes if user has
+// no permission or is not authorized
+
 // ========= MODULES ==========
 import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
@@ -5,6 +8,7 @@ import { Navigate } from "react-router-dom";
 import styles from "./styles/ProtectedRoute.module.scss";
 
 import { useUser } from "@/lib/auth";
+
 // ======= COMPONENTS =========
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNotificationState } from "@/store/UI/NotificationStore";
@@ -15,7 +19,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { data: user, isLoading } = useUser();
-
+  // When getting info from db show loading indicator
   if (isLoading) {
     return (
       <div className={styles.centeredContent}>
@@ -24,8 +28,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     );
   }
 
+  // If authorization failed then redirect and show error notification
   if (!user) {
-    // font and center
     useNotificationState
       .getState()
       .setNotification(

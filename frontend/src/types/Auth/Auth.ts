@@ -7,6 +7,7 @@ export type Entity<T> = {
   [K in keyof T]: T[K];
 } & BaseEntity;
 
+// Props user object hold
 export type User = Entity<{
   name: string;
   email: string;
@@ -14,11 +15,13 @@ export type User = Entity<{
   token: string;
 }>;
 
+// Object returned if auth is success
 export type AuthResponse = {
   token: string;
   user: User;
 };
 
+// Used for auth configuration react-query-auth
 export interface AuthState {
   user: User | null;
   token: string | null;

@@ -10,11 +10,17 @@ type Props = {
 };
 
 const Layout = ({ children }: Props) => {
+  // get current MUI theme set in store
   const muiTheme = ThemeStore((state) => state.muiTheme);
+
   return (
+    // Provide theme for MUI
     <ThemeProvider theme={muiTheme}>
       <div id={styles.layout}>
+        {/* Always include Header */}
         <Header />
+
+        {/* Render rest of the children */}
         <div className={styles.children}>{children}</div>
       </div>
     </ThemeProvider>

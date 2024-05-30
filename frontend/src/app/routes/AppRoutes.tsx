@@ -1,3 +1,5 @@
+// This components functionality is to provide routing system for different routes in the app
+
 // ========= MODULES ==========
 import { Route, Routes, Navigate } from "react-router-dom";
 

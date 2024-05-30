@@ -23,8 +23,12 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         </div>
       }
     >
+      {/* Provides queryClient to component tree that is necessary to @tanstack/react-query to work */}
       <QueryClientProvider client={queryClient}>
+        {/* This makes sure that notifications persist upon route changing */}
         {<Notification />}
+
+        {/* Show ReactQueryDevTools if there is DEV */}
         {import.meta.env.DEV && <ReactQueryDevtools />}
         {children}
       </QueryClientProvider>
