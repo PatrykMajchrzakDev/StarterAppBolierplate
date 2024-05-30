@@ -61,9 +61,9 @@ Before you begin, ensure you have the following installed:
     - Update the environment variables with your PostgreSQL database credentials and JWT secret.
 
     \`\`\`env
-    DATABASE_URL = "your_postgre_url"
-    JWT_SECRET = 'your_jwt_secret'
-    PORT = 3000
+    - DATABASE_URL = "your_postgre_url"
+    - JWT_SECRET = 'your_jwt_secret'
+    - PORT = 3000
     \`\`\`
 
 2. **Frontend Configuration**:
@@ -72,8 +72,8 @@ Before you begin, ensure you have the following installed:
     - Update the environment variables with your backend API URL.
 
     \`\`\`env
-    VITE_DEV=development
-    VITE_API_URL=http://localhost:3000
+    - VITE_DEV=development
+    - VITE_API_URL=http://localhost:3000
     \`\`\`
 
 ### Database Setup
