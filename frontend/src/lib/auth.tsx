@@ -6,12 +6,15 @@ import { configureAuth } from "react-query-auth";
 import Cookies from "js-cookie";
 
 import { AuthResponse, User } from "@/types/Auth/Auth";
-
 import { api } from "./api-client";
+import { useNotificationState } from "@/store/UI/NotificationStore";
 
 // LOGOUT API CALL
 const logout = async (): Promise<void> => {
   Cookies.remove("token");
+  useNotificationState
+    .getState()
+    .setNotification(`User logged out successfully`, "success", "outlined");
 };
 
 // GET USER DATA API CALL
