@@ -35,6 +35,7 @@ api.interceptors.response.use(
   // if error occurs then create notification with error.message
   (error) => {
     const message = error.response?.data?.error || error.message;
+    if (message === "No token provided") return;
     useNotificationState
       .getState()
       .setNotification(message, "error", "outlined");

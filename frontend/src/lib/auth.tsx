@@ -1,3 +1,6 @@
+// This file functionality is to provide auth through react-query-auth funcionality
+
+// ========= MODULES ==========
 import { z } from "zod";
 import { configureAuth } from "react-query-auth";
 import Cookies from "js-cookie";
@@ -6,13 +9,11 @@ import { AuthResponse, User } from "@/types/Auth/Auth";
 
 import { api } from "./api-client";
 
-// TBD
 // LOGOUT API CALL
-const logout = (): Promise<void> => {
-  return api.post("/auth/logout");
+const logout = async (): Promise<void> => {
+  Cookies.remove("token");
 };
 
-//TBD
 // GET USER DATA API CALL
 const getUser = (): Promise<User> => {
   return api.get("/auth/me");

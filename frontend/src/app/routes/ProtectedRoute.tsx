@@ -33,7 +33,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     useNotificationState
       .getState()
       .setNotification(
-        `This route is not allowed! Sign in or contact support for permissions`,
+        `This route is not allowed! Sign in or contact support for permissions.`,
         "error",
         "outlined"
       );
