@@ -1,3 +1,9 @@
-CHANGE URLS OF STORE/AUTH/AUTHSTORE TO SERVER URLS
+<!-- WHEN NEW APP -->
+
+1. Change .ENV values
+2. HTML meta tags
+3. Sign In, Sign Up copyrights
+
+<!-- TBD -->
+
 Logout function to /lib/auth - check TBD
-Theme changes when I go to /signin and the to /signup
