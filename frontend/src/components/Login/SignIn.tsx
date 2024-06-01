@@ -1,7 +1,7 @@
 // ========= MODULES ==========
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { z } from "zod";
+import { boolean, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -47,6 +47,7 @@ const SignIn = () => {
     defaultValues: {
       email: "",
       password: "",
+      rememberMe: false
     },
   });
 
@@ -54,6 +55,7 @@ const SignIn = () => {
   // SEND DATA
   const onSubmit = async (data: FormData) => {
     try {
+      console.log(data)
       // If OK then show notification and navigate to /app
       await loginUser(data);
       navigate("/app");
@@ -82,6 +84,7 @@ const SignIn = () => {
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign in
+          Qweasdzxc123!
         </Typography>
 
         {/* Form with inputs */}
@@ -115,8 +118,8 @@ const SignIn = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  value="remember"
                   color="primary"
+                  {...register("rememberMe")}
                   sx={{
                     "& .MuiSvgIcon-root": {
                       fontSize: 20,
@@ -125,9 +128,6 @@ const SignIn = () => {
                 />
               }
               label="Remember me"
-              sx={{
-                "& .MuiFormControlLabel-label": {},
-              }}
             />
             {/* SUBMIT BUTTON */}
             <Button
