@@ -8,6 +8,10 @@ import Layout from "../../layouts/Layout";
 import SignIn from "@/components/Login/SignIn";
 import SignUp from "@/components/Login/SignUp";
 import ProtectedRoute from "./ProtectedRoute";
+import AppRoot from "./Root";
+import Dashboard from "./Dashboard";
+import UserProfile from "./user/UserProfile";
+import UserSettings from "./user/UserSettings";
 
 const AppRoutes = () => {
   return (
@@ -15,7 +19,7 @@ const AppRoutes = () => {
       {/* IF USER TYPES WRONG ROUTE THEN REDIRECT TO "/" */}
       <Route path="*" element={<Navigate to="/" />}></Route>
 
-      {/* ======= ROOT =======*/}
+      {/* ======= LANDING =======*/}
       <Route path="/" element={<Layout>HOME PAGE</Layout>}></Route>
 
       {/*======= AUTH =======*/}
@@ -36,21 +40,26 @@ const AppRoutes = () => {
         }
       ></Route>
 
-      {/* ======= USER ======= */}
-      <Route
-        path="/user-profile"
-        element={<span>USER PROFILE PAGE</span>}
-      ></Route>
-
       {/* ======= APP ======= */}
       <Route
         path="/app"
         element={
           <ProtectedRoute>
-            <Layout>LOGGED IN USER</Layout>
+            <AppRoot />
           </ProtectedRoute>
         }
-      />
+      >
+        {/* ======= /APP NESTED CHILDREN ======= */}
+
+        {/* USER ROUTES */}
+        <Route path="user-profile" element={<UserProfile />} />
+        <Route path="user-profile/settings" element={<UserSettings />} />
+
+        {/* DASHBOARD */}
+        <Route path="" element={<Dashboard />} />
+
+        {/* Add more nested routes here */}
+      </Route>
     </Routes>
   );
 };
