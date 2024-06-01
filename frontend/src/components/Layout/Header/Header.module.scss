@@ -17,12 +17,6 @@
     gap: 2rem;
     align-items: center;
 
-    svg,
-    img {
-      width: 20px;
-      height: 20px;
-    }
-
     .mainNav {
       @include tablet {
         display: none;
