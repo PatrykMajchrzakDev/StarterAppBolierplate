@@ -10,9 +10,10 @@ import {
 export const queryConfig = {
   queries: {
     // throwOnError: true,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
     retry: false,
     staleTime: 1000 * 60, // 1 minute
+    refetchInterval: 1000 * 60
   },
 } satisfies DefaultOptions;
 
