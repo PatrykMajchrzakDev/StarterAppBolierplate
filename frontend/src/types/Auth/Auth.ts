@@ -19,13 +19,14 @@ export type User = Entity<{
 export type AuthResponse = {
   token: string;
   user: User;
+  isrememberMe: boolean;
 };
 
 // Used for auth configuration react-query-auth
 export interface AuthState {
   user: User | null;
   token: string | null;
-  signin: (email: string, password: string) => Promise<void>;
+  signin: (email: string, password: string, rememberMe: boolean) => Promise<void>;
   signup: (email: string, password: string, name: string) => Promise<void>;
   logout: () => void;
 }

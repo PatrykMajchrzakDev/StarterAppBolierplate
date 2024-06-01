@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
@@ -57,7 +57,7 @@ export const register = async (req: Request, res: Response) => {
 
 // Login user when called from frontend
 export const login = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { email, password, rememberMe } = req.body;
   try {
     // check if email exists
     const user = await prisma.user.findUnique({ where: { email } });
@@ -72,9 +72,13 @@ export const login = async (req: Request, res: Response) => {
     if (!validPassword)
       return res.status(401).json({ error: "Invalid Password" });
 
+    // check if user wants to be auth longer
+    const isrememberMe = rememberMe ? true : false
+
     // if all good then create token and send it with response
     const token = jwt.sign({ userId: user.id, role: user.role }, SECRET);
-    res.json({ token: token, user: user });
+    
+    res.json({ token: token, user: user, isrememberMe });
   } catch (error) {
     if (isErrorWithMessage(error)) {
       res.status(400).json({ error: error.message });

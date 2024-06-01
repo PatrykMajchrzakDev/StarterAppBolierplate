@@ -70,6 +70,7 @@ export const signInInputSchema = z.object({
       /[^a-zA-Z0-9]/,
       "Password must contain at least one special character"
     ),
+    rememberMe: z.boolean().optional(),
 });
 export type SignInInput = z.infer<typeof signInInputSchema>;
 
@@ -88,7 +89,13 @@ const authConfig = {
   userFn: getUser,
   loginFn: async (data: SignInInput) => {
     const response = await loginWithEmailAndPassword(data);
-    Cookies.set("token", response.token, { expires: 7 });
+
+    if(response.isrememberMe){
+      Cookies.set("token", response.token, { expires: 7 });
+    } else {
+      Cookies.set("token", response.token, { expires: 1 });
+    }
+    
     return response.user;
   },
   registerFn: async (data: SignUpInput) => {
