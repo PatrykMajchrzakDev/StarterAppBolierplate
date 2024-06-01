@@ -47,7 +47,7 @@ const SignIn = () => {
     defaultValues: {
       email: "",
       password: "",
-      rememberMe: false
+      rememberMe: false,
     },
   });
 
@@ -55,7 +55,6 @@ const SignIn = () => {
   // SEND DATA
   const onSubmit = async (data: FormData) => {
     try {
-      console.log(data)
       // If OK then show notification and navigate to /app
       await loginUser(data);
       navigate("/app");
@@ -83,8 +82,7 @@ const SignIn = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
-          Qweasdzxc123!
+          Sign in Qweasdzxc123!
         </Typography>
 
         {/* Form with inputs */}

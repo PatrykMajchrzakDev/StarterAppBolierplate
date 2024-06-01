@@ -1,6 +1,7 @@
 // ========= MODULES ==========
 
 import { useNotificationState } from "@/store/UI/NotificationStore";
+import ThemeStore from "@/store/Theme/ThemeStore";
 // ======= COMPONENTS =========
 import { Snackbar } from "@mui/material";
 import Alert, { AlertProps } from "@mui/material/Alert";
@@ -17,6 +18,11 @@ interface NotificationProps {
 const Notification = ({ snackbarProps, alertProps }: NotificationProps) => {
   const { message, severity, variant, color, open, closeNotification } =
     useNotificationState();
+
+  // Changes color of text based on current theme
+  const theme = ThemeStore((state) => state.theme);
+  const notifTextColor = theme === "light" ? "black" : "white";
+
   return (
     <Snackbar
       open={open}
@@ -33,9 +39,9 @@ const Notification = ({ snackbarProps, alertProps }: NotificationProps) => {
         {...alertProps}
         sx={{
           width: "100%",
-          color: "black" || color,
           "& .MuiAlert-message": {
             fontSize: "16px",
+            color: notifTextColor || color,
           },
         }}
       >

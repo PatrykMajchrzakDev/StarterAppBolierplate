@@ -19,7 +19,7 @@ export type User = Entity<{
 export type AuthResponse = {
   token: string;
   user: User;
-  isrememberMe: boolean;
+  isrememberMe?: boolean;
 };
 
 // Used for auth configuration react-query-auth

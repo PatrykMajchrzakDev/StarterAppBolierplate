@@ -5,7 +5,7 @@ import { z } from "zod";
 import { configureAuth } from "react-query-auth";
 import Cookies from "js-cookie";
 
-import { AuthResponse, User } from "@/types/Auth/Auth";
+import { AuthResponse } from "@/types/Auth/Auth";
 import { api } from "./api-client";
 import { useNotificationState } from "@/store/UI/NotificationStore";
 
@@ -18,7 +18,7 @@ const logout = async (): Promise<void> => {
 };
 
 // GET USER DATA API CALL
-const getUser = (): Promise<User> => {
+const getUser = (): Promise<AuthResponse> => {
   return api.get("/auth/me");
 };
 
@@ -70,7 +70,7 @@ export const signInInputSchema = z.object({
       /[^a-zA-Z0-9]/,
       "Password must contain at least one special character"
     ),
-    rememberMe: z.boolean().optional(),
+  rememberMe: z.boolean().optional(),
 });
 export type SignInInput = z.infer<typeof signInInputSchema>;
 
@@ -90,17 +90,17 @@ const authConfig = {
   loginFn: async (data: SignInInput) => {
     const response = await loginWithEmailAndPassword(data);
 
-    if(response.isrememberMe){
+    if (response.isrememberMe) {
       Cookies.set("token", response.token, { expires: 7 });
     } else {
       Cookies.set("token", response.token, { expires: 1 });
     }
-    
-    return response.user;
+
+    return { user: response.user, token: response.token };
   },
   registerFn: async (data: SignUpInput) => {
     const response = await registerWithEmailAndPassword(data);
-    return response.user;
+    return { user: response.user, token: response.token };
   },
   logoutFn: logout,
 };

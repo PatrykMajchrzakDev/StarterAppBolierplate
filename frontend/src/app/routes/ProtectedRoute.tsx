@@ -12,6 +12,7 @@ import { useUser } from "@/lib/auth";
 // ======= COMPONENTS =========
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNotificationState } from "@/store/UI/NotificationStore";
+import Cookies from "js-cookie";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -29,7 +30,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   }
 
   // If authorization failed then redirect and show error notification
-  if (!user) {
+  if (!user || Cookies.get("token") !== user.token) {
     useNotificationState
       .getState()
       .setNotification(
