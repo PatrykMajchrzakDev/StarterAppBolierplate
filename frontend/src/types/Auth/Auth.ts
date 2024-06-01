@@ -17,8 +17,8 @@ export type User = Entity<{
 
 // Object returned if auth is success
 export type AuthResponse = {
-  user: User;
   token: string;
+  user: User;
   isrememberMe?: boolean;
 };
 
