@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
+import crypto from "crypto";
 
 // SECRET is used to later create token using this string
 const SECRET =
@@ -32,12 +33,21 @@ export const register = async (req: Request, res: Response) => {
         .status(400)
         .json({ error: "User with this name already exists" });
 
+    let id;
+    let sameId;
+
+    do {
+      id = crypto.randomBytes(5).toString("hex");
+      sameId = await prisma.user.findUnique({ where: { id } });
+    } while (sameId);
+
     // Hashing password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // If everything OK then create user in db
     const user = await prisma.user.create({
       data: {
+        id: id,
         email,
         password: hashedPassword,
         role: "USER", // Assign 'USER' role by default
@@ -73,11 +83,11 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ error: "Invalid Password" });
 
     // check if user wants to be auth longer
-    const isrememberMe = rememberMe ? true : false
+    const isrememberMe = rememberMe ? true : false;
 
     // if all good then create token and send it with response
     const token = jwt.sign({ userId: user.id, role: user.role }, SECRET);
-    
+
     res.json({ token: token, user: user, isrememberMe });
   } catch (error) {
     if (isErrorWithMessage(error)) {
@@ -97,12 +107,9 @@ export const getUserDetails = async (req: Request, res: Response) => {
     // get token from headers
     const token = req.header("Authorization")?.replace("Bearer ", "");
 
-    // check if ID is present and if it's number
+    // check if ID is present
     if (!userId) {
       return res.status(400).json({ error: "Invalid user ID" });
-    }
-    if (typeof userId !== "number") {
-      return res.status(400).json({ error: "Invalid user ID (not a number)" });
     }
 
     // If ID is present then search db
@@ -121,7 +128,8 @@ export const getUserDetails = async (req: Request, res: Response) => {
 
 // Just a test routing
 export const test2 = async (req: Request, res: Response) => {
-  console.log("test2 accessed");
+  console.log(crypto.randomBytes(5).toString("hex"));
+  // console.log("test2 accessed");
   const user = {
     id: "123asdasd",
     name: "test2",
