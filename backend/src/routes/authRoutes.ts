@@ -18,6 +18,6 @@ router.post("/login", login);
 router.get("/me", auth, getUserDetails);
 
 // Test route to check if route works
-router.post("/test2", test2);
+router.get("/test2", test2);
 
 export default router;

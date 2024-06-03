@@ -31,11 +31,11 @@ datasource db {
 // ============================
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
-  name     String @unique
-  role     Role   @default(USER)
+  id         String   @id
+  email      String   @unique
+  password   String
+  name       String   @unique
+  role       Role     @default(USER)
   created_at DateTime @default(now())
 }
 
