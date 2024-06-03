@@ -12,7 +12,7 @@ const SECRET =
 
 // JWT types
 interface JwtPayload {
-  userId: number;
+  userId: string;
   role: string;
 }
 
