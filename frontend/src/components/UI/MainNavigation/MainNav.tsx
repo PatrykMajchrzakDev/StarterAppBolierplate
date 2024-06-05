@@ -1,10 +1,9 @@
 // ========= MODULES ==========
 import { useState } from "react";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./MainNav.module.scss";
 
 import { useLogout, useUser } from "@/lib/auth";
-
 // ======= COMPONENTS =========
 import {
   Tooltip,
@@ -30,6 +29,22 @@ const MainNav = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const adminNavigation =
+    user?.user.role === "ADMIN" ? (
+      <MenuItem
+        onClick={handleClose}
+        component={Link}
+        to="/app/user-profile/admin"
+      >
+        <ListItemIcon>
+          <Settings fontSize="small" />
+        </ListItemIcon>
+        Admin Dashboard
+      </MenuItem>
+    ) : (
+      ""
+    );
 
   return (
     <ul className={styles.list}>
@@ -57,44 +72,46 @@ const MainNav = () => {
             id="account-menu"
             open={open}
             onClose={handleClose}
-            onClick={handleClose}
-            PaperProps={{
-              elevation: 0,
-              sx: {
-                overflow: "visible",
-                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                mt: 1.5,
-                "& .MuiAvatar-root": {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
-                },
-                "&::before": {
-                  content: '""',
-                  display: "block",
-                  position: "absolute",
-                  top: 0,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: "background.paper",
-                  transform: "translateY(-50%) rotate(45deg)",
-                  zIndex: 0,
+            // this is removed cause clicking on name closed menu
+            // onClick={handleClose}
+            slotProps={{
+              paper: {
+                elevation: 0,
+                sx: {
+                  overflow: "visible",
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  mt: 1.5,
+                  "& .MuiAvatar-root": {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  "&::before": {
+                    content: '""',
+                    display: "block",
+                    position: "absolute",
+                    top: 0,
+                    right: 14,
+                    width: 10,
+                    height: 10,
+                    bgcolor: "background.paper",
+                    transform: "translateY(-50%) rotate(45deg)",
+                    zIndex: 0,
+                  },
                 },
               },
             }}
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            <MenuItem
-              onClick={handleClose}
-              component={Link}
-              to="/app/user-profile"
-            >
-              <Avatar /> Profile
+            {/* AVATAR */}
+            <MenuItem>
+              <Avatar /> {user.user.name}
             </MenuItem>
             <Divider />
+
+            {/* SETTINGS */}
             <MenuItem
               onClick={handleClose}
               component={Link}
@@ -105,6 +122,11 @@ const MainNav = () => {
               </ListItemIcon>
               Settings
             </MenuItem>
+
+            {/* REST ITEMS IS FOR ADMINS */}
+            {adminNavigation}
+
+            {/* LOGOUT */}
             <MenuItem
               onClick={() => {
                 logout.mutate({});
@@ -121,6 +143,7 @@ const MainNav = () => {
           </Menu>
         </li>
       ) : (
+        // IF NO USER THEN DISPLAY SIGN IN BUTTON
         <li>
           <Button variant="outlined" component={Link} to="/signin">
             Sign In
@@ -132,9 +155,3 @@ const MainNav = () => {
 };
 
 export default MainNav;
-
-{
-  /* <Button variant="outlined" onClick={() => logout.mutate({})}>
-<Link to={"/"}>Logout</Link>
-</Button> */
-}
