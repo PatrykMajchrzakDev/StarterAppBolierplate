@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import "dotenv/config";
 import authRoutes from "@/routes/authRoutes";
+import usersRoutes from "@/routes/usersRoutes";
 
 const app = express();
 
@@ -20,6 +21,9 @@ app.use(cors());
 
 // Auth routes
 app.use("/auth", authRoutes);
+
+// User routes
+app.use("/users", usersRoutes);
 
 // TEST routes
 app.get("/test", async (req: Request, res: Response) => {
