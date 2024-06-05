@@ -12,6 +12,7 @@ import AppRoot from "./Root";
 import Dashboard from "./Dashboard";
 import UserProfile from "./user/UserProfile";
 import UserSettings from "./user/UserSettings";
+import AdminDashboard from "./admin/Dashboard";
 
 const AppRoutes = () => {
   return (
@@ -54,7 +55,7 @@ const AppRoutes = () => {
         {/* USER ROUTES */}
         <Route path="user-profile" element={<UserProfile />} />
         <Route path="user-profile/settings" element={<UserSettings />} />
-
+        <Route path="user-profile/admin" element={<AdminDashboard />} />
         {/* DASHBOARD */}
         <Route path="" element={<Dashboard />} />
 
