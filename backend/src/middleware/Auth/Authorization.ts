@@ -41,3 +41,10 @@ declare module "express-serve-static-core" {
     user?: JwtPayload;
   }
 }
+
+export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+  if (req.user?.role !== "ADMIN") {
+    res.status(401).json({ error: "Access denied, admin only" });
+  }
+  next();
+};
