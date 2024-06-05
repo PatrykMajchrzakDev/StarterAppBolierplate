@@ -6,7 +6,6 @@
 }
 
 html {
-  // font-size: 62.5%;
   scroll-behavior: smooth;
 }
 
@@ -14,6 +13,7 @@ body {
   background-color: var(--background-color);
   font-family: $regular-font;
   position: relative;
+  color: var(--default-text-color);
 }
 
 p,
@@ -29,11 +29,6 @@ h6 {
 .container {
   width: 100%;
   margin: 0 auto;
-}
-
-div,
-p {
-  font-size: $text-size;
 }
 
 a {
