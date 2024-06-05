@@ -9,10 +9,11 @@ export type Entity<T> = {
 
 // Props user object hold
 export type User = Entity<{
+  id: string;
   name: string;
   email: string;
   role: "ADMIN" | "USER" | "MOD";
-  token: string;
+  created_at: Date;
 }>;
 
 // Object returned if auth is success
@@ -26,7 +27,11 @@ export type AuthResponse = {
 export interface AuthState {
   user: User | null;
   token: string | null;
-  signin: (email: string, password: string, rememberMe: boolean) => Promise<void>;
+  signin: (
+    email: string,
+    password: string,
+    rememberMe: boolean
+  ) => Promise<void>;
   signup: (email: string, password: string, name: string) => Promise<void>;
   logout: () => void;
 }
