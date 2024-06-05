@@ -19,7 +19,8 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { data: user, isLoading } = useUser();
+  // Get response json from db - data as an object to hold user and token values
+  const { data, isLoading } = useUser();
   // When getting info from db show loading indicator
   if (isLoading) {
     return (
@@ -30,7 +31,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   }
 
   // If authorization failed then redirect and show error notification
-  if (!user || Cookies.get("token") !== user.token) {
+  if (!data || Cookies.get("token") !== data.token) {
     useNotificationState
       .getState()
       .setNotification(
