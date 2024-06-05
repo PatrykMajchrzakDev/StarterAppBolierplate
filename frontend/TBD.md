@@ -7,3 +7,5 @@
 <!-- TBD -->
 
 Logout function to /lib/auth - check TBD
+
+TDB OMIT PASSWORD
