@@ -27,7 +27,7 @@ $breakpoint-desktop: 1300px;
   --default-text-color: white;
   --secondary-text-color: black;
   // Background colors
-  --background-color: #333;
+  --background-color: #121212;
   --secondary-bg-color: #242424;
   //Custom
   --default-shadow-color: rgb(255 255 255 / 0.1);
@@ -45,26 +45,17 @@ $section-size: 2.4rem;
 
 // Roboto Regular
 @font-face {
-  font-family: "Roboto Regular";
-  src: url("~@fontsource/roboto/files/roboto-latin-400-normal.woff2")
-      format("woff2"),
-    url("~@fontsource/roboto/files/roboto-latin-400-normal.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
+  font-family: "Poppins Regular";
+  src: url("@/assets/fonts/Poppins-Regular.ttf") format("truetype");
 }
-$regular-font: "Roboto Regular", sans-serif;
+$regular-font: "Poppins Regular", sans-serif;
 
-// Roboto Bold
+// Poppins Bold
 @font-face {
-  font-family: "Roboto Bold";
-  src: url("~@fontsource/roboto/files/roboto-latin-700-normal.woff2")
-      format("woff2"),
-    url("~@fontsource/roboto/files/roboto-latin-700-normal.woff") format("woff");
-  font-weight: 700;
-  font-style: normal;
+  font-family: "Poppins Bold";
+  src: url("@/assets/fonts/Poppins-Bold.ttf") format("truetype");
 }
-$bold-font: "Roboto Bold", sans-serif;
-
+$bold-font: "Poppins Bold", sans-serif;
 // =======================================
 // ============= CUSTOM ==================
 // =======================================
