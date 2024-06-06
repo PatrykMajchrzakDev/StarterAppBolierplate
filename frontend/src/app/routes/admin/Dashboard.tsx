@@ -1,10 +1,13 @@
-import { useState } from "react";
+// This components functionality is to display informations only available to admins
 
 // ========= MODULES ==========
+import { useState } from "react";
+
 import styles from "./styles/Dashboard.module.scss";
 import UserList from "./UserList";
 import { Authorization, ROLES } from "@/lib/authorization";
 
+// ======= COMPONENTS =========
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
