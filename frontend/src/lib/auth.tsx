@@ -4,10 +4,12 @@
 import { z } from "zod";
 import { configureAuth } from "react-query-auth";
 import Cookies from "js-cookie";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 
 import { AuthResponse } from "@/types/Auth/Auth";
 import { api } from "./api-client";
 import { useNotificationState } from "@/store/UI/NotificationStore";
+import { QueryConfig } from "@/lib/react-query";
 
 // LOGOUT API CALL
 const logout = async (): Promise<void> => {
@@ -20,6 +22,26 @@ const logout = async (): Promise<void> => {
 // GET USER DATA API CALL
 const getUser = (): Promise<AuthResponse> => {
   return api.get("/auth/me");
+};
+
+// Options are set to be able to invalidate user data
+// for example when avatar is changed to update new avatar
+export const getUserQueryOptions = () => {
+  return queryOptions({
+    queryKey: ["loggedInUser"],
+    queryFn: getUser,
+  });
+};
+
+type UseUsersOptions = {
+  queryConfig?: QueryConfig<typeof getUserQueryOptions>;
+};
+
+export const useUsers = ({ queryConfig }: UseUsersOptions = {}) => {
+  return useQuery({
+    ...getUserQueryOptions(),
+    ...queryConfig,
+  });
 };
 
 // ================================
