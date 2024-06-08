@@ -62,9 +62,19 @@ const MainNav = () => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar sx={{ width: 32, height: 32 }}>
-                {/* TBD HERE COULD BE USERS PROFILE PICTURE */}M
-              </Avatar>
+              <Avatar
+                sx={{
+                  width: 32,
+                  height: 32,
+                  img: {
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  },
+                }}
+              >
+                {<img src={user.user.avatarUrl} /> || user.user.name[0]}
+              </Avatar>{" "}
             </IconButton>
           </Tooltip>
           <Menu
@@ -107,7 +117,20 @@ const MainNav = () => {
           >
             {/* AVATAR */}
             <MenuItem>
-              <Avatar /> {user.user.name}
+              <Avatar
+                sx={{
+                  width: 32,
+                  height: 32,
+                  img: {
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  },
+                }}
+              >
+                {<img src={user.user.avatarUrl} /> || user.user.name[0]}
+              </Avatar>{" "}
+              {user.user.name}
             </MenuItem>
             <Divider />
 
