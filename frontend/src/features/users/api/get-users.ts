@@ -1,3 +1,5 @@
+// This components functionality is to get all users data
+
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import { QueryConfig } from "@/lib/react-query";
 
