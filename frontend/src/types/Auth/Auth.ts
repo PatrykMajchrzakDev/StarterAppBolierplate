@@ -14,6 +14,7 @@ export type User = Entity<{
   email: string;
   role: "ADMIN" | "USER" | "MOD";
   created_at: Date;
+  avatarUrl: string;
 }>;
 
 // Object returned if auth is success
