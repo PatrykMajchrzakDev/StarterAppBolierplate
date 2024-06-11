@@ -1,9 +1,10 @@
 // This components functionality is to provide functions for user settings
 import { z } from "zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 import { api } from "@/lib/api-client";
 import { MutationConfig } from "@/lib/react-query";
+import { useUser } from "@/lib/auth";
 
 // ====================================
 // ========== CHANGE AVATAR ===========
@@ -46,14 +47,12 @@ type UseChangeUserAvatarOptions = {
 export const useChangeUserAvatar = ({
   mutationConfig,
 }: UseChangeUserAvatarOptions = {}) => {
-  const queryClient = useQueryClient();
-
+  const { refetch: refetchUser } = useUser();
   const { onSuccess, ...restConfig } = mutationConfig || {};
 
   return useMutation({
     onSuccess: (...args) => {
-      // Invalidate any queries related to the user to refresh the data
-      queryClient.invalidateQueries({ queryKey: ["loggedInUser"] });
+      refetchUser();
       onSuccess?.(...args);
     },
     ...restConfig,
