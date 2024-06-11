@@ -1,10 +1,5 @@
-// This components functionality is to handle file uploads to external storage
-
-// ========= MODULES ==========
-import { useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-
-// ======= COMPONENTS =========
 import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Button from "@mui/material/Button";
@@ -22,25 +17,36 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-type UploadButtonProps = {
+// Component props
+interface UploadFileProps {
   uploadMutationFn: (data: {
     data: { file: File; userId: string };
-  }) => Promise<void>;
+  }) => Promise<any>;
   userId: string;
-};
+  onSuccess?: (response: any) => void;
+}
 
+// Notification on success or error fn
 const addNotif = () => {
   useNotificationState
     .getState()
-    .setNotification("Changed avatar", "success", "outlined");
+    .setNotification("File uploaded successfully", "success", "outlined");
 };
-
-const UploadButton = ({ uploadMutationFn, userId }: UploadButtonProps) => {
+// The component takes 2-3 props
+const UploadFile: React.FC<UploadFileProps> = ({
+  uploadMutationFn,
+  userId,
+}) => {
+  // Sets state to display currently choosen file name
   const [fileName, setFileName] = useState<string>("");
+  // Methods from react-hook-form
   const { handleSubmit, reset } = useForm();
+  // Saves state of currently choosen file
   const [file, setFile] = useState<File | null>(null);
 
+  // Run this when submiting form
   const onSubmit = async () => {
+    // Set object because mutation expects an object
     if (file) {
       const uploadData = {
         userId,
@@ -49,15 +55,22 @@ const UploadButton = ({ uploadMutationFn, userId }: UploadButtonProps) => {
 
       try {
         await uploadMutationFn({ data: uploadData });
+
+        // This prop sets response from server. Its optional
+        // Add notification on success
         addNotif();
+        // reset form
         reset();
+        // reset file name
         setFileName("");
+        // reset file
         setFile(null);
       } catch (error) {
         console.error("Upload failed:", error);
       }
     }
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Button
@@ -78,6 +91,7 @@ const UploadButton = ({ uploadMutationFn, userId }: UploadButtonProps) => {
           }}
         />
       </Button>
+      {/* Displays file name and shows submit if user chose file*/}
       {fileName && (
         <div>
           <span style={{ padding: "0 2rem 0 0" }}>
@@ -92,4 +106,4 @@ const UploadButton = ({ uploadMutationFn, userId }: UploadButtonProps) => {
   );
 };
 
-export default UploadButton;
+export default UploadFile;
