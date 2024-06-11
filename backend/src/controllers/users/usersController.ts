@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import admin from "firebase-admin";
+import { URL } from "url";
 const firebaseServiceAccount = require("@/config/firebaseServiceAccount.json");
 
 // Prisma init
@@ -47,9 +48,33 @@ export const changeUserAvatar = async (req: Request, res: Response) => {
   try {
     // Access storage bucket
     const bucket = admin.storage().bucket();
-    // Set fileName to userId since only one avatar for profile
-    const fileName = `avatars/${userId}`;
 
+    // Retrieve the current user data
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    // If user has an existing avatar URL, delete the old file
+    if (user && user.avatarUrl) {
+      try {
+        // Parse the URL to get the pathname
+        const parsedUrl = new URL(user.avatarUrl);
+        console.log("parsed", parsedUrl);
+        const decodedPathname = decodeURIComponent(parsedUrl.pathname);
+        const oldFileName = decodedPathname.split("/").pop();
+        console.log("old", oldFileName);
+        if (oldFileName) {
+          const oldFile = bucket.file(`avatars/${oldFileName}`);
+          await oldFile.delete();
+        }
+      } catch (error) {
+        console.error("Error deleting old avatar file:", error);
+      }
+    }
+
+    // Set fileName to userId since only one avatar for profile
+    const fileName = `avatars/${userId}?t=${new Date().getTime()}`;
+    console.log(fileName);
     // Upload the file
     const fileUpload = bucket.file(fileName);
     await fileUpload.save(file.buffer, {
@@ -57,7 +82,6 @@ export const changeUserAvatar = async (req: Request, res: Response) => {
         contentType: file.mimetype,
       },
     });
-
     // Get firebase file url and set expiration time
     const fileURL = await fileUpload.getSignedUrl({
       action: "read",
@@ -65,12 +89,15 @@ export const changeUserAvatar = async (req: Request, res: Response) => {
     });
 
     // Update the user's avatar URL in the database
-    const user = await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: { avatarUrl: fileURL[0] },
     });
 
-    res.json({ message: "Avatar URL saved", user });
+    res.json({
+      message: "Avatar URL saved",
+      newAvatarUrl: updatedUser.avatarUrl,
+    });
   } catch (error) {
     console.error("Error saving avatar URL:", error);
     res.status(500).json({ error: "Failed to save avatar URL" });
