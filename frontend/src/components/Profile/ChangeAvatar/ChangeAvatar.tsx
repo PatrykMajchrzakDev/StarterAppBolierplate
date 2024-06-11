@@ -1,6 +1,11 @@
+// This components functionality is to show description about updating user avatar and to show upload button
+
+// ========= MODULES ==========
 import { useUser } from "@/lib/auth";
-import UploadFile from "@/components/UI/Buttons/UploadFile";
 import { useChangeUserAvatar } from "@/features/users/api/user-settings";
+
+// ======= COMPONENTS =========
+import UploadFile from "@/components/UI/Buttons/UploadFile";
 
 export const ChangeAvatar = () => {
   const { data } = useUser();
