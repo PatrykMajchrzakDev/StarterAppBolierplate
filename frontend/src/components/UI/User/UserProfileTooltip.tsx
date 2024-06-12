@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useLogout, useUser } from "@/lib/auth";
-// import useUserAvatarStore from "@/store/User/user-avatar";
 // ======= COMPONENTS =========
 import {
   Tooltip,
@@ -31,7 +30,6 @@ const UserProfileTooltip = () => {
     setAnchorEl(null);
   };
 
-  console.log(user?.user.avatarUrl);
   const adminNavigation =
     user?.user.role === "ADMIN" ? (
       <MenuItem

@@ -59,6 +59,18 @@ export const changeUserAvatar = async (req: Request, res: Response) => {
       where: { id: userId },
     });
 
+    // Validate file extension
+    const allowedExtensions = /jpeg|jpg|png|webp/;
+    const extname = allowedExtensions.test(file.originalname.toLowerCase());
+    const mimetype = allowedExtensions.test(file.mimetype);
+
+    if (!extname || !mimetype) {
+      return res.status(400).json({
+        error:
+          "Wrong type of file extension. Allowed file extenstions: jpeg | jpg | png | webp",
+      });
+    }
+
     // If user has an existing avatar URL, delete the old file
     if (user && user.avatarUrl) {
       try {
