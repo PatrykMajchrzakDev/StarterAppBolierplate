@@ -129,7 +129,7 @@ export const getUserDetails = async (req: Request, res: Response) => {
     const { password: _, ...userWithoutPassword } = user;
 
     // If all good then return response with user info and token
-    res.json({ userWithoutPassword, token });
+    res.json({ user: userWithoutPassword, token });
   } catch (error) {
     res
       .status(500)
