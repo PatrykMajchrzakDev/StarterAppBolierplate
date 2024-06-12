@@ -13,9 +13,9 @@ const SECRET =
 const isErrorWithMessage = (error: any): error is { message: string } => {
   return typeof error === "object" && error !== null && "message" in error;
 };
-// ===============================================
-// === Register user when called from frontend ===
-// ===============================================
+// ====================================================================
+// ============= Register user when called from frontend ==============
+// ====================================================================
 export const register = async (req: Request, res: Response) => {
   const { email, password, name } = req.body;
 
@@ -56,7 +56,7 @@ export const register = async (req: Request, res: Response) => {
       },
     });
 
-    res.status(201).json(user);
+    res.status(201).json("Registered user");
   } catch (error) {
     if (isErrorWithMessage(error)) {
       res.status(400).json({ error: error.message });
@@ -65,9 +65,9 @@ export const register = async (req: Request, res: Response) => {
     }
   }
 };
-// ===============================================
-// ==== Login user when called from frontend =====
-// ===============================================
+// ====================================================================
+// =============== Login user when called from frontend ===============
+// ====================================================================
 export const login = async (req: Request, res: Response) => {
   const { email, password, rememberMe } = req.body;
   try {
@@ -90,7 +90,10 @@ export const login = async (req: Request, res: Response) => {
     // if all good then create token and send it with response
     const token = jwt.sign({ userId: user.id, role: user.role }, SECRET);
 
-    res.json({ token: token, user: user, isrememberMe });
+    // Destructure user object to exclude password
+    const { password: _, ...userWithoutPassword } = user;
+
+    res.json({ token: token, user: userWithoutPassword, isrememberMe });
   } catch (error) {
     if (isErrorWithMessage(error)) {
       res.status(400).json({ error: error.message });
@@ -99,9 +102,10 @@ export const login = async (req: Request, res: Response) => {
     }
   }
 };
-// ===========================================================================
-// == Get authenticated user details - authorization is done via middleware ==
-// ===========================================================================
+// ====================================================================
+// ============ Get authenticated user details ========================
+// ============ authorization is done via middleware ==================
+// ====================================================================
 export const getUserDetails = async (req: Request, res: Response) => {
   try {
     // checks if user has id
@@ -120,8 +124,12 @@ export const getUserDetails = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
+
+    // Destructure user object to exclude password
+    const { password: _, ...userWithoutPassword } = user;
+
     // If all good then return response with user info and token
-    res.json({ user, token });
+    res.json({ user: userWithoutPassword, token });
   } catch (error) {
     res
       .status(500)
