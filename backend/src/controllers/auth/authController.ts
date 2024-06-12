@@ -13,8 +13,9 @@ const SECRET =
 const isErrorWithMessage = (error: any): error is { message: string } => {
   return typeof error === "object" && error !== null && "message" in error;
 };
-
-// Register user when called from frontend
+// ===============================================
+// === Register user when called from frontend ===
+// ===============================================
 export const register = async (req: Request, res: Response) => {
   const { email, password, name } = req.body;
 
@@ -41,8 +42,8 @@ export const register = async (req: Request, res: Response) => {
       sameId = await prisma.user.findUnique({ where: { id } });
     } while (sameId);
 
-    // Hashing password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Hashing password with salting
+    const hashedPassword = await bcrypt.hash(password, process.env.SALT || 10);
 
     // If everything OK then create user in db
     const user = await prisma.user.create({
@@ -64,8 +65,9 @@ export const register = async (req: Request, res: Response) => {
     }
   }
 };
-
-// Login user when called from frontend
+// ===============================================
+// ==== Login user when called from frontend =====
+// ===============================================
 export const login = async (req: Request, res: Response) => {
   const { email, password, rememberMe } = req.body;
   try {
@@ -97,8 +99,9 @@ export const login = async (req: Request, res: Response) => {
     }
   }
 };
-
-// Get authenticated user details - authorization is done via middleware
+// ===========================================================================
+// == Get authenticated user details - authorization is done via middleware ==
+// ===========================================================================
 export const getUserDetails = async (req: Request, res: Response) => {
   try {
     // checks if user has id
