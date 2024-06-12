@@ -56,7 +56,7 @@ Before you begin, ensure you have the following installed:
 
 1. **Backend Configuration**:
 
-   - Create \`.env\` in the root \`backend\` directory.
+   - Create `.env` in the root `backend` directory.
    - Update the environment variables with your PostgreSQL database credentials and JWT secret.
    - Paste your firebase service account file to backend/config (.gitignore ignores it)
 
@@ -69,13 +69,14 @@ Before you begin, ensure you have the following installed:
 
 2. **Frontend Configuration**:
 
-   - Create \`.env\` in the root \`frontend\` directory.
+   - Create `.env` in the root `frontend` directory.
    - Update the environment variables with your backend API URL.
 
    ```env
 
    - VITE_DEV=development
    - VITE_API_URL=http://localhost:3000
+   - SALT = Any number 1 - 10 for example (better to not be high 20+)
    ```
 
 ### Database Setup
@@ -109,7 +110,7 @@ Before you begin, ensure you have the following installed:
    npm run dev
    ```
 
-3. Open your browser and navigate to \`http://localhost:5173\` to see the application in action.
+3. Open your browser and navigate to `http://localhost:5173` to see the application in action.
 
 ## Project Structure
 
