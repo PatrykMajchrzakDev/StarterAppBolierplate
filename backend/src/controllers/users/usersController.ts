@@ -18,15 +18,20 @@ const isErrorWithMessage = (error: any): error is { message: string } => {
   return typeof error === "object" && error !== null && "message" in error;
 };
 
-// =======================================
-// ======== EXTRACT ALL USERS ============
-// == AND THEIR INFO FOR ADMIN PURPOSES ==
-// =======================================
+// ====================================================================
+// ======== EXTRACT ALL USERS AND THEIR INFO FOR ADMIN PURPOSES =======
+// ====================================================================
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
     const users = await prisma.user.findMany();
     // returns object with array of users
-    res.json(users);
+
+    // Map over users to remove password field from each user object
+    const usersWithoutPasswords = users.map(
+      ({ password, ...userWithoutPassword }) => userWithoutPassword
+    );
+
+    res.json(usersWithoutPasswords);
   } catch (error) {
     if (isErrorWithMessage(error)) {
       res.status(400).json({ error: error.message });
@@ -36,9 +41,9 @@ export const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
-// =======================================
-// ======== CHANGE USER AVATAR ===========
-// =======================================
+// ====================================================================
+// ======================== CHANGE USER AVATAR ========================
+// ====================================================================
 export const changeUserAvatar = async (req: Request, res: Response) => {
   const file = req.file;
   const userId = req.body.userId;
