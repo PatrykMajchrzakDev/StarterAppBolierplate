@@ -64,10 +64,8 @@ export const changeUserAvatar = async (req: Request, res: Response) => {
       try {
         // Parse the URL to get the pathname
         const parsedUrl = new URL(user.avatarUrl);
-        console.log("parsed", parsedUrl);
         const decodedPathname = decodeURIComponent(parsedUrl.pathname);
         const oldFileName = decodedPathname.split("/").pop();
-        console.log("old", oldFileName);
         if (oldFileName) {
           const oldFile = bucket.file(`avatars/${oldFileName}`);
           await oldFile.delete();
@@ -79,7 +77,6 @@ export const changeUserAvatar = async (req: Request, res: Response) => {
 
     // Set fileName to userId since only one avatar for profile
     const fileName = `avatars/${userId}?t=${new Date().getTime()}`;
-    console.log(fileName);
     // Upload the file
     const fileUpload = bucket.file(fileName);
     await fileUpload.save(file.buffer, {
