@@ -33,24 +33,24 @@ Before you begin, ensure you have the following installed:
 
 1. Clone the repository:
 
-   \`\`\`sh
+   ```sh
    git clone https://github.com/PatrykMajchrzakDev/StarterAppBolierplate.git
-   \`\`\`
+   ```
 
 2. Navigate to the project directory:
 
-   \`\`\`sh
+   ```sh
    cd StarterAppBoilerplate
-   \`\`\`
+   ```
 
 3. Install the dependencies for both frontend and backend:
 
-   \`\`\`sh
+   ```sh
    cd backend
    npm install
    cd ../frontend
    npm install
-   \`\`\`
+   ```
 
 ### Configuration
 
@@ -60,54 +60,54 @@ Before you begin, ensure you have the following installed:
    - Update the environment variables with your PostgreSQL database credentials and JWT secret.
    - Paste your firebase service account file to backend/config (.gitignore ignores it)
 
-   \`\`\`env
+   ```env
 
    - DATABASE_URL = "your_postgre_url"
    - JWT_SECRET = 'your_jwt_secret'
    - PORT = 3000
-     \`\`\`
+   ```
 
 2. **Frontend Configuration**:
 
    - Create \`.env\` in the root \`frontend\` directory.
    - Update the environment variables with your backend API URL.
 
-   \`\`\`env
+   ```env
 
    - VITE_DEV=development
    - VITE_API_URL=http://localhost:3000
-     \`\`\`
+   ```
 
 ### Database Setup
 
 1. Initialize the Prisma client:
 
-   \`\`\`sh
+   ```sh
    cd backend
    npx prisma migrate dev --name init
-   \`\`\`
+   ```
 
 2. Seed the database (if applicable):
 
-   \`\`\`sh
+   ```sh
    npm run seed
-   \`\`\`
+   ```
 
 ### Running the Application
 
 1. Start the backend server:
 
-   \`\`\`sh
+   ```sh
    cd backend
    npm run dev
-   \`\`\`
+   ```
 
 2. Start the frontend server:
 
-   \`\`\`sh
+   ```sh
    cd frontend
    npm run dev
-   \`\`\`
+   ```
 
 3. Open your browser and navigate to \`http://localhost:5173\` to see the application in action.
 
