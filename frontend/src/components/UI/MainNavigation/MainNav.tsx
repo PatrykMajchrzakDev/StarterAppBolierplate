@@ -15,7 +15,7 @@ const MainNav = () => {
       <li>1</li>
       <li>2</li>
       <li>3</li>
-      {user ? (
+      {user && user.user ? (
         <UserProfileTooltip />
       ) : (
         // IF NO USER THEN DISPLAY SIGN IN BUTTON
