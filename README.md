@@ -62,9 +62,32 @@ Before you begin, ensure you have the following installed:
 
    ```env
 
+   - BASE_URL = "e.g. http://localhost:3000"
    - DATABASE_URL = "your_postgre_url"
    - JWT_SECRET = 'your_jwt_secret'
-   - PORT = 3000
+   - PORT = "e.g. 3000"
+   - SALT = Any number 1 - 10 for example (better to not be high 20+)
+
+   - ( Email variables are used for sending emails to users for things like verifying user registration. Check below explanation how to set it up)
+   - EMAIL_USER= "your-email@gmail.com"
+   - EMAIL_PASS= "your-email-password"
+   ```
+
+   **NODEMAILER ZOHO EMAIL APP SETUP**
+   Create Zoho email account then go to Settings -> Go to Security -> App Passwords -> Generate New Password and then change .env variables. Make sure to setup services/sendEmail.ts.
+
+   Use smtp.zoho.eu if in EU and .com if in US.
+
+   ```
+   const transporter = nodemailer.createTransport({
+      host: "smtp.zoho.eu",
+      port: 465,
+      secure: true, // use SSL
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
    ```
 
 2. **Frontend Configuration**:
@@ -76,7 +99,6 @@ Before you begin, ensure you have the following installed:
 
    - VITE_DEV=development
    - VITE_API_URL=http://localhost:3000
-   - SALT = Any number 1 - 10 for example (better to not be high 20+)
    ```
 
 ### Database Setup

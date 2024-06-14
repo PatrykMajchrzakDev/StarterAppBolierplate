@@ -1,7 +1,7 @@
 // ========= MODULES ==========
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { boolean, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -139,15 +139,20 @@ const SignIn = () => {
             </Button>
 
             {/* NAVIGATION LINKS */}
-            <Grid container>
-              <Grid item xs>
-                <Link to="#" variant="body2" component={RouterLink}>
+            <Grid container sx={{ gap: "1rem" }}>
+              <Grid item container>
+                <Link to="/forgotpassword" variant="body2" component={RouterLink}>
                   Forgot password?
                 </Link>
               </Grid>
-              <Grid item>
+              <Grid item container>
                 <Link to="/signup" component={RouterLink} variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  Don't have an account? Sign Up
+                </Link>
+              </Grid>
+              <Grid item container>
+                <Link to="/resendemail" variant="body2" component={RouterLink}>
+                  Resend verification email?
                 </Link>
               </Grid>
             </Grid>
@@ -172,7 +177,7 @@ function Copyright(props: any) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Boilerplate Application
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
