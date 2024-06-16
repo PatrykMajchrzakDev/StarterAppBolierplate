@@ -5,14 +5,17 @@ import { Route, Routes, Navigate } from "react-router-dom";
 
 // ======= COMPONENTS =========
 import Layout from "../../layouts/Layout";
-import SignIn from "@/components/Login/SignIn";
-import SignUp from "@/components/Login/SignUp";
+import SignIn from "@/components/Auth/SignIn";
+import SignUp from "@/components/Auth/SignUp";
 import ProtectedRoute from "./ProtectedRoute";
 import AppRoot from "./Root";
 import Dashboard from "./Dashboard";
 import UserProfile from "./user/UserProfile";
 import UserSettings from "./user/UserSettings";
 import AdminDashboard from "./admin/Dashboard";
+import ForgotPasword from "@/components/Auth/ForgotPassword";
+import ResendEmail from "@/components/Auth/ResendEmail";
+import ResetPassword from "@/components/Auth/ResetPassword";
 
 const AppRoutes = () => {
   return (
@@ -37,6 +40,30 @@ const AppRoutes = () => {
         element={
           <Layout>
             <SignUp />
+          </Layout>
+        }
+      ></Route>
+      <Route
+        path="/forgotpassword"
+        element={
+          <Layout>
+            <ForgotPasword />
+          </Layout>
+        }
+      ></Route>
+      <Route
+        path="/resetpassword"
+        element={
+          <Layout>
+            <ResetPassword />
+          </Layout>
+        }
+      ></Route>
+      <Route
+        path="/resendemail"
+        element={
+          <Layout>
+            <ResendEmail />
           </Layout>
         }
       ></Route>

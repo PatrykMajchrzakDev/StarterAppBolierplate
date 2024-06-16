@@ -4,12 +4,13 @@
 import { z } from "zod";
 import { configureAuth } from "react-query-auth";
 import Cookies from "js-cookie";
-import { queryOptions, useQuery } from "@tanstack/react-query";
+import { queryOptions, useQuery, useMutation } from "@tanstack/react-query";
 
 import { AuthResponse } from "@/types/Auth/Auth";
 import { api } from "./api-client";
 import { useNotificationState } from "@/store/UI/NotificationStore";
-import { QueryConfig } from "@/lib/react-query";
+import { MutationConfig, QueryConfig } from "@/lib/react-query";
+import { JSONMessageResponse } from "@/types/GenericResponse";
 
 // LOGOUT API CALL
 const logout = async (): Promise<void> => {
@@ -103,9 +104,108 @@ const loginWithEmailAndPassword = (
   return api.post("/auth/login", data);
 };
 
+// ===============================================
+// ==== FORGOT PASSWORD INPUTS FORM VALIDATION ===
+// ===============================================
+
+// zod schema
+export const forgotPasswordInputSchema = z.object({
+  email: z.string().min(1, "Required").email("Invalid email address"),
+});
+
+export type forgotPasswordInput = z.infer<typeof forgotPasswordInputSchema>;
+
+//FORGOT PASSWORD API CALL
+export const forgotPassword = (
+  data: forgotPasswordInput
+): Promise<JSONMessageResponse> => {
+  return api.post("/auth/forgot-password", data);
+};
+
+// Mutation config
+type UseForgotPasswordOptions = {
+  mutationConfig?: MutationConfig<typeof forgotPassword>;
+};
+
+export const useForgotPassword = ({
+  mutationConfig,
+}: UseForgotPasswordOptions) => {
+  const { onSuccess, ...restConfig } = mutationConfig || {};
+  return useMutation({
+    onSuccess: (...args) => {
+      onSuccess?.(...args);
+    },
+    ...restConfig,
+    mutationFn: forgotPassword,
+  });
+};
+
+// ===============================================
+// ==== RESET PASSWORD INPUTS FORM VALIDATION ====
+// ===============================================
+
+export const resetPasswordInputSchema = z
+  .object({
+    password: z
+      .string()
+      .min(10, "Password should be at least 10 characters long")
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[0-9]/, "Password must contain at least one number")
+      .regex(
+        /[^a-zA-Z0-9]/,
+        "Password must contain at least one special character"
+      ),
+    confirmPassword: z.string().min(1, "Required"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export type resetPasswordInput = z.infer<typeof resetPasswordInputSchema>;
+
+//RESET PASSWORD API CALL
+export const resetPassword = (data: {
+  formData: resetPasswordInput;
+  resetToken: string | null;
+}): Promise<JSONMessageResponse> => {
+  return api.post("/auth/reset-password", data);
+};
+
+// Mutation config
+type UseResetPasswordOptions = {
+  mutationConfig?: MutationConfig<typeof resetPassword>;
+};
+
+export const useResetPassword = ({
+  mutationConfig,
+}: UseResetPasswordOptions) => {
+  const { onSuccess, ...restConfig } = mutationConfig || {};
+  return useMutation({
+    onSuccess: (...args) => {
+      onSuccess?.(...args);
+    },
+    ...restConfig,
+    mutationFn: resetPassword,
+  });
+};
+
+// ==================================================
+// === RESEND VERIFICATION EMAIL FORM VALIDATION ====
+// ==================================================
+export const resendVerificationEmailInputSchema = z.object({
+  email: z.string().min(1, "Required").email("Invalid email address"),
+});
+
+export type resendEmailInput = z.infer<
+  typeof resendVerificationEmailInputSchema
+>;
+
 // ============================
 // ======= AUTH CONFIG ========
 // === for react-query-auth ===
+// ============================
 
 const authConfig = {
   userFn: getUser,

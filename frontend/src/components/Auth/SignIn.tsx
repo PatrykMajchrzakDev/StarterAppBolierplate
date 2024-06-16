@@ -62,7 +62,15 @@ const SignIn = () => {
         .getState()
         .setNotification("Sign in successfull", "success", "outlined");
     } catch (error) {
-      console.error(error);
+      useNotificationState
+        .getState()
+        .setNotification(
+          `${error}` ||
+            "Could not reset password. Try again later or contact support",
+          "error",
+          "outlined"
+        );
+      console.log(error);
     }
   };
 
@@ -141,13 +149,17 @@ const SignIn = () => {
             {/* NAVIGATION LINKS */}
             <Grid container sx={{ gap: "1rem" }}>
               <Grid item container>
-                <Link to="/forgotpassword" variant="body2" component={RouterLink}>
-                  Forgot password?
+                <Link to="/signup" component={RouterLink} variant="body2">
+                  Don't have an account?
                 </Link>
               </Grid>
               <Grid item container>
-                <Link to="/signup" component={RouterLink} variant="body2">
-                  Don't have an account? Sign Up
+                <Link
+                  to="/forgotpassword"
+                  variant="body2"
+                  component={RouterLink}
+                >
+                  Forgot password?
                 </Link>
               </Grid>
               <Grid item container>
@@ -176,6 +188,7 @@ function Copyright(props: any) {
       sx={{ mt: 2 }}
     >
       {"Copyright © "}
+      {/* TBC */}
       <Link color="inherit" href="https://mui.com/">
         Boilerplate Application
       </Link>{" "}

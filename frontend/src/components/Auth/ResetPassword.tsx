@@ -1,69 +1,90 @@
-// ========= MODULES ==========
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
-import { Link as RouterLink } from "react-router-dom";
+// This components functionality is to send email to db to reset user password
 
+// ============================
+// ========= MODULES ==========
+// ============================
+
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { z } from "zod";
+import { useLocation } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Link as RouterLink } from "react-router-dom";
+import { resetPasswordInputSchema, useResetPassword } from "@/lib/auth";
 import { useNotificationState } from "@/store/UI/NotificationStore";
-import { signUpInputSchema } from "@/lib/auth";
-import { useRegister } from "@/lib/auth";
 // ============================
 // ======= COMPONENTS =========
 // ============================
 import {
-  Typography,
-  TextField,
+  Avatar,
   Button,
+  CssBaseline,
+  TextField,
+  Link,
   Grid,
   Box,
+  Typography,
   Container,
-  CssBaseline,
-  Avatar,
-  Link,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
-const SignUp = () => {
+const ResetPassword = () => {
+  // Get token from params
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const token = queryParams.get("token");
+
   // FormData type set to indicate what input this form should hold
-  type FormData = z.infer<typeof signUpInputSchema>;
+  type FormData = z.infer<typeof resetPasswordInputSchema>;
+
   const navigate = useNavigate();
+
+  // useForm component methods from react-hook-form package
   const {
     // register on an input field, it tells react-hook-form to track and manage the value of that input.
     // If you are using a resolver like zodResolver with a schema (as in your example), register will
     // ensure that validation rules are applied to the input fields according to the schema.
     register,
     handleSubmit,
-
-    // Current form state to handle different state like isLoading
+    // Current form state to handle different state like errors
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(signUpInputSchema),
+    resolver: zodResolver(resetPasswordInputSchema),
     defaultValues: {
-      email: "",
-      name: "",
       password: "",
       confirmPassword: "",
     },
   });
 
-  const { mutateAsync: registerUser, status } = useRegister();
+  // SEND DATA
+  const resetPasswordMutation = useResetPassword({
+    mutationConfig: {
+      onSuccess: (data) => {
+        useNotificationState
+          .getState()
+          .setNotification(`${data.message}`, "success", "outlined");
+        navigate("/signin");
+      },
+      onError: (error) => {
+        useNotificationState
+          .getState()
+          .setNotification(
+            `${error}` ||
+              "Could not reset password. Try again later or contact support",
+            "error",
+            "outlined"
+          );
+        console.log(error);
+      },
+    },
+  });
 
-  const onSubmit = async (data: FormData) => {
-    try {
-      // If OK then show notification and navigate to /app
-      await registerUser(data);
-      navigate("/signin");
-      useNotificationState
-        .getState()
-        .setNotification("Sign up successfull", "success", "outlined");
-    } catch (error) {
-      console.error(error);
-    }
+  const onSubmit = (data: FormData) => {
+    resetPasswordMutation.mutate({ formData: data, resetToken: token || null });
   };
 
   return (
-    <Container component="main" maxWidth="xs" sx={{ fontSize: 1.7 }}>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
         sx={{
@@ -77,37 +98,18 @@ const SignUp = () => {
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5" sx={{ textAlign: "center" }}>
-          Sign up
+        <Typography component="h1" variant="h5">
+          Reset password
         </Typography>
+        <Typography
+          component="h4"
+          sx={{ padding: "1.5rem 1.5rem 0 1.5rem", textAlign: "center" }}
+        ></Typography>
+
         {/* Form with inputs */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box sx={{ maxWidth: 400, mx: "auto", p: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                {/* EMAIL FIELD */}
-                <TextField
-                  required
-                  label="Email"
-                  fullWidth
-                  margin="normal"
-                  {...register("email")}
-                  error={!!errors.email}
-                  helperText={errors.email?.message}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                {/* NAME FIELD */}
-                <TextField
-                  required
-                  label="Name"
-                  fullWidth
-                  margin="normal"
-                  {...register("name")}
-                  error={!!errors.name}
-                  helperText={errors.name?.message}
-                />
-              </Grid>
               <Grid item xs={12}>
                 {/* PASSWORD FIELD */}
                 <TextField
@@ -143,22 +145,28 @@ const SignUp = () => {
               disabled={status === "pending"}
               sx={{ mt: 3, mb: 2 }}
             >
-              {status === "pending" ? "Signing up..." : "Sign up"}
+              {resetPasswordMutation.isPending ? "Submitting..." : "Submit"}
             </Button>
+
+            {/* NAVIGATION LINKS */}
+            <Grid container sx={{ gap: "1rem" }}>
+              <Grid item container>
+                <Link to="/signin" component={RouterLink} variant="body2">
+                  Already have account?
+                </Link>
+              </Grid>
+              <Grid item container>
+                <Link to="/signup" component={RouterLink} variant="body2">
+                  Don't have an account?
+                </Link>
+              </Grid>
+              <Grid item container>
+                <Link to="/resendemail" variant="body2" component={RouterLink}>
+                  Resend verification email?
+                </Link>
+              </Grid>
+            </Grid>
           </Box>
-          {/* NAVIGATION LINKS */}
-          <Grid container>
-            <Grid item xs>
-              <Link to="#" component={RouterLink} variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link to="/signin" component={RouterLink} variant="body2">
-                {"Already have account? Sign in"}
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </Box>
       <Copyright sx={{ mt: 8, mb: 4 }} />
@@ -166,7 +174,7 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default ResetPassword;
 
 function Copyright(props: any) {
   return (
@@ -178,6 +186,7 @@ function Copyright(props: any) {
       sx={{ mt: 2 }}
     >
       {"Copyright © "}
+      {/* TBC */}
       <Link color="inherit" href="https://mui.com/">
         Your Website
       </Link>{" "}
