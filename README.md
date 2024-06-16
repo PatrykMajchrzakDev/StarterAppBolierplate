@@ -63,6 +63,7 @@ Before you begin, ensure you have the following installed:
    ```env
 
    - BASE_URL = "e.g. http://localhost:3000"
+   - FRONTEND_BASE_URL: "e.g. http://localhost:5173"
    - DATABASE_URL = "your_postgre_url"
    - JWT_SECRET = 'your_jwt_secret'
    - PORT = "e.g. 3000"
@@ -100,6 +101,9 @@ Before you begin, ensure you have the following installed:
    - VITE_DEV=development
    - VITE_API_URL=http://localhost:3000
    ```
+
+3. **App specific names**:
+   - Use search in your IDE and search for "TBC" to find stuff that has to be changed like names, logos and so on...
 
 ### Database Setup
 
