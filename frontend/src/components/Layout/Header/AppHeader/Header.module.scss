@@ -1,0 +1,33 @@
+#header {
+  box-shadow: $default-shadow;
+
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem 2.5rem;
+
+    .logo {
+      font-size: $headings-size;
+      font-weight: bold;
+    }
+  }
+  .navActions {
+    position: relative;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+
+    .mainNav {
+      @include tablet {
+        display: none;
+      }
+    }
+
+    .mobileNav {
+      display: none;
+      @include tablet {
+        display: block;
+      }
+    }
+  }
+}
