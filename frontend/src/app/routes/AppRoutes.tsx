@@ -4,7 +4,6 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 
 // ======= COMPONENTS =========
-import Layout from "../../layouts/Layout";
 import SignIn from "@/components/Auth/SignIn";
 import SignUp from "@/components/Auth/SignUp";
 import ProtectedRoute from "./ProtectedRoute";
@@ -16,6 +15,8 @@ import AdminDashboard from "./admin/Dashboard";
 import ForgotPasword from "@/components/Auth/ForgotPassword";
 import ResendEmail from "@/components/Auth/ResendEmail";
 import ResetPassword from "@/components/Auth/ResetPassword";
+import LandingLayout from "@/layouts/LandingLayout";
+import LandingPage from "./Landing";
 
 const AppRoutes = () => {
   return (
@@ -24,47 +25,54 @@ const AppRoutes = () => {
       <Route path="*" element={<Navigate to="/" />}></Route>
 
       {/* ======= LANDING =======*/}
-      <Route path="/" element={<Layout>HOME PAGE</Layout>}></Route>
+      <Route
+        path="/"
+        element={
+          <LandingLayout>
+            <LandingPage />
+          </LandingLayout>
+        }
+      ></Route>
 
       {/*======= AUTH =======*/}
       <Route
         path="/signin"
         element={
-          <Layout>
+          <LandingLayout>
             <SignIn />
-          </Layout>
+          </LandingLayout>
         }
       ></Route>
       <Route
         path="/signup"
         element={
-          <Layout>
+          <LandingLayout>
             <SignUp />
-          </Layout>
+          </LandingLayout>
         }
       ></Route>
       <Route
         path="/forgotpassword"
         element={
-          <Layout>
+          <LandingLayout>
             <ForgotPasword />
-          </Layout>
+          </LandingLayout>
         }
       ></Route>
       <Route
         path="/resetpassword"
         element={
-          <Layout>
+          <LandingLayout>
             <ResetPassword />
-          </Layout>
+          </LandingLayout>
         }
       ></Route>
       <Route
         path="/resendemail"
         element={
-          <Layout>
+          <LandingLayout>
             <ResendEmail />
-          </Layout>
+          </LandingLayout>
         }
       ></Route>
 

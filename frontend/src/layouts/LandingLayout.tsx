@@ -1,15 +1,15 @@
 // ========= MODULES ==========
-import styles from "./scss/Layout.module.scss";
+import styles from "./scss/LandingLayout.module.scss";
 import ThemeStore from "@/store/Theme/ThemeStore";
 
 // ======= COMPONENTS =========
-import Header from "@/components/Layout/Header/Header";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import LandingHeader from "@/components/Layout/Header/LandingHeader/LandingHeader";
 type Props = {
   children: React.ReactNode;
 };
 
-const Layout = ({ children }: Props) => {
+const LandingLayout = ({ children }: Props) => {
   // get current MUI theme set in store
   const muiTheme = ThemeStore((state) => state.muiTheme);
 
@@ -18,7 +18,7 @@ const Layout = ({ children }: Props) => {
     <ThemeProvider theme={muiTheme}>
       <div id={styles.layout}>
         {/* Always include Header */}
-        <Header />
+        <LandingHeader />
 
         {/* Render rest of the children */}
         <div className={styles.children}>{children}</div>
@@ -27,4 +27,4 @@ const Layout = ({ children }: Props) => {
   );
 };
 
-export default Layout;
+export default LandingLayout;

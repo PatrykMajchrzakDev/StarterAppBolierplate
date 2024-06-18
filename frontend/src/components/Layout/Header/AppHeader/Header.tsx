@@ -1,3 +1,5 @@
+// This component functionality is to header - logo, theme toggler and navigation for main app
+
 // ============================
 // ========= MODULES ==========
 // ============================
@@ -8,7 +10,7 @@ import { Link } from "react-router-dom";
 // ============================
 import ThemeToggler from "@/components/UI/ThemeToggler/ThemeToggler";
 import MobileNav from "@/components/UI/MobileNavigation/MobileNav";
-import MainNav from "@/components/UI/MainNavigation/MainNav";
+import MainNav from "@/components/UI/TopNavigation/AppNavigation/MainNav";
 
 const Header = () => {
   return (

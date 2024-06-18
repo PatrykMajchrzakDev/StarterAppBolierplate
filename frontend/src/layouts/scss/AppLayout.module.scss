@@ -1,0 +1,10 @@
+#layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  .children {
+    // children grow and shrink as needed, ignoring initial size
+    flex: 1 1 0%;
+  }
+}

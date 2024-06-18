@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
-import Layout from "../../layouts/Layout";
+import AppLayout from "../../layouts/AppLayout";
 
 const AppRoot = () => {
   return (
-    <Layout>
+    <AppLayout>
       <Outlet />
-    </Layout>
+    </AppLayout>
   );
 };
 
