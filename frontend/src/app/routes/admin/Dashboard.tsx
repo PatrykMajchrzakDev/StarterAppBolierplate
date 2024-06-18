@@ -6,21 +6,22 @@ import { useState } from "react";
 import styles from "./styles/Dashboard.module.scss";
 import UserList from "./UserList";
 import { Authorization, ROLES } from "@/lib/authorization";
-
+import AccordionDrawer from "@/components/UI/AccordionDrawer/AccordionDrawer";
 // ======= COMPONENTS =========
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const AdminDashboard = () => {
-  const [expanded, setExpanded] = useState<string | false>(false);
-
-  const handleChange =
+  // This state sets object with key as argument passed to handleExpandPanel
+  // and boolean as value to check if child component should be opened and content fetched
+  const [expandedPanels, setExpandedPanels] = useState<{
+    [key: string]: boolean;
+  }>({});
+  const handleExpandPanel =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
+      setExpandedPanels((prevState) => ({
+        ...prevState,
+        [panel]: isExpanded,
+      }));
     };
-
   return (
     <Authorization
       forbiddenFallback={<div>Only admin can view this.</div>}
@@ -28,27 +29,18 @@ const AdminDashboard = () => {
     >
       <div className={styles.container}>
         <span>ADMIN DASHBOARD</span>
-        <div>
-          <Accordion
-            expanded={expanded === "panel1"}
-            onChange={handleChange("panel1")}
-            sx={{
-              boxShadow:
-                "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 2px rgba(0, 0, 0, 0.14), 0px 1px 3px 3px rgba(0, 0, 0, 0.12)",
-            }}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1-content"
-              id="panel1-header"
-            >
-              List of users
-            </AccordionSummary>
-            <AccordionDetails>
-              <UserList shouldFetch={expanded === "panel1"} />
-            </AccordionDetails>
-          </Accordion>
-        </div>
+        <AccordionDrawer
+          panelTitle="User List"
+          panelName="userPanel"
+          sx={{
+            boxShadow:
+              "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 2px rgba(0, 0, 0, 0.14), 0px 1px 3px 3px rgba(0, 0, 0, 0.12)",
+          }}
+          expanded={!!expandedPanels["userPanel"]}
+          onChange={handleExpandPanel("userPanel")}
+        >
+          <UserList shouldFetch={!!expandedPanels["userPanel"]} />
+        </AccordionDrawer>
       </div>
     </Authorization>
   );
