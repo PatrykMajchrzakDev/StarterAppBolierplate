@@ -9,11 +9,13 @@
 <!-- FULLSTACK -->
 
 FORGOT PASSWORD
+add google auth
 
 <!-- FRONTEND -->
 
 Too many /auth/me requests. Change layout so /auth/me only fetches on specific layoutes? /src/layouts
 add isPending to UploadFile component
+fix mobile navigation
 
 <!-- BACKEND -->
 

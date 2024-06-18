@@ -1,4 +1,4 @@
-// This components functionality is to
+// This component functionality is to
 
 // ========= MODULES ==========
 import styles from "./styles/";
