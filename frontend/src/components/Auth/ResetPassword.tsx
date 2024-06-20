@@ -27,6 +27,7 @@ import {
   Container,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Copyright from "@/components/UI/Copyright/Copyright";
 
 const ResetPassword = () => {
   // Get token from params
@@ -169,29 +170,9 @@ const ResetPassword = () => {
           </Box>
         </form>
       </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
+      <Copyright alignText="center" sx={{ mt: 8, mb: 4 }} />
     </Container>
   );
 };
 
 export default ResetPassword;
-
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-      sx={{ mt: 2 }}
-    >
-      {"Copyright © "}
-      {/* TBC */}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}

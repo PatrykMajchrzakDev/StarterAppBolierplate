@@ -26,6 +26,7 @@ import {
   Container,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Copyright from "@/components/UI/Copyright/Copyright";
 
 const SignIn = () => {
   // FormData type set to indicate what input this form should hold
@@ -171,29 +172,9 @@ const SignIn = () => {
           </Box>
         </form>
       </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
+      <Copyright alignText="center" sx={{ mt: 8, mb: 4 }} />
     </Container>
   );
 };
 
 export default SignIn;
-
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-      sx={{ mt: 2 }}
-    >
-      {"Copyright © "}
-      {/* TBC */}
-      <Link color="inherit" href="https://mui.com/">
-        Boilerplate Application
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
