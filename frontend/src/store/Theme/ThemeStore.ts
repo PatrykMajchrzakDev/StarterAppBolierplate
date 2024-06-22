@@ -4,26 +4,42 @@ import { Theme } from "@mui/material/styles";
 
 // Define the store's state and actions using TypeScript interfaces
 interface ThemeState {
-  theme: string;
+  theme: "light" | "dark";
   muiTheme: Theme;
   toggleTheme: () => void;
 }
 
+const getInitialTheme = (): "light" | "dark" => {
+  return (localStorage.getItem("theme") as "light" | "dark") || "light";
+};
+
+const getInitialMuiTheme = (theme: "light" | "dark"): Theme => {
+  return theme === "dark" ? darkTheme : lightTheme;
+};
+
+const initialTheme = getInitialTheme();
+const initialMuiTheme = getInitialMuiTheme(initialTheme);
+
+// Set the initial data-theme attribute
+document.documentElement.setAttribute(
+  "data-theme",
+  initialMuiTheme.palette.mode
+);
+
 const ThemeStore = create<ThemeState>((set, get) => ({
-  // Get themes from store and if there is none then set to light
-  theme: (localStorage.getItem("theme") as "light" | "dark") || "light",
-  muiTheme: localStorage.getItem("theme") === "dark" ? darkTheme : lightTheme,
-
-  // fn to toggle theme
+  theme: initialTheme,
+  muiTheme: initialMuiTheme,
   toggleTheme: () => {
-    const newTheme = get().theme === "light" ? "dark" : "light";
-    const newMuiTheme = newTheme === "dark" ? darkTheme : lightTheme;
-    set({ theme: newTheme, muiTheme: newMuiTheme });
+    const currentTheme = get().theme;
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+    const newMuiTheme = getInitialMuiTheme(newTheme);
 
-    // when theme toggled then update theme in localstorage
+    set({ theme: newTheme, muiTheme: newMuiTheme });
     localStorage.setItem("theme", newTheme);
-    // add attribute to <html> tag
-    document.documentElement.setAttribute("data-theme", newTheme);
+    document.documentElement.setAttribute(
+      "data-theme",
+      newMuiTheme.palette.mode
+    );
   },
 }));
 
