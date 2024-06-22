@@ -1,6 +1,7 @@
 // =======================================
 // ============= BREAKPOINTS =============
 // =======================================
+$breakpoint-mobile-sm: 380px;
 $breakpoint-mobile: 480px;
 $breakpoint-tablet: 768px;
 $breakpoint-laptop: 1024px;
@@ -16,7 +17,7 @@ $breakpoint-desktop: 1300px;
   --secondary-text-color: white;
   // Background colors
   --background-color: white;
-  --secondary-bg-color: #242424;
+  --secondary-bg-color: #0f1214;
   //Custom
   --default-shadow-color: rgb(0 0 0 / 0.1);
 }
@@ -27,7 +28,7 @@ $breakpoint-desktop: 1300px;
   --default-text-color: white;
   --secondary-text-color: black;
   // Background colors
-  --background-color: #121212;
+  --background-color: #0f1214;
   --secondary-bg-color: #242424;
   //Custom
   --default-shadow-color: rgb(255 255 255 / 0.1);
@@ -59,12 +60,18 @@ $bold-font: "Poppins Bold", sans-serif;
 // =======================================
 // ============= CUSTOM ==================
 // =======================================
-// Light theme variables
-$default-shadow: 0 10px 15px -3px var(--default-shadow-color),
-  0 4px 6px -4px var(--default-shadow-color);
 
-// Dark theme variables
-[data-theme="dark"] {
-  $default-shadow: 0 10px 15px -3px var(--default-shadow-color),
-    0 4px 6px -4px var(--default-shadow-color);
-}
+// Light theme variables
+$shadowElevation6: 0px 3px 5px -1px var(--default-shadow-color),
+  0px 6px 10px 0px var(--default-shadow-color),
+  0px 1px 18px 0px var(--default-shadow-color);
+$shadowElevation12: 0px 7px 8px -4px var(--default-shadow-color),
+  0px 12px 17px 2px var(--default-shadow-color),
+  0px 5px 22px 4px var(--default-shadow-color);
+
+$shadowElevationAll6: 0px -2px 4px -1px var(--default-shadow-color),
+  0px 2px 4px -1px var(--default-shadow-color),
+  0px -3px 6px 0px var(--default-shadow-color),
+  0px 3px 6px 0px var(--default-shadow-color),
+  0px -1px 8px 0px var(--default-shadow-color),
+  0px 1px 8px 0px var(--default-shadow-color);
