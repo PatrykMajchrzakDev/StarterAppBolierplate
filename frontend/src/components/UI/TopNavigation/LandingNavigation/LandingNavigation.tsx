@@ -4,10 +4,14 @@ import styles from "./LandingNavigation.module.scss";
 
 // ======= COMPONENTS =========
 import { Button } from "@mui/material";
+import ThemeToggler from "../../ThemeToggler/ThemeToggler";
 
 const LandingNavigation = () => {
   return (
     <ul className={styles.list}>
+      <li>
+        <ThemeToggler id="1" />
+      </li>
       <li>1</li>
       <li>2</li>
       <li>3</li>
