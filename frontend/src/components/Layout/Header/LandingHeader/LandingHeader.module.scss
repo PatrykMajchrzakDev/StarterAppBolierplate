@@ -1,14 +1,27 @@
 #header {
-  box-shadow: $default-shadow;
+  box-shadow: $shadowElevationAll6;
 
   .wrapper {
     display: flex;
+    margin: 0 auto;
+    width: 95%;
+    padding: 1rem 0;
+    align-items: center;
     justify-content: space-between;
-    padding: 1.5rem 2.5rem;
 
     .logo {
-      font-size: $headings-size;
-      font-weight: bold;
+      display: flex;
+      align-items: center;
+      width: 220px;
+      @include mobile-sm {
+        width: 300px;
+      }
+      img {
+        width: 220px;
+        @include mobile-sm {
+          width: 280px;
+        }
+      }
     }
   }
   .navActions {
@@ -16,17 +29,19 @@
     display: flex;
     gap: 2rem;
     align-items: center;
+    margin-right: 0 auto;
 
     .landingNav {
+      display: none;
       @include tablet {
-        display: none;
+        display: block;
       }
     }
 
     .mobileNav {
-      display: none;
+      display: block;
       @include tablet {
-        display: block;
+        display: none;
       }
     }
   }
