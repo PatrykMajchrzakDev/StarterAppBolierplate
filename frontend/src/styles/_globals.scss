@@ -1,45 +1,109 @@
-// Resetting margins and paddings
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+@media only screen and (min-width: 0rem) {
+  .topper {
+    display: block;
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.1em;
+    font-size: var(--topperFontSize);
+    line-height: 1.2em;
+    text-align: inherit;
+    font-weight: 700;
+  }
 
-html,
-body {
-  scroll-behavior: smooth;
-  background-color: var(--background-color);
-  font-family: $regular-font;
-  position: relative;
-  color: var(--default-text-color);
-  font-size: 16px;
-}
+  .title {
+    position: relative;
+    margin: 0 0 1rem 0;
+    max-width: 43.75rem;
+    font-size: var(--headerFontSize);
+    line-height: 1.2em;
+    font-weight: 900;
+    text-align: inherit;
+  }
 
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  overflow-wrap: break-word;
-}
-
-.container {
-  position: relative;
-  width: 92%;
-  margin: auto;
-  @include large-screen {
+  .text {
+    margin: 0;
+    max-width: 40.625rem;
     width: 100%;
-    max-width: 1400px;
+    font-size: var(--bodyFontSize);
+    line-height: 1.5em;
+    text-align: inherit;
   }
 }
 
-a {
-  color: var(--default-text-color);
-  text-decoration: none;
+/* Fonts and general styles */
+@media only screen and (min-width: 0rem) {
+  body,
+  html {
+    color: var(--default-text-color);
+    margin: 0;
+    overflow-x: hidden;
+    padding: 0;
+    font-size: 100%;
+    scroll-behavior: smooth;
+    background-color: var(--background-color);
+    font-family: $regular-font;
+  }
+
+  *,
+  *:before,
+  *:after {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+  }
+
+  body {
+    transition: background-color 0.3s;
+  }
+
+  .container {
+    position: relative;
+    margin: auto;
+    width: 92%;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    color: var(--default-text-color);
+  }
+
+  p,
+  li,
+  a {
+    margin: 0;
+    font-size: calc(16 / 16 * 1rem);
+    line-height: 1.5em;
+  }
+
+  a,
+  button {
+    text-decoration: none;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  li {
+    list-style-type: none;
+  }
 }
 
-li {
-  list-style-type: none;
+/* Reset Margins */
+@media only screen and (min-width: 1024px) {
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Scale full website with the viewport width */
+@media only screen and (min-width: 3000px) {
+  body,
+  html {
+    font-size: 0.55vw;
+  }
 }

@@ -4,34 +4,38 @@
   display: flex;
   flex-direction: column;
   font-size: 16px;
+  align-items: center;
   box-shadow: $shadowElevationAll6;
 
   // ===================================
   // ========== UPPER SECTION ==========
   // ===================================
   .upperSection {
+    width: 95%;
     display: flex;
-    justify-content: space-between;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     padding: 3em 1rem 1rem 1rem;
 
     @include tablet {
-      flex-direction: column;
-      align-items: center;
+      justify-content: space-between;
+      flex-direction: row;
     }
     .logo {
       max-width: 290px;
       height: 50px;
       align-self: center;
+      order: 2;
       @include tablet {
-        order: 2;
         margin: 1rem 0;
+        order: 1;
       }
     }
     .jumpToTop {
+      order: 1;
+      padding: 1rem 0;
       @include tablet {
-        order: 1;
-        padding: 1rem 0;
+        order: 2;
       }
     }
     .quickLinks {
@@ -39,17 +43,16 @@
       width: 280px;
       height: 120px;
       flex-direction: column;
-      @include tablet {
-        order: 3;
-        padding: 1rem 0;
-      }
+      order: 3;
+      padding: 1rem 0;
 
       .title {
         padding-bottom: 1rem;
         font-weight: bold;
         text-align: end;
+        text-align: center;
         @include tablet {
-          text-align: center;
+          text-align: right;
         }
       }
 
@@ -95,16 +98,22 @@
 // ===================================
 
 .lowerSection {
+  width: 95%;
   padding: 1rem 1rem 0 1rem;
   display: flex;
-  justify-content: space-between;
+
   align-items: center;
+  flex-direction: column;
+  justify-content: center;
   @include tablet {
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    flex-direction: row;
   }
 }
 
 .socialLinks {
   width: 290px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

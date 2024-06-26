@@ -5,22 +5,32 @@
 // ============================
 import styles from "./LandingHeader.module.scss";
 import { Link } from "react-router-dom";
+
+import ThemeStore from "@/store/Theme/ThemeStore";
 // ============================
 // ======= COMPONENTS =========
 // ============================
-import ThemeToggler from "@/components/UI/ThemeToggler/ThemeToggler";
 import MobileNav from "@/components/UI/MobileNavigation/MobileNav";
 import LandingNavigation from "@/components/UI/TopNavigation/LandingNavigation/LandingNavigation";
+import logo from "@/assets/img/logo.png";
+import logoDM from "@/assets/img/logo-dm.png";
 
 const LandingHeader = () => {
+  const theme = ThemeStore((state) => state.theme);
   return (
     <div id={styles.header}>
       <div className={styles.wrapper}>
         <Link to="/" className={styles.logo}>
-          MY APP LOGO
+          <img
+            src={theme === "light" ? logo : logoDM}
+            alt="logo"
+            loading="lazy"
+            decoding="async"
+            width="290px"
+            height="52px"
+          />
         </Link>
         <div className={styles.navActions}>
-          <ThemeToggler id="1" />
           <div className={styles.landingNav}>
             <LandingNavigation />
           </div>
