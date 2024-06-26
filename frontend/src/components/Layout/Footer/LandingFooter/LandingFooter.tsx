@@ -9,15 +9,7 @@ import ThemeStore from "@/store/Theme/ThemeStore";
 // ======= COMPONENTS =========
 import logo from "@/assets/img/logo.png";
 import logoDM from "@/assets/img/logo-dm.png";
-import {
-  Box,
-  Divider,
-  Fab,
-  IconButton,
-  Link,
-  Paper,
-  Tooltip,
-} from "@mui/material";
+import { Box, Divider, Fab, IconButton, Link, Tooltip } from "@mui/material";
 import { ArrowUpward, GitHub, LinkedIn, WebAsset } from "@mui/icons-material";
 import Copyright from "@/components/UI/Copyright/Copyright";
 
@@ -36,7 +28,7 @@ const LandingFooter = () => {
   return (
     <footer id={styles.footer}>
       {/* UPPER SECTION */}
-      <div className={`${styles.upperSection} container`}>
+      <div className={styles.upperSection}>
         {/* LOGO */}
         <img
           src={theme === "light" ? logo : logoDM}
