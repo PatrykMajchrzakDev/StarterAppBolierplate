@@ -20,6 +20,7 @@ $breakpoint-desktop: 1300px;
   --secondary-bg-color: #0f1214;
   //Custom
   --default-shadow-color: rgb(0 0 0 / 0.1);
+  --accent-text-color: #7d50ff;
 }
 
 // Dark theme variables
@@ -37,10 +38,11 @@ $breakpoint-desktop: 1300px;
 // ============= FONTS ===================
 // =======================================
 
-// Font size
-$text-size: 1.7rem;
-$headings-size: 2rem;
-$section-size: 2.4rem;
+/* 13px - 16px */
+$topperFontSize: clamp(0.8125rem, 1.6vw, 1rem);
+/* 31px - 49px */
+$headerFontSize: clamp(1.9375rem, 3.9vw, 3.0625rem);
+$bodyFontSize: 1rem;
 
 // Font styles
 
