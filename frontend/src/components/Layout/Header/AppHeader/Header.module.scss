@@ -1,14 +1,25 @@
 #header {
-  box-shadow: $default-shadow;
-
+  box-shadow: $shadowElevation6;
   .wrapper {
     display: flex;
     justify-content: space-between;
-    padding: 1.5rem 2.5rem;
+    padding: 1rem 2rem;
 
     .logo {
-      font-size: $headings-size;
       font-weight: bold;
+      width: 220px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      @include mobile-sm {
+        width: 300px;
+      }
+      img {
+        width: 220px;
+        @include mobile-sm {
+          width: 280px;
+        }
+      }
     }
   }
   .navActions {
@@ -18,15 +29,16 @@
     align-items: center;
 
     .mainNav {
+      display: none;
       @include tablet {
-        display: none;
+        display: block;
       }
     }
 
     .mobileNav {
-      display: none;
+      display: block;
       @include tablet {
-        display: block;
+        display: none;
       }
     }
   }
