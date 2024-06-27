@@ -1,5 +1,11 @@
+import LandingHero from "@/components/Layout/Hero/LandingHero/LandingHero";
+
 const Landing = () => {
-  return <div>Landing Page</div>;
+  return (
+    <>
+      <LandingHero />
+    </>
+  );
 };
 
 export default Landing;
