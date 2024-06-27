@@ -1,10 +1,16 @@
 @media only screen and (min-width: 0rem) {
+  :root {
+    --topperFontSize: #{$topperFontSize};
+    --headerFontSize: #{$headerFontSize};
+    --bodyFontSize: #{$bodyFontSize};
+    --defaultFontSize: #{$defaultFontSize};
+  }
   .topper {
     display: block;
     margin-bottom: 0.25rem;
     letter-spacing: 0.1em;
     font-size: var(--topperFontSize);
-    line-height: 1.2em;
+    line-height: 1.2;
     text-align: inherit;
     font-weight: 700;
   }
@@ -12,19 +18,25 @@
   .title {
     position: relative;
     margin: 0 0 1rem 0;
-    max-width: 43.75rem;
     font-size: var(--headerFontSize);
-    line-height: 1.2em;
+    line-height: 1.2;
     font-weight: 900;
     text-align: inherit;
   }
 
   .text {
     margin: 0;
-    max-width: 40.625rem;
     width: 100%;
     font-size: var(--bodyFontSize);
-    line-height: 1.5em;
+    line-height: 1.5;
+    text-align: inherit;
+  }
+
+  .textScalable {
+    margin: 0;
+    width: 100%;
+    font-size: var(--defaultFontSize);
+    line-height: 1.5;
     text-align: inherit;
   }
 }
@@ -68,15 +80,15 @@
   h5,
   h6 {
     margin: 0;
-    color: var(--default-text-color);
+    font-size: 1rem;
   }
 
   p,
   li,
   a {
     margin: 0;
-    font-size: calc(16 / 16 * 1rem);
-    line-height: 1.5em;
+    font-size: 1rem;
+    line-height: 1.5;
   }
 
   a,
