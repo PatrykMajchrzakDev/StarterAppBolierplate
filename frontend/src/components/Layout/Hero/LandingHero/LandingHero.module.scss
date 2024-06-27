@@ -1,0 +1,92 @@
+#hero {
+  display: flex;
+  position: relative;
+  z-index: 1;
+  min-height: 550px;
+  color: var(--secondary-text-color);
+  flex-direction: column;
+  //
+  padding: clamp(6rem, 10vw, 12rem) 0;
+
+  .bgImg {
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      z-index: -1;
+    }
+  }
+
+  @include tablet {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  // ===============================
+  // ========== HERO TEXT ==========
+  // ===============================
+  .heroText {
+    position: relative;
+    text-align: center;
+    color: var(--secondary-text-color);
+    padding-bottom: 2rem;
+    z-index: 10;
+
+    @include tablet {
+      padding: clamp(1rem, 4vw, 3rem);
+    }
+  }
+
+  h1 {
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+  }
+
+  h2 {
+    padding-bottom: 1rem;
+  }
+
+  .titleDistinction {
+    color: var(--accent-text-color);
+  }
+
+  // ===============================
+  // ========== HERO IMG ===========
+  // ===============================
+  .heroImgContainer {
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+    @include mobile {
+      object-fit: contain;
+    }
+
+    @include tablet {
+      top: auto;
+      left: 0;
+      left: clamp(-1vw, 1vw, -7vw);
+      transform: translateX(clamp(0%, 10%, 20%));
+      object-fit: scale-down;
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    @include large-screen {
+      left: 0%;
+      transform: translateX(0%);
+      width: auto;
+      height: auto;
+    }
+  }
+  .heroImg {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
