@@ -202,6 +202,31 @@ export type resendEmailInput = z.infer<
   typeof resendVerificationEmailInputSchema
 >;
 
+//RESEND VERIFICATION EMAIL API CALL
+export const resendVerificationEmail = (
+  email: resendEmailInput
+): Promise<JSONMessageResponse> => {
+  return api.post("/auth/resend-verification-email", email);
+};
+
+// Mutation config
+type UseResendVerificationEmail = {
+  mutationConfig?: MutationConfig<typeof resendVerificationEmail>;
+};
+
+export const useResendVerificationEmail = ({
+  mutationConfig,
+}: UseResendVerificationEmail) => {
+  const { onSuccess, ...restConfig } = mutationConfig || {};
+  return useMutation({
+    onSuccess: (...args) => {
+      onSuccess?.(...args);
+    },
+    ...restConfig,
+    mutationFn: resendVerificationEmail,
+  });
+};
+
 // ============================
 // ======= AUTH CONFIG ========
 // === for react-query-auth ===
