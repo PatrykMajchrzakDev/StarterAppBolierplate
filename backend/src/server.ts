@@ -1,6 +1,12 @@
+// Server modules
 import express, { Request, Response } from "express";
 import cors from "cors";
 import "dotenv/config";
+
+// Services
+import "@/services/cleanUpScheduler";
+
+// Routes
 import authRoutes from "@/routes/authRoutes";
 import usersRoutes from "@/routes/usersRoutes";
 
