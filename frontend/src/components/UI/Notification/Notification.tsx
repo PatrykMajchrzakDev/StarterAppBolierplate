@@ -22,6 +22,7 @@ const Notification = ({ snackbarProps, alertProps }: NotificationProps) => {
   // Changes color of text based on current theme
   const theme = ThemeStore((state) => state.theme);
   const notifTextColor = theme === "light" ? "black" : "white";
+  const notifBgColor = theme === "light" ? "white" : "#0f1214";
 
   return (
     <Snackbar
@@ -30,7 +31,11 @@ const Notification = ({ snackbarProps, alertProps }: NotificationProps) => {
       onClose={closeNotification}
       {...snackbarProps}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      style={{ top: "120px", maxWidth: "400px" }}
+      style={{
+        top: "120px",
+        maxWidth: "400px",
+        backgroundColor: notifBgColor || color,
+      }}
     >
       <Alert
         onClose={closeNotification}
