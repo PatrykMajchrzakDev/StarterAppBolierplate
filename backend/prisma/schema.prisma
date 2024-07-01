@@ -54,6 +54,7 @@ model PasswordReset {
   userId         String
   resetToken     String
   tokenExpiresAt DateTime
+  createdAt      DateTime @default(now())
 }
 
 // USER ROLERS
