@@ -61,7 +61,7 @@ Before you begin, ensure you have the following installed:
    - Paste your firebase service account file to backend/config (.gitignore ignores it)
 
    ```env
-
+   - NODE_ENV = development || production -> this has to be changed based on      current server status
    - BASE_URL = "e.g. http://localhost:3000"
    - FRONTEND_BASE_URL: "e.g. http://localhost:5173"
    - DATABASE_URL = "your_postgre_url"
