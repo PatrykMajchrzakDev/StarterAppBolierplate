@@ -66,9 +66,8 @@ const MobileNav = () => {
 
   return (
     <nav id={styles.navigation}>
-      <Button variant="outlined" onClick={toggleNavOpen}>
-        <Menu />
-      </Button>
+      <Menu onClick={toggleNavOpen} fontSize="large" sx={{ margin: "1rem" }} />
+
       <div
         ref={navContainerRef}
         className={`${styles.navContainer} ${
