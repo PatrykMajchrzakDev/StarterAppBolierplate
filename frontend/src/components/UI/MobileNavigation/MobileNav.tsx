@@ -1,6 +1,6 @@
 // ========= MODULES ==========
 import { useState, useCallback, useRef, useEffect } from "react";
-import { Route, Link as RouterLink, useLocation } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import styles from "./MobileNav.module.scss";
 
 // ======= COMPONENTS =========
