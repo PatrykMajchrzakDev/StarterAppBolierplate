@@ -1,63 +1,101 @@
 // ========= MODULES ==========
-import { useState, forwardRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
+import { Route, Link as RouterLink, useLocation } from "react-router-dom";
+import styles from "./MobileNav.module.scss";
 
 // ======= COMPONENTS =========
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Slide from "@mui/material/Slide";
-import { TransitionProps } from "@mui/material/transitions";
+import { Button, Divider, Link } from "@mui/material";
 import ThemeToggler from "../ThemeToggler/ThemeToggler";
+import {
+  Menu,
+  Home,
+  Login,
+  AppRegistration,
+  Password,
+  MarkEmailRead,
+} from "@mui/icons-material";
 
-const Transition = forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<any, any>;
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+const navItems = [
+  { path: "/", label: "Home", icon: <Home /> },
+  { path: "/signin", label: "Sign In", icon: <Login /> },
+  { path: "/signup", label: "Sign Up", icon: <AppRegistration /> },
+  { path: "/forgotpassword", label: "Forgot Password", icon: <Password /> },
+  { path: "/resendEmail", label: "Resend Email", icon: <MarkEmailRead /> },
+];
 
 const MobileNav = () => {
-  const [open, setOpen] = useState(false);
+  const location = useLocation();
+  // State to manage the visibility of the mobile nav
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState<boolean>(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // Reference to the nav container element
+  const navContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // Toggles the mobile nav open/closed state
+  const toggleNavOpen = useCallback(() => {
+    setIsMobileNavOpen((prevState) => !prevState);
+  }, []);
+
+  // Closes the nav if a click happens outside of the nav container
+  const handleClickOutside = useCallback((event: MouseEvent | TouchEvent) => {
+    if (
+      navContainerRef.current &&
+      !navContainerRef.current.contains(event.target as Node)
+    ) {
+      setIsMobileNavOpen(false);
+    }
+  }, []);
+
+  // Effect to add/remove event listeners for detecting outside clicks
+  useEffect(() => {
+    const handleDocumentClick = (event: MouseEvent | TouchEvent) => {
+      handleClickOutside(event);
+    };
+
+    document.addEventListener("mousedown", handleDocumentClick);
+    document.addEventListener("touchstart", handleDocumentClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleDocumentClick);
+      document.removeEventListener("touchstart", handleDocumentClick);
+    };
+  }, [handleClickOutside]);
+
+  // Set class based on current location
+  const isActive = (path: string) => location.pathname === path;
 
   return (
-    <>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Ham
+    <nav id={styles.navigation}>
+      <Button variant="outlined" onClick={toggleNavOpen}>
+        <Menu />
       </Button>
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
+      <div
+        ref={navContainerRef}
+        className={`${styles.navContainer} ${
+          isMobileNavOpen ? styles.open : ""
+        }`}
       >
-        <DialogTitle>{"Use Google's location service?"}</DialogTitle>
-        <DialogContent>
-          <ThemeToggler id="1" />
-          <DialogContentText id="alert-dialog-slide-description">
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose}>Agree</Button>
-        </DialogActions>
-      </Dialog>
-    </>
+        <div className={styles.actionsContainer}>
+          <div className={styles.themeToggler}>
+            <ThemeToggler id="2" />
+          </div>
+
+          <Divider />
+          <ul className={styles.links}>
+            {navItems.map((item) => (
+              <li
+                key={item.label}
+                className={isActive(item.path) ? styles.isActive : ""}
+              >
+                <Link component={RouterLink} to={item.path}>
+                  {item.icon} {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </nav>
   );
 };
 
