@@ -61,7 +61,7 @@ const LandingFooter = () => {
               Forgot password
             </Link>
             <Link to={"/resendemail"} component={RouterLink}>
-              Something
+              Resend Email
             </Link>
           </div>
         </div>
