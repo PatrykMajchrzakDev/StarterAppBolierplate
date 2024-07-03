@@ -31,7 +31,7 @@
   .heroText {
     position: relative;
     text-align: center;
-    color: var(--secondary-text-color);
+    color: white;
     padding-bottom: 2rem;
     z-index: 10;
 
@@ -50,7 +50,11 @@
   }
 
   .titleDistinction {
-    color: var(--accent-text-color);
+    color: var(--accent-color);
+  }
+
+  button {
+    color: white;
   }
 
   // ===============================
