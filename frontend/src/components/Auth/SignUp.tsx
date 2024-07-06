@@ -54,15 +54,20 @@ const SignUp = () => {
     try {
       // If OK then show notification and navigate to /app
       await registerUser(data);
+
       navigate("/signin");
       useNotificationState
         .getState()
-        .setNotification("Sign up successfull", "success", "outlined");
-    } catch (error) {
+        .setNotification(
+          "Registered user. Please check your email to verify your account.",
+          "success",
+          "outlined"
+        );
+    } catch (error: any) {
       useNotificationState
         .getState()
         .setNotification(
-          `${error}` ||
+          `${error.response.data.error}` ||
             "Could not reset password. Try again later or contact support",
           "error",
           "outlined"
@@ -144,6 +149,11 @@ const SignUp = () => {
                 />
               </Grid>
             </Grid>
+            <Typography sx={{ padding: "2rem 0" }}>
+              <span style={{ color: "red" }}>*</span> Upon successful
+              registering you must confirm your address email via a message we
+              send to your email address.
+            </Typography>
             {/* SUBMIT BUTTON */}
             <Button
               type="submit"

@@ -25,7 +25,7 @@ datasource db {
 model User {
   id                 String              @id
   email              String              @unique
-  password           String
+  password           String?
   name               String              @unique
   role               Role                @default(USER)
   created_at         DateTime            @default(now())
@@ -35,6 +35,8 @@ model User {
   updated_at         DateTime            @default(now())
   emailVerifications EmailVerification[]
   passwordReset      PasswordReset[]
+  provider           String              @default("local")
+  googleId           String?             @unique
 }
 
 // SCHEMA FOR USER EMAIL VERIFICATIONS
@@ -57,9 +59,9 @@ model PasswordReset {
   createdAt      DateTime @default(now())
 }
 
-// USER ROLERS
+// USER ROLES
 enum Role {
   USER
   ADMIN
-  MOD
+  MODERATOR
 }

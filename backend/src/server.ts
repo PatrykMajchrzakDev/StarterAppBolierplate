@@ -2,9 +2,14 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import "dotenv/config";
+import passport from "passport";
+import session from "express-session";
 
 // Services
 import "@/services/cleanUpScheduler";
+
+// Import Passport configuration
+import "@/middleware/Auth/passport";
 
 // Routes
 import authRoutes from "@/routes/authRoutes";
@@ -15,6 +20,19 @@ const app = express();
 // <!-- ======================== -->
 // <!-- ====== Middleware ====== -->
 // <!-- ======================== -->
+
+// Initialize session middleware
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "7264353-nfi2p12839gbk7c",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+// Initialize passport and session
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Automatically convert the body of any request to server as JSON
 app.use(express.json());

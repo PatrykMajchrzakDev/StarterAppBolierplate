@@ -22,7 +22,6 @@ export const sendEmail = async (
       subject: subject,
       html: message,
     });
-    console.log("Email sent successfully");
   } catch (error) {
     console.error(
       "Email not sent. Try again later or contact support if problem persists"

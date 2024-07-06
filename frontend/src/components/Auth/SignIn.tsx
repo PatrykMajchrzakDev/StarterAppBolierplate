@@ -26,6 +26,7 @@ import {
   Container,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { Google as GoogleIcon } from "@mui/icons-material";
 import Copyright from "@/components/UI/Copyright/Copyright";
 
 const SignIn = () => {
@@ -33,6 +34,10 @@ const SignIn = () => {
   type FormData = z.infer<typeof signInInputSchema>;
 
   const navigate = useNavigate();
+
+  const handleGoogleLogin = () => {
+    window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
+  };
 
   // useForm component methods from react-hook-form package
   const {
@@ -62,11 +67,11 @@ const SignIn = () => {
       useNotificationState
         .getState()
         .setNotification("Sign in successfull", "success", "outlined");
-    } catch (error) {
+    } catch (error: any) {
       useNotificationState
         .getState()
         .setNotification(
-          `${error}` ||
+          `${error.response.data.error}` ||
             "Could not reset password. Try again later or contact support",
           "error",
           "outlined"
@@ -147,8 +152,25 @@ const SignIn = () => {
               {status === "pending" ? "Signing in..." : "Sign in"}
             </Button>
 
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<GoogleIcon />}
+              onClick={handleGoogleLogin}
+              sx={{
+                backgroundColor: "#4285F4",
+                "&:hover": {
+                  backgroundColor: "#357ae8",
+                },
+                textTransform: "uppercase",
+                width: "100%",
+              }}
+            >
+              Sign in with Google
+            </Button>
+
             {/* NAVIGATION LINKS */}
-            <Grid container sx={{ gap: "1rem" }}>
+            <Grid container sx={{ gap: "1rem", marginTop: "1rem" }}>
               <Grid item container>
                 <Link to="/signup" component={RouterLink} variant="body2">
                   Don't have an account?

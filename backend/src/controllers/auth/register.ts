@@ -36,6 +36,7 @@ export const register = async (req: Request, res: Response) => {
         .status(400)
         .json({ error: "User with this name already exists" });
 
+    // Create id for user. It is not done via uuid cause its too long
     let id;
     let sameId;
 
@@ -59,6 +60,7 @@ export const register = async (req: Request, res: Response) => {
         role: "USER", // Assign 'USER' role by default
         name,
         isVerified: false,
+        provider: "LOCAL",
       },
     });
 

@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { test2, getUserDetails } from "@/controllers/auth/userDetails";
+import passport from "passport";
+import { getUserDetails } from "@/controllers/auth/userDetails";
 import { auth } from "@/middleware/Auth/Authorization";
 import { register } from "@/controllers/auth/register";
-import { login } from "@/controllers/auth/login";
+import { login, googleLogin } from "@/controllers/auth/login";
 import { forgotPassword } from "@/controllers/auth/forgotPassword";
 import {
   resendVerificationEmail,
@@ -30,7 +31,16 @@ router.post("/forgot-password", forgotPassword);
 
 router.post("/reset-password", resetPassword);
 
-// Test route to check if route works
-router.get("/test2", test2);
+// Handle Google OAuth
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", { failureRedirect: "/signin" }),
+  googleLogin
+);
 
 export default router;

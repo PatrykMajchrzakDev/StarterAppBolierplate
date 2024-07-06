@@ -4,7 +4,7 @@ import { Link as RouterLink, useLocation } from "react-router-dom";
 import styles from "./MobileNav.module.scss";
 
 // ======= COMPONENTS =========
-import { Button, Divider, Link } from "@mui/material";
+import { Divider, Link } from "@mui/material";
 import ThemeToggler from "../ThemeToggler/ThemeToggler";
 import {
   Menu,
