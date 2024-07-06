@@ -17,6 +17,7 @@ import ResendEmail from "@/components/Auth/ResendEmail";
 import ResetPassword from "@/components/Auth/ResetPassword";
 import LandingLayout from "@/layouts/LandingLayout";
 import LandingPage from "./Landing";
+import AuthRedirect from "./AuthRedirect";
 
 const AppRoutes = () => {
   return (
@@ -33,6 +34,9 @@ const AppRoutes = () => {
           </LandingLayout>
         }
       ></Route>
+
+      {/*======= AUTH REDIRECT =======*/}
+      <Route path="/auth/callback" element={<AuthRedirect />}></Route>
 
       {/*======= AUTH =======*/}
       <Route
