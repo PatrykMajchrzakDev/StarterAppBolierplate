@@ -67,11 +67,14 @@ Before you begin, ensure you have the following installed:
    - DATABASE_URL = "your_postgre_url"
    - JWT_SECRET = 'your_jwt_secret'
    - PORT = "e.g. 3000"
-   - SALT = Any number 1 - 10 for example (better to not be high 20+)
+   - SALT = Any number 8+ for example 10 (better to not be too high)
 
    - ( Email variables are used for sending emails to users for things like verifying user registration. Check below explanation how to set it up)
    - EMAIL_USER= "your-email@gmail.com"
    - EMAIL_PASS= "your-email-password"
+   - GOOGLE_OAUTH_CLIENT_ID = client id from google oauth credentials
+   - GOOGLE_OAUTH_CLIENT_SECRET = client secret from google oauth credentials
+   - SESSION SECRET = Random string (used for session initialization to serialize and deserialize user via passport)
    ```
 
    **NODEMAILER ZOHO EMAIL APP SETUP**
@@ -103,7 +106,15 @@ Before you begin, ensure you have the following installed:
    ```
 
 3. **App specific names**:
+
    - Use search in your IDE and search for "TBC" to find stuff that has to be changed like names, logos and so on...
+
+4. **Google OAuth Configuration**:
+   - Create project
+   - Go to "OAuth consent screen" and fill necessary input fields and in "App Domain" -> "Application home page" write down your domain (by default - http://localhost:5173)
+   - Next go to "Credentials" -> "Create credentials" -> OAuth Client ID
+   - Select Web App -> in "JS origins" your frontend URI (http://localhost:5173) -> in "redirect URI" your backend redirect (http://localhost:3000/auth/google/callback)
+   - After this setup "Client ID" and "Client Secret" are generated and have to be put in backend/.env
 
 ### Database Setup
 
