@@ -66,11 +66,11 @@ const ResetPassword = () => {
           .setNotification(`${data.message}`, "success", "outlined");
         navigate("/signin");
       },
-      onError: (error) => {
+      onError: (error: any) => {
         useNotificationState
           .getState()
           .setNotification(
-            `${error}` ||
+            `${error.response.data.error}` ||
               "Could not reset password. Try again later or contact support",
             "error",
             "outlined"
