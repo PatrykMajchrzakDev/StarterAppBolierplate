@@ -20,7 +20,7 @@
     height: 100vh;
     width: 220px;
     z-index: 200;
-    transform: translateX(100%);
+    transform: translateX(105%);
     background-color: var(--background-color);
     transition: transform 0.3s ease-in-out;
     box-shadow: $shadowElevation12;
@@ -34,7 +34,7 @@
         transform: translateX(0);
       }
       100% {
-        transform: translateX(100%);
+        transform: translateX(105%);
       }
     }
   }
