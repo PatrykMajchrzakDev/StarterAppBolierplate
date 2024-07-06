@@ -57,7 +57,6 @@ const ResendEmail = () => {
   const resendVerificationEmailMutation = useResendVerificationEmail({
     mutationConfig: {
       onSuccess: (data) => {
-        console.log(data);
         useNotificationState
           .getState()
           .setNotification(`${data}`, "success", "outlined");
