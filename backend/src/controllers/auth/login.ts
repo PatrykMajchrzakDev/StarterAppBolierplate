@@ -25,6 +25,20 @@ export const login = async (req: Request, res: Response) => {
     // if not exists then return error
     if (!user) return res.status(404).json({ error: "User not found" });
 
+    // only local users can put in password so check if password exists
+    if (user.provider !== "LOCAL") {
+      throw new Error(
+        "Login via password is only possible to previously created users"
+      );
+    }
+    // validate password
+    if (!user.password) {
+      return res.status(400).json({
+        error:
+          "No password set for this user. Please use the appropriate login method.",
+      });
+    }
+    // check if user is verified
     if (!user.isVerified)
       return res.status(400).json({
         error:
@@ -38,7 +52,7 @@ export const login = async (req: Request, res: Response) => {
     if (!validPassword)
       return res.status(401).json({ error: "Invalid Password" });
 
-    // check if user wants to be auth longer
+    // check if user wants to be authed longer
     const isrememberMe = rememberMe ? true : false;
 
     // if all good then create token and send it with response
@@ -55,4 +69,11 @@ export const login = async (req: Request, res: Response) => {
       res.status(400).json({ error: "An unexpected error occurred" });
     }
   }
+};
+
+export const googleLogin = async (req: Request, res: Response) => {
+  const user = req.user as any;
+  const token = jwt.sign({ userId: user.id, role: user.role }, SECRET);
+  // Send the token and user information in the response body
+  res.redirect(`${process.env.FRONTEND_BASE_URL}/auth/callback?token=${token}`);
 };
