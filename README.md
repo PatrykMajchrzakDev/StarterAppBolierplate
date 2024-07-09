@@ -48,6 +48,7 @@ Before you begin, ensure you have the following installed:
    ```sh
    cd backend
    npm install
+   npx prisma generate
    cd ../frontend
    npm install
    ```
@@ -58,7 +59,7 @@ Before you begin, ensure you have the following installed:
 
    - Create `.env` in the root `backend` directory.
    - Update the environment variables with your PostgreSQL database credentials and JWT secret.
-   - Paste your firebase service account file to backend/config (.gitignore ignores it)
+   - Paste your firebase service account file (firebaseServiceAccount.json) to backend/config (.gitignore ignores it)
 
    ```env
    - NODE_ENV = development || production -> this has to be changed based on      current server status
