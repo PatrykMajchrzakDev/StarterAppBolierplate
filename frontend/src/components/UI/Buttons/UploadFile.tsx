@@ -24,6 +24,7 @@ interface UploadFileProps {
   }) => Promise<any>;
   userId: string;
   onSuccess?: (response: any) => void;
+  isPending: boolean;
 }
 
 // Notification on success or error fn
@@ -36,6 +37,7 @@ const addNotif = () => {
 const UploadFile: React.FC<UploadFileProps> = ({
   uploadMutationFn,
   userId,
+  isPending,
 }) => {
   // Sets state to display currently choosen file name
   const [fileName, setFileName] = useState<string>("");
@@ -97,8 +99,13 @@ const UploadFile: React.FC<UploadFileProps> = ({
           <span style={{ padding: "0 2rem 0 0" }}>
             Selected file: {fileName}
           </span>
-          <Button size="small" variant="contained" type="submit">
-            Submit
+          <Button
+            size="small"
+            variant="contained"
+            type="submit"
+            disabled={isPending}
+          >
+            {isPending ? "Submitting..." : "Submit"}
           </Button>
         </div>
       )}

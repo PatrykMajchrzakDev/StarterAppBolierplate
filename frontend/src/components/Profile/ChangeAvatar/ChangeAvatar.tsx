@@ -19,6 +19,7 @@ export const ChangeAvatar = () => {
         <UploadFile
           uploadMutationFn={changeAvatarMutation.mutateAsync}
           userId={userId}
+          isPending={changeAvatarMutation.isPending}
         />
       )}
     </div>
