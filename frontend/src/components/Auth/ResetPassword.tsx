@@ -143,7 +143,7 @@ const ResetPassword = () => {
               type="submit"
               fullWidth
               variant="contained"
-              disabled={status === "pending"}
+              disabled={resetPasswordMutation.isPending}
               sx={{ mt: 3, mb: 2 }}
             >
               {resetPasswordMutation.isPending ? "Submitting..." : "Submit"}
