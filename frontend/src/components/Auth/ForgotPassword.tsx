@@ -127,7 +127,7 @@ const ForgotPassword = () => {
               type="submit"
               fullWidth
               variant="contained"
-              disabled={status === "pending"}
+              disabled={forgotPasswordMutation.isPending}
               sx={{ mt: 3, mb: 2 }}
             >
               {forgotPasswordMutation.isPending ? "Submitting..." : "Submit"}

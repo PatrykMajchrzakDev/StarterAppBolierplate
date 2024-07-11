@@ -12,12 +12,12 @@
     .logo {
       display: flex;
       align-items: center;
-      width: 220px;
+      width: 240px;
       @include mobile-sm {
         width: 300px;
       }
       img {
-        width: 220px;
+        width: 240px;
         @include mobile-sm {
           width: 280px;
         }

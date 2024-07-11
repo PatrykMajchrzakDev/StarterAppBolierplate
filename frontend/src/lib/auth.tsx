@@ -51,7 +51,10 @@ export const useUsers = ({ queryConfig }: UseUsersOptions = {}) => {
 export const signUpInputSchema = z
   .object({
     email: z.string().min(1, "Required").email("Invalid email address"),
-    name: z.string().min(1, "Required"),
+    name: z
+      .string()
+      .min(4, "Should be 4 characters")
+      .regex(/^[a-zA-Z0-9]*$/, "Name should not include special characters"),
     password: z
       .string()
       .min(10, "Password should be at least 10 characters long")

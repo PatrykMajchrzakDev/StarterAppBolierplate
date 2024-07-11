@@ -28,7 +28,7 @@ interface UserListProps {
 }
 
 const UserList = ({ shouldFetch }: UserListProps) => {
-  const { data, isFetching, status } = useUsers({
+  const { data, isFetching, error } = useUsers({
     queryConfig: {
       enabled: shouldFetch,
     },
@@ -48,7 +48,7 @@ const UserList = ({ shouldFetch }: UserListProps) => {
     );
   }
 
-  if (status === "error") {
+  if (error) {
     return <div>Failed to load data</div>;
   }
   return (
