@@ -62,11 +62,11 @@ const ResendEmail = () => {
           .setNotification(`${data}`, "success", "outlined");
         navigate("/signin");
       },
-      onError: (error) => {
+      onError: (error: any) => {
         useNotificationState
           .getState()
           .setNotification(
-            `${error}` ||
+            `${error.response.data.error}` ||
               "Could not send verification email. Try again later or contact support",
             "error",
             "outlined"
@@ -130,7 +130,7 @@ const ResendEmail = () => {
               type="submit"
               fullWidth
               variant="contained"
-              disabled={status === "pending"}
+              disabled={resendVerificationEmailMutation.isPending}
               sx={{ mt: 3, mb: 2 }}
             >
               {resendVerificationEmailMutation.isPending
