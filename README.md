@@ -16,7 +16,7 @@ StarterAppBoilerplate is a robust and scalable application boilerplate featuring
 - **Backend**: Node.js, Express
 - **Database**: PostgreSQL
 - **ORM**: Prisma
-- **Authentication**: JWT (JSON Web Tokens)
+- **Authentication**: JWT (JSON Web Tokens), OAuth
 - **Authorization**: Role-based access control
 
 ## Getting Started
