@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { validatePassword } from "@/validation/passwordValidation";
 
 const prisma = new PrismaClient();
 
@@ -12,18 +13,24 @@ const isErrorWithMessage = (error: any): error is { message: string } => {
 export const resetPassword = async (req: Request, res: Response) => {
   const { formData, resetToken } = req.body;
 
+  const { error } = validatePassword({
+    password: formData.password,
+    confirmPassword: formData.confirmPassword,
+  });
+  if (error) {
+    // If validation fails, return error
+    return res.status(400).json({
+      error: "Password was invalid.",
+    });
+  }
+
   if (!resetToken) {
     return res.status(400).json({
-      message:
+      error:
         "Could not reset password. There was no token provided. Please use reset link from email you got.",
     });
   }
 
-  if (formData.password !== formData.confirmPassword) {
-    return res.status(400).json({
-      message: "Could not reset password. Passwords were not the same.",
-    });
-  }
   try {
     // Find the password reset record by token
     const resetRecord = await prisma.passwordReset.findFirst({
