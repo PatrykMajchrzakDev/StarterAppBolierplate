@@ -7,7 +7,7 @@
 
     .logo {
       font-weight: bold;
-      width: 220px;
+      width: 230px;
       height: 50px;
       display: flex;
       align-items: center;
@@ -15,7 +15,7 @@
         width: 300px;
       }
       img {
-        width: 220px;
+        width: 230px;
         @include mobile-sm {
           width: 280px;
         }
