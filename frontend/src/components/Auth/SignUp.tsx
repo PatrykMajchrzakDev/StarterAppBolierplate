@@ -48,7 +48,7 @@ const SignUp = () => {
     },
   });
 
-  const { mutateAsync: registerUser, status } = useRegister();
+  const { mutateAsync: registerUser, isPending } = useRegister();
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -64,6 +64,7 @@ const SignUp = () => {
           "outlined"
         );
     } catch (error: any) {
+      console.log(error);
       useNotificationState
         .getState()
         .setNotification(
@@ -159,10 +160,10 @@ const SignUp = () => {
               type="submit"
               fullWidth
               variant="contained"
-              disabled={status === "pending"}
+              disabled={isPending}
               sx={{ mt: 3, mb: 2 }}
             >
-              {status === "pending" ? "Signing up..." : "Sign up"}
+              {isPending ? "Signing up..." : "Sign up"}
             </Button>
           </Box>
           {/* NAVIGATION LINKS */}
