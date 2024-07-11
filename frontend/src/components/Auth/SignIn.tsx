@@ -57,7 +57,7 @@ const SignIn = () => {
     },
   });
 
-  const { mutateAsync: loginUser, status } = useLogin();
+  const { mutateAsync: loginUser, isPending } = useLogin();
   // SEND DATA
   const onSubmit = async (data: FormData) => {
     try {
@@ -146,10 +146,10 @@ const SignIn = () => {
               type="submit"
               fullWidth
               variant="contained"
-              disabled={status === "pending"}
+              disabled={isPending}
               sx={{ mt: 3, mb: 2 }}
             >
-              {status === "pending" ? "Signing in..." : "Sign in"}
+              {isPending ? "Signing in..." : "Sign in"}
             </Button>
 
             <Button
