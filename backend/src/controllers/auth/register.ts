@@ -5,10 +5,9 @@ const prisma = new PrismaClient();
 import crypto from "crypto";
 import { sendEmail } from "@/services/sendEmail";
 import { addHours } from "date-fns";
-
-// SECRET is used to later create token using this string
-const SECRET =
-  process.env.JWT_SECRET || "rMk,E(6SvKw;5q=[CTf!pN+?hY<d@$.Ha47B%8zg";
+import { validatePassword } from "@/validation/passwordValidation";
+import { validateUserName } from "@/validation/validateUserName";
+import { validateEmail } from "@/validation/emailValidation";
 
 // Helper function to type guard
 const isErrorWithMessage = (error: any): error is { message: string } => {
@@ -19,7 +18,34 @@ const isErrorWithMessage = (error: any): error is { message: string } => {
 // ============= Register user when called from frontend ==============
 // ====================================================================
 export const register = async (req: Request, res: Response) => {
-  const { email, password, name } = req.body;
+  const { email, password, name, confirmPassword } = req.body;
+
+  const { error: invalidPasswordError } = validatePassword({
+    password,
+    confirmPassword,
+  });
+  if (invalidPasswordError) {
+    // If validation fails, return error
+    return res.status(400).json({
+      error: "Server: Password was invalid.",
+    });
+  }
+
+  const { error: invalidUserNameError } = validateUserName({ name });
+  if (invalidUserNameError) {
+    // If validation fails, return error
+    return res.status(400).json({
+      error: "Server: Name was invalid.",
+    });
+  }
+
+  const { error: invalidEmailError } = validateEmail({ email });
+  if (invalidEmailError) {
+    // If validation fails, return error
+    return res.status(400).json({
+      error: "Server: Invalid email.",
+    });
+  }
 
   try {
     // checks db for existing user email
