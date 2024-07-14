@@ -4,12 +4,26 @@
     width: 80%;
   }
 
-  .themeToggler {
+  .topNav {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 1rem;
     width: 100%;
     align-items: center;
-    margin: 1rem 0 2rem 0;
+    margin: 1rem 0 1rem 0;
+  }
+
+  .bottomNav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .bottomNavContent {
+      padding: 1rem;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
   }
 
   .navContainer {
@@ -24,6 +38,9 @@
     background-color: var(--background-color);
     transition: transform 0.3s ease-in-out;
     box-shadow: $shadowElevation12;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
   }
 
   .navContainer.open {
@@ -37,6 +54,12 @@
         transform: translateX(105%);
       }
     }
+  }
+
+  .userProfile {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .actionsContainer {
