@@ -34,7 +34,9 @@
     .landingNav {
       display: none;
       @include tablet {
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
       }
     }
 
@@ -46,9 +48,41 @@
     }
   }
 
-  .list {
+  .links {
     display: flex;
     gap: 1rem;
     align-items: center;
+    li.isActive::before {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: var(--accent-color);
+      border-radius: 2px;
+    }
+
+    li {
+      position: relative;
+      a {
+        color: var(--primary-text-color);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      :hover::before {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: var(--accent-color-opacity);
+      }
+    }
   }
 }
