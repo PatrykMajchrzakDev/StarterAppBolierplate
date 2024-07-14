@@ -3,37 +3,66 @@
 // ============================
 // ========= MODULES ==========
 // ============================
-
+import { ReactNode } from "react";
 import styles from "./Header.module.scss";
-import { Link } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 
 // ============================
 // ======= COMPONENTS =========
 // ============================
 
-import ThemeToggler from "@/components/UI/ThemeToggler/ThemeToggler";
-import MobileNav from "@/components/UI/MobileNavigation/MobileNav";
 import logo from "@/assets/img/logo.png";
 import logoDM from "@/assets/img/logo-dm.png";
+
+import MobileNav from "@/components/UI/MobileNavigation/MobileNav";
 import ThemeStore from "@/store/Theme/ThemeStore";
 import UserProfileTooltip from "@/components/UI/User/UserProfileTooltip";
 import { useUser } from "@/lib/auth";
 
+import { Link } from "@mui/material";
 import { Home, Logout } from "@mui/icons-material";
 
-const navItems = [
-  { path: "/app", label: "Home", icon: <Home /> },
+type navItemProps = {
+  path: string;
+  label: string;
+  icon: ReactNode;
+};
+
+const mobileNavItems: navItemProps[] = [
+  { path: "/app", label: "Dashboard", icon: <Home /> },
   { path: "/logout", label: "Logout", icon: <Logout /> },
+];
+
+const appNavItems: navItemProps[] = [
+  {
+    path: "/app",
+    label: "Dashboard",
+    icon: <Home />,
+  },
+  {
+    path: "/app/user-profile/settings",
+    label: "Settings",
+    icon: <Home />,
+  },
+  {
+    path: "/",
+    label: "Landing",
+    icon: <Home />,
+  },
 ];
 
 const Header = () => {
   const { data: user } = useUser();
   const theme = ThemeStore((state) => state.theme);
+  const location = useLocation();
+
+  // Set class based on current location
+  const isActive = (path: string) => location.pathname === path;
   return (
     <div id={styles.header}>
       <div className={styles.wrapper}>
         {/* LOGO */}
-        <Link to="/" className={styles.logo}>
+        <RouterLink to="/" className={styles.logo}>
           <img
             src={theme === "light" ? logo : logoDM}
             alt="logo"
@@ -42,26 +71,33 @@ const Header = () => {
             width="290px"
             height="52px"
           />
-        </Link>
+        </RouterLink>
 
         {/* RIGHT SIDE NAV ACTIONS */}
         <div className={styles.navActions}>
           <div className={styles.landingNav}>
             {/* DESKTOP LIST OF LINKS */}
-            <ul className={styles.list}>
-              <li>
-                <ThemeToggler id="1" />
-              </li>
-              <li>1</li>
-              <li>2</li>
-              <li>3</li>
-              <li>{user && user.user && <UserProfileTooltip />}</li>
+            <ul className={styles.links}>
+              {appNavItems.map((item) => (
+                <li
+                  key={item.label}
+                  className={isActive(item.path) ? styles.isActive : ""}
+                >
+                  <Link component={RouterLink} to={item.path}>
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
+            {user && user.user && <UserProfileTooltip />}
           </div>
 
           {/* MOBILE LIST OF LINKS */}
           <div className={styles.mobileNav}>
-            <MobileNav navItems={navItems} />
+            <MobileNav
+              navItems={mobileNavItems}
+              user={user ? user.user : undefined}
+            />
           </div>
         </div>
       </div>
