@@ -4,8 +4,11 @@ import { Link as RouterLink, useLocation } from "react-router-dom";
 import styles from "./MobileNav.module.scss";
 
 // ======= COMPONENTS =========
-import { Divider, Link } from "@mui/material";
 import ThemeToggler from "../ThemeToggler/ThemeToggler";
+import { User } from "@/types/Auth/Auth";
+import UserProfileTooltip from "../User/UserProfileTooltip";
+
+import { Divider, Link } from "@mui/material";
 import { Menu } from "@mui/icons-material";
 
 type navItem = {
@@ -16,12 +19,15 @@ type navItem = {
 
 type MobileNavProps = {
   navItems: navItem[];
+  user?: User;
 };
 
-const MobileNav = ({ navItems }: MobileNavProps) => {
+const MobileNav = ({ navItems, user }: MobileNavProps) => {
   const location = useLocation();
+
   // State to manage the visibility of the mobile nav
   const [isMobileNavOpen, setIsMobileNavOpen] = useState<boolean>(false);
+  const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
 
   // Reference to the nav container element
   const navContainerRef = useRef<HTMLDivElement>(null);
@@ -32,14 +38,18 @@ const MobileNav = ({ navItems }: MobileNavProps) => {
   }, []);
 
   // Closes the nav if a click happens outside of the nav container
-  const handleClickOutside = useCallback((event: MouseEvent | TouchEvent) => {
-    if (
-      navContainerRef.current &&
-      !navContainerRef.current.contains(event.target as Node)
-    ) {
-      setIsMobileNavOpen(false);
-    }
-  }, []);
+  const handleClickOutside = useCallback(
+    (event: MouseEvent | TouchEvent) => {
+      if (
+        navContainerRef.current &&
+        !navContainerRef.current.contains(event.target as Node) &&
+        !isPopoverOpen
+      ) {
+        setIsMobileNavOpen(false);
+      }
+    },
+    [isPopoverOpen]
+  );
 
   // Effect to add/remove event listeners for detecting outside clicks
   useEffect(() => {
@@ -59,6 +69,16 @@ const MobileNav = ({ navItems }: MobileNavProps) => {
   // Set class based on current location
   const isActive = (path: string) => location.pathname === path;
 
+  // Handler functions needed to check if UserProfileTooltip is open because without it
+  // MobileNav closes as it thinks user clicks outside of it
+  const handlePopoverOpen = () => {
+    setIsPopoverOpen(true);
+  };
+
+  const handlePopoverClose = () => {
+    setIsPopoverOpen(false);
+  };
+
   return (
     <nav id={styles.navigation}>
       <Menu onClick={toggleNavOpen} fontSize="large" sx={{ margin: "1rem" }} />
@@ -70,9 +90,13 @@ const MobileNav = ({ navItems }: MobileNavProps) => {
         }`}
       >
         <div className={styles.actionsContainer}>
-          <div className={styles.themeToggler}>
-            {/* tutaj dodac UserProfileTooltip */}
-            <ThemeToggler id="2" />
+          <div className={styles.topNav}>
+            {user && (
+              <UserProfileTooltip
+                onOpen={handlePopoverOpen}
+                onClose={handlePopoverClose}
+              />
+            )}
           </div>
 
           <Divider />
@@ -88,6 +112,12 @@ const MobileNav = ({ navItems }: MobileNavProps) => {
               </li>
             ))}
           </ul>
+        </div>
+        <div className={styles.bottomNav}>
+          <Divider />
+          <div className={styles.bottomNavContent}>
+            <ThemeToggler id="2" />
+          </div>
         </div>
       </div>
     </nav>
