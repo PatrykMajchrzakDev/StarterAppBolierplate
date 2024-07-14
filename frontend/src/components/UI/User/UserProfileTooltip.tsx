@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 import { useLogout, useUser } from "@/lib/auth";
 // ======= COMPONENTS =========
+import ThemeToggler from "../ThemeToggler/ThemeToggler";
+
 import {
   Tooltip,
   IconButton,
@@ -14,7 +16,13 @@ import {
 } from "@mui/material";
 import { Logout, Settings } from "@mui/icons-material";
 
-const UserProfileTooltip = () => {
+// These are necessary for mobileNav to control if it should close itself or not
+type UserProfileTooltipProps = {
+  onOpen?: () => void;
+  onClose?: () => void;
+};
+
+const UserProfileTooltip = ({ onOpen, onClose }: UserProfileTooltipProps) => {
   // Get user info
   const { data: user } = useUser();
   // Logout fn
@@ -25,9 +33,15 @@ const UserProfileTooltip = () => {
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
+    {
+      onOpen && onOpen();
+    }
   };
   const handleClose = () => {
     setAnchorEl(null);
+    {
+      onClose && onClose();
+    }
   };
 
   const adminNavigation =
@@ -46,7 +60,7 @@ const UserProfileTooltip = () => {
       ""
     );
   return (
-    <li>
+    <>
       <Tooltip title="Account settings">
         <IconButton
           onClick={handleClick}
@@ -57,8 +71,8 @@ const UserProfileTooltip = () => {
         >
           <Avatar
             sx={{
-              width: 32,
-              height: 32,
+              width: 50,
+              height: 50,
               img: {
                 width: "100%",
                 height: "100%",
@@ -111,25 +125,32 @@ const UserProfileTooltip = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        {/* AVATAR */}
+        {/* Upper Menu Item List */}
         <MenuItem>
-          <Avatar
-            sx={{
-              width: 32,
-              height: 32,
-              img: {
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-              },
-            }}
-          >
-            {(user?.user.avatarUrl != null && (
-              <img src={user?.user.avatarUrl} />
-            )) ||
-              user?.user.name[0]}
-          </Avatar>{" "}
-          {user?.user.name}
+          {/* AVATAR */}
+          <MenuItem sx={{ "&:hover": { backgroundColor: "transparent" } }}>
+            <Avatar
+              sx={{
+                width: 32,
+                height: 32,
+                img: {
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                },
+              }}
+            >
+              {(user?.user.avatarUrl != null && (
+                <img src={user?.user.avatarUrl} />
+              )) ||
+                user?.user.name[0]}
+            </Avatar>{" "}
+            {user?.user.name}
+          </MenuItem>
+          {/* Toggler beside Avatar */}
+          <MenuItem sx={{ "&:hover": { backgroundColor: "transparent" } }}>
+            <ThemeToggler id="3" />
+          </MenuItem>
         </MenuItem>
         <Divider />
 
@@ -163,7 +184,7 @@ const UserProfileTooltip = () => {
           Logout
         </MenuItem>
       </Menu>
-    </li>
+    </>
   );
 };
 
