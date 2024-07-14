@@ -62,7 +62,7 @@ const Header = () => {
     <div id={styles.header}>
       <div className={styles.wrapper}>
         {/* LOGO */}
-        <RouterLink to="/" className={styles.logo}>
+        <RouterLink to="/app" className={styles.logo}>
           <img
             src={theme === "light" ? logo : logoDM}
             alt="logo"
