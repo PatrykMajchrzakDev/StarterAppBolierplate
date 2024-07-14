@@ -1,29 +1,24 @@
 // ========= MODULES ==========
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, ReactNode } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import styles from "./MobileNav.module.scss";
 
 // ======= COMPONENTS =========
 import { Divider, Link } from "@mui/material";
 import ThemeToggler from "../ThemeToggler/ThemeToggler";
-import {
-  Menu,
-  Home,
-  Login,
-  AppRegistration,
-  Password,
-  MarkEmailRead,
-} from "@mui/icons-material";
+import { Menu } from "@mui/icons-material";
 
-const navItems = [
-  { path: "/", label: "Home", icon: <Home /> },
-  { path: "/signin", label: "Sign In", icon: <Login /> },
-  { path: "/signup", label: "Sign Up", icon: <AppRegistration /> },
-  { path: "/forgotpassword", label: "Forgot Password", icon: <Password /> },
-  { path: "/resendEmail", label: "Resend Email", icon: <MarkEmailRead /> },
-];
+type navItem = {
+  path: string;
+  label: string;
+  icon: ReactNode;
+};
 
-const MobileNav = () => {
+type MobileNavProps = {
+  navItems: navItem[];
+};
+
+const MobileNav = ({ navItems }: MobileNavProps) => {
   const location = useLocation();
   // State to manage the visibility of the mobile nav
   const [isMobileNavOpen, setIsMobileNavOpen] = useState<boolean>(false);
@@ -76,6 +71,7 @@ const MobileNav = () => {
       >
         <div className={styles.actionsContainer}>
           <div className={styles.themeToggler}>
+            {/* tutaj dodac UserProfileTooltip */}
             <ThemeToggler id="2" />
           </div>
 
