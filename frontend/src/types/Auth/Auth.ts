@@ -12,7 +12,7 @@ export type User = Entity<{
   id: string;
   name: string;
   email: string;
-  role: "ADMIN" | "USER" | "MOD";
+  role: "ADMIN" | "USER" | "MODERATOR";
   created_at: Date;
   avatarUrl: string;
 }>;
