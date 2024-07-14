@@ -55,9 +55,6 @@ const LandingHeader = () => {
           <div className={styles.landingNav}>
             {/* DESKTOP LIST OF LINKS */}
             <ul className={styles.list}>
-              <li>
-                <ThemeToggler id="1" />
-              </li>
               <li>1</li>
               <li>2</li>
               <li>3</li>
@@ -65,6 +62,9 @@ const LandingHeader = () => {
                 <Button variant="outlined" component={Link} to="/signin">
                   Sign In
                 </Button>
+              </li>
+              <li>
+                <ThemeToggler id="1" />
               </li>
             </ul>
           </div>
