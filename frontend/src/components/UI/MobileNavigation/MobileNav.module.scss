@@ -4,12 +4,26 @@
     width: 80%;
   }
 
-  .themeToggler {
+  .topNav {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 1rem;
     width: 100%;
     align-items: center;
-    margin: 1rem 0 2rem 0;
+    margin: 1rem 0 1rem 0;
+  }
+
+  .bottomNav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .bottomNavContent {
+      padding: 1rem;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
   }
 
   .navContainer {
@@ -24,6 +38,9 @@
     background-color: var(--background-color);
     transition: transform 0.3s ease-in-out;
     box-shadow: $shadowElevation12;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
   }
 
   .navContainer.open {
@@ -39,6 +56,12 @@
     }
   }
 
+  .userProfile {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
   .actionsContainer {
     margin: 0 auto;
     width: 200px;
@@ -52,11 +75,14 @@
     padding-top: 2rem;
     li {
       border-radius: 5px;
-      width: 100%;
+      width: 188px;
       height: 50px;
       &.isActive {
         background-color: var(--accent-color);
         color: var(--primary-text-color);
+      }
+      &:hover {
+        background-color: var(--accent-color-opacity);
       }
       a {
         color: var(--primary-text-color);

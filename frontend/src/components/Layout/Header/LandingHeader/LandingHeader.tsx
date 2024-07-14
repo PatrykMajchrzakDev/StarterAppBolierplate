@@ -16,6 +16,22 @@ import logo from "@/assets/img/logo.png";
 import logoDM from "@/assets/img/logo-dm.png";
 import { Button } from "@mui/material";
 import ThemeToggler from "@/components/UI/ThemeToggler/ThemeToggler";
+import {
+  Home,
+  Login,
+  AppRegistration,
+  Password,
+  MarkEmailRead,
+} from "@mui/icons-material";
+
+// List of nav items for landing mobile nav
+const navItems = [
+  { path: "/", label: "Home", icon: <Home /> },
+  { path: "/signin", label: "Sign In", icon: <Login /> },
+  { path: "/signup", label: "Sign Up", icon: <AppRegistration /> },
+  { path: "/forgotpassword", label: "Forgot Password", icon: <Password /> },
+  { path: "/resendEmail", label: "Resend Email", icon: <MarkEmailRead /> },
+];
 
 const LandingHeader = () => {
   const theme = ThemeStore((state) => state.theme);
@@ -39,9 +55,6 @@ const LandingHeader = () => {
           <div className={styles.landingNav}>
             {/* DESKTOP LIST OF LINKS */}
             <ul className={styles.list}>
-              <li>
-                <ThemeToggler id="1" />
-              </li>
               <li>1</li>
               <li>2</li>
               <li>3</li>
@@ -50,12 +63,15 @@ const LandingHeader = () => {
                   Sign In
                 </Button>
               </li>
+              <li>
+                <ThemeToggler id="1" />
+              </li>
             </ul>
           </div>
 
           {/* MOBILE LIST OF LINKS */}
           <div className={styles.mobileNav}>
-            <MobileNav />
+            <MobileNav navItems={navItems} />
           </div>
         </div>
       </div>
