@@ -52,11 +52,14 @@
     padding-top: 2rem;
     li {
       border-radius: 5px;
-      width: 100%;
+      width: 188px;
       height: 50px;
       &.isActive {
         background-color: var(--accent-color);
         color: var(--primary-text-color);
+      }
+      &:hover {
+        background-color: var(--accent-color-opacity);
       }
       a {
         color: var(--primary-text-color);
