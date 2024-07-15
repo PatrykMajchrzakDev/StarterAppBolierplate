@@ -24,6 +24,7 @@ import {
   Box,
   Typography,
   Container,
+  Divider,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Google as GoogleIcon } from "@mui/icons-material";
@@ -151,7 +152,7 @@ const SignIn = () => {
             >
               {isPending ? "Signing in..." : "Sign in"}
             </Button>
-
+            <Divider sx={{ padding: "1rem 0 2rem 0" }}>OR</Divider>
             <Button
               variant="contained"
               color="primary"
@@ -170,7 +171,7 @@ const SignIn = () => {
             </Button>
 
             {/* NAVIGATION LINKS */}
-            <Grid container sx={{ gap: "1rem", marginTop: "1rem" }}>
+            <Grid container sx={{ gap: "1rem", marginTop: "2rem" }}>
               <Grid item container>
                 <Link to="/signup" component={RouterLink} variant="body2">
                   Don't have an account?
