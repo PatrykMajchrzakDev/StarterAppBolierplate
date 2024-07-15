@@ -21,8 +21,9 @@ import {
   CssBaseline,
   Avatar,
   Link,
+  Divider,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { LockOutlined, Google } from "@mui/icons-material";
 import Copyright from "@/components/UI/Copyright/Copyright";
 
 const SignUp = () => {
@@ -49,6 +50,10 @@ const SignUp = () => {
   });
 
   const { mutateAsync: registerUser, isPending } = useRegister();
+
+  const handleGoogleLogin = () => {
+    window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
+  };
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -90,14 +95,14 @@ const SignUp = () => {
       >
         {/* Upper side of form - icon and text */}
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
+          <LockOutlined />
         </Avatar>
         <Typography component="h1" variant="h5" sx={{ textAlign: "center" }}>
           Sign up
         </Typography>
         {/* Form with inputs */}
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Box sx={{ maxWidth: 400, mx: "auto", p: 3 }}>
+          <Box sx={{ maxWidth: 400, mx: "auto" }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 {/* EMAIL FIELD */}
@@ -152,7 +157,7 @@ const SignUp = () => {
             </Grid>
             <Typography sx={{ padding: "2rem 0" }}>
               <span style={{ color: "red" }}>*</span> Upon successful
-              registering you must confirm your address email via a message we
+              registering, you must confirm your address email via a message we
               send to your email address.
             </Typography>
             {/* SUBMIT BUTTON */}
@@ -165,9 +170,30 @@ const SignUp = () => {
             >
               {isPending ? "Signing up..." : "Sign up"}
             </Button>
+
+            <Divider sx={{ margin: "1rem 0 2rem 0", fontSize: "1rem" }}>
+              OR
+            </Divider>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<Google />}
+              onClick={handleGoogleLogin}
+              sx={{
+                backgroundColor: "#4285F4",
+                "&:hover": {
+                  backgroundColor: "#357ae8",
+                },
+                textTransform: "uppercase",
+                width: "100%",
+              }}
+            >
+              Sign in with Google
+            </Button>
           </Box>
+
           {/* NAVIGATION LINKS */}
-          <Grid container sx={{ gap: "1rem" }}>
+          <Grid container sx={{ gap: "1rem", mt: "2rem" }}>
             <Grid item container>
               <Link to="/signin" component={RouterLink} variant="body2">
                 Already have account?
