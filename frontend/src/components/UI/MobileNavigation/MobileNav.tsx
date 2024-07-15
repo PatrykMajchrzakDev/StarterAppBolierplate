@@ -5,25 +5,26 @@ import styles from "./MobileNav.module.scss";
 
 // ======= COMPONENTS =========
 import ThemeToggler from "../ThemeToggler/ThemeToggler";
-import { User } from "@/types/Auth/Auth";
 import UserProfileTooltip from "../User/UserProfileTooltip";
 
 import { Divider, Link } from "@mui/material";
 import { Menu } from "@mui/icons-material";
+import { useUser } from "@/lib/auth";
 
 type navItem = {
   path: string;
   label: string;
   icon: ReactNode;
+  onClick?: () => void;
 };
 
 type MobileNavProps = {
   navItems: navItem[];
-  user?: User;
 };
 
-const MobileNav = ({ navItems, user }: MobileNavProps) => {
+const MobileNav = ({ navItems }: MobileNavProps) => {
   const location = useLocation();
+  const { data } = useUser();
 
   // State to manage the visibility of the mobile nav
   const [isMobileNavOpen, setIsMobileNavOpen] = useState<boolean>(false);
@@ -79,6 +80,11 @@ const MobileNav = ({ navItems, user }: MobileNavProps) => {
     setIsPopoverOpen(false);
   };
 
+  // Close the mobile nav when a link is clicked
+  const handleLinkClick = () => {
+    setIsMobileNavOpen(false);
+  };
+
   return (
     <nav id={styles.navigation}>
       <Menu onClick={toggleNavOpen} fontSize="large" sx={{ margin: "1rem" }} />
@@ -91,7 +97,7 @@ const MobileNav = ({ navItems, user }: MobileNavProps) => {
       >
         <div className={styles.actionsContainer}>
           <div className={styles.topNav}>
-            {user && (
+            {data && (
               <UserProfileTooltip
                 onOpen={handlePopoverOpen}
                 onClose={handlePopoverClose}
@@ -105,6 +111,10 @@ const MobileNav = ({ navItems, user }: MobileNavProps) => {
               <li
                 key={item.label}
                 className={isActive(item.path) ? styles.isActive : ""}
+                onClick={() => {
+                  handleLinkClick();
+                  if (item.onClick) item.onClick();
+                }}
               >
                 <Link component={RouterLink} to={item.path}>
                   {item.icon} {item.label}
