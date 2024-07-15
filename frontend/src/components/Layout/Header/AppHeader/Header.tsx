@@ -17,7 +17,7 @@ import logoDM from "@/assets/img/logo-dm.png";
 import MobileNav from "@/components/UI/MobileNavigation/MobileNav";
 import ThemeStore from "@/store/Theme/ThemeStore";
 import UserProfileTooltip from "@/components/UI/User/UserProfileTooltip";
-import { useUser } from "@/lib/auth";
+import { useLogout, useUser } from "@/lib/auth";
 
 import { Link } from "@mui/material";
 import { Home, Logout } from "@mui/icons-material";
@@ -26,12 +26,8 @@ type navItemProps = {
   path: string;
   label: string;
   icon: ReactNode;
+  onClick?: () => void;
 };
-
-const mobileNavItems: navItemProps[] = [
-  { path: "/app", label: "Dashboard", icon: <Home /> },
-  { path: "/logout", label: "Logout", icon: <Logout /> },
-];
 
 const appNavItems: navItemProps[] = [
   {
@@ -53,8 +49,21 @@ const appNavItems: navItemProps[] = [
 
 const Header = () => {
   const { data: user } = useUser();
+  const logout = useLogout();
   const theme = ThemeStore((state) => state.theme);
   const location = useLocation();
+
+  const mobileNavItems: navItemProps[] = [
+    { path: "/app", label: "Dashboard", icon: <Home /> },
+    {
+      path: "/logout",
+      label: "Logout",
+      icon: <Logout />,
+      onClick: () => {
+        logout.mutate({});
+      },
+    },
+  ];
 
   // Set class based on current location
   const isActive = (path: string) => location.pathname === path;
@@ -94,10 +103,7 @@ const Header = () => {
 
           {/* MOBILE LIST OF LINKS */}
           <div className={styles.mobileNav}>
-            <MobileNav
-              navItems={mobileNavItems}
-              user={user ? user.user : undefined}
-            />
+            <MobileNav navItems={mobileNavItems} />
           </div>
         </div>
       </div>
