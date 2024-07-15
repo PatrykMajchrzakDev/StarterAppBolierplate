@@ -4,7 +4,7 @@
 // ========= MODULES ==========
 // ============================
 import styles from "./LandingHeader.module.scss";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 import ThemeStore from "@/store/Theme/ThemeStore";
 // ============================
@@ -22,24 +22,60 @@ import {
   AppRegistration,
   Password,
   MarkEmailRead,
+  Dashboard,
+  Logout,
 } from "@mui/icons-material";
-
-// List of nav items for landing mobile nav
-const navItems = [
-  { path: "/", label: "Home", icon: <Home /> },
-  { path: "/signin", label: "Sign In", icon: <Login /> },
-  { path: "/signup", label: "Sign Up", icon: <AppRegistration /> },
-  { path: "/forgotpassword", label: "Forgot Password", icon: <Password /> },
-  { path: "/resendEmail", label: "Resend Email", icon: <MarkEmailRead /> },
-];
+import { useLogout, useUser } from "@/lib/auth";
 
 const LandingHeader = () => {
+  const { data } = useUser();
+  const logout = useLogout();
+
+  // List of nav items for landing mobile nav
+  const navItems = data
+    ? [
+        { path: "/app", label: "Dashboard", icon: <Dashboard /> },
+        {
+          path: "/logout",
+          label: "Logout",
+          icon: <Logout />,
+          onClick: () => {
+            logout.mutate({});
+          },
+        },
+      ]
+    : [
+        { path: "/", label: "Home", icon: <Home /> },
+        { path: "/signin", label: "Sign In", icon: <Login /> },
+        { path: "/signup", label: "Sign Up", icon: <AppRegistration /> },
+        {
+          path: "/forgotpassword",
+          label: "Forgot Password",
+          icon: <Password />,
+        },
+        {
+          path: "/resendEmail",
+          label: "Resend Email",
+          icon: <MarkEmailRead />,
+        },
+      ];
+
+  const loginOrDashboardIfUserExists = data ? (
+    <Button variant="contained" size="small" to="/app" component={RouterLink}>
+      Dashboard
+    </Button>
+  ) : (
+    <Button variant="outlined" component={RouterLink} to="/signin">
+      Sign In
+    </Button>
+  );
+
   const theme = ThemeStore((state) => state.theme);
   return (
     <div id={styles.header}>
       <div className={styles.wrapper}>
         {/* LOGO */}
-        <Link to="/" className={styles.logo}>
+        <RouterLink to="/" className={styles.logo}>
           <img
             src={theme === "light" ? logo : logoDM}
             alt="logo"
@@ -48,7 +84,7 @@ const LandingHeader = () => {
             width="290px"
             height="52px"
           />
-        </Link>
+        </RouterLink>
 
         {/* RIGHT SIDE NAV ACTIONS */}
         <div className={styles.navActions}>
@@ -58,11 +94,7 @@ const LandingHeader = () => {
               <li>1</li>
               <li>2</li>
               <li>3</li>
-              <li>
-                <Button variant="outlined" component={Link} to="/signin">
-                  Sign In
-                </Button>
-              </li>
+              <li>{loginOrDashboardIfUserExists}</li>
               <li>
                 <ThemeToggler id="1" />
               </li>
