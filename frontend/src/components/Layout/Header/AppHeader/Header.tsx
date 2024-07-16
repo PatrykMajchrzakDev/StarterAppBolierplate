@@ -14,9 +14,9 @@ import { Link as RouterLink, useLocation } from "react-router-dom";
 import logo from "@/assets/img/logo.png";
 import logoDM from "@/assets/img/logo-dm.png";
 
-import MobileNav from "@/components/UI/MobileNavigation/MobileNav";
+import MobileNav from "@/components/Layout/MobileNavigation/MobileNav";
 import ThemeStore from "@/store/Theme/ThemeStore";
-import UserProfileTooltip from "@/components/UI/User/UserProfileTooltip";
+import UserProfileTooltip from "@/components/Profile/UserProfileTooltip";
 import { useLogout, useUser } from "@/lib/auth";
 
 import { Link } from "@mui/material";

@@ -4,7 +4,7 @@
 import styles from "./styles/UserSettings.module.scss";
 
 // ======= COMPONENTS =========
-import { ChangeAvatar } from "@/components/Profile/ChangeAvatar/ChangeAvatar";
+import { ChangeAvatar } from "@/components/UI/UserSettings/ChangeAvatar/ChangeAvatar";
 
 const UserSettings = () => {
   return (

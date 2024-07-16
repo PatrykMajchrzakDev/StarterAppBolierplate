@@ -4,8 +4,8 @@ import { Link as RouterLink, useLocation } from "react-router-dom";
 import styles from "./MobileNav.module.scss";
 
 // ======= COMPONENTS =========
-import ThemeToggler from "../ThemeToggler/ThemeToggler";
-import UserProfileTooltip from "../User/UserProfileTooltip";
+import ThemeToggler from "../../UI/ThemeToggler/ThemeToggler";
+import UserProfileTooltip from "@/components/Profile/UserProfileTooltip";
 
 import { Divider, Link } from "@mui/material";
 import { Menu } from "@mui/icons-material";

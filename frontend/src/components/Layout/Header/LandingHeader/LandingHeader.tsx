@@ -10,7 +10,7 @@ import ThemeStore from "@/store/Theme/ThemeStore";
 // ============================
 // ======= COMPONENTS =========
 // ============================
-import MobileNav from "@/components/UI/MobileNavigation/MobileNav";
+import MobileNav from "@/components/Layout/MobileNavigation/MobileNav";
 // import LandingNavigation from "@/components/UI/TopNavigation/LandingNavigation/LandingNavigation";
 import logo from "@/assets/img/logo.png";
 import logoDM from "@/assets/img/logo-dm.png";
