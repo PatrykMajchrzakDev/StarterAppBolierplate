@@ -89,13 +89,17 @@ const MobileNav = ({ navItems }: MobileNavProps) => {
     <nav id={styles.navigation}>
       <Menu onClick={toggleNavOpen} fontSize="large" sx={{ margin: "1rem" }} />
 
+      {/* Navigation container - animating has open close animation */}
+      {/* ref is used to check when to close when clicked outside of it */}
       <div
         ref={navContainerRef}
         className={`${styles.navContainer} ${
           isMobileNavOpen ? styles.open : ""
         }`}
       >
+        {/* Action container holds top and middle section*/}
         <div className={styles.actionsContainer}>
+          {/* Top section */}
           <div className={styles.topNav}>
             {data && (
               <UserProfileTooltip
@@ -106,6 +110,8 @@ const MobileNav = ({ navItems }: MobileNavProps) => {
           </div>
 
           <Divider />
+
+          {/* Middle section */}
           <ul className={styles.links}>
             {navItems.map((item) => (
               <li
@@ -123,6 +129,8 @@ const MobileNav = ({ navItems }: MobileNavProps) => {
             ))}
           </ul>
         </div>
+
+        {/* Bottom section */}
         <div className={styles.bottomNav}>
           <Divider />
           <div className={styles.bottomNavContent}>
