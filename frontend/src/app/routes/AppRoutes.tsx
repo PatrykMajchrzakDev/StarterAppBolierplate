@@ -6,18 +6,19 @@ import { Route, Routes, Navigate } from "react-router-dom";
 // ======= COMPONENTS =========
 import SignIn from "@/components/Auth/SignIn";
 import SignUp from "@/components/Auth/SignUp";
-import ProtectedRoute from "./ProtectedRoute";
-import AppRoot from "./Root";
-import Dashboard from "./Dashboard";
-import UserProfile from "./user/UserProfile";
-import UserSettings from "./user/UserSettings";
-import AdminDashboard from "./admin/Dashboard";
+import ProtectedRoute from "@/app/routes/ProtectedRoute";
+import AppRoot from "@/app/routes/Root";
+import Dashboard from "@/app/routes/App/Dashboard";
+import UserProfile from "@/app/routes/App/user/UserProfile";
+import UserSettings from "@/app/routes/App/user/UserSettings";
+import AdminDashboard from "@/app/routes/admin/Dashboard";
 import ForgotPasword from "@/components/Auth/ForgotPassword";
 import ResendEmail from "@/components/Auth/ResendEmail";
 import ResetPassword from "@/components/Auth/ResetPassword";
 import LandingLayout from "@/layouts/LandingLayout";
-import LandingPage from "./Landing";
-import AuthRedirect from "./AuthRedirect";
+import LandingPage from "@/app/routes/Landing/Landing";
+import AuthRedirect from "@/app/routes/AuthRedirect";
+import Pricing from "@/app/routes/General/Pricing";
 
 const AppRoutes = () => {
   return (
@@ -76,6 +77,14 @@ const AppRoutes = () => {
         element={
           <LandingLayout>
             <ResendEmail />
+          </LandingLayout>
+        }
+      ></Route>
+      <Route
+        path="/pricing"
+        element={
+          <LandingLayout>
+            <Pricing />
           </LandingLayout>
         }
       ></Route>
