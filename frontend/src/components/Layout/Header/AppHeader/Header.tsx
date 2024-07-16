@@ -20,41 +20,49 @@ import UserProfileTooltip from "@/components/Profile/UserProfileTooltip";
 import { useLogout, useUser } from "@/lib/auth";
 
 import { Link } from "@mui/material";
-import { Home, Logout } from "@mui/icons-material";
+import { Home, Logout, Loyalty, Dashboard } from "@mui/icons-material";
 
-type navItemProps = {
+type mobileNavItemProps = {
   path: string;
   label: string;
   icon: ReactNode;
   onClick?: () => void;
 };
 
+type navItemProps = {
+  path: string;
+  label: string;
+  icon?: ReactNode;
+  onClick?: () => void;
+};
+
 const appNavItems: navItemProps[] = [
+  {
+    path: "/",
+    label: "Home",
+    icon: <Home />,
+  },
+  {
+    path: "/pricing",
+    label: "Pricing",
+    icon: <Loyalty />,
+  },
   {
     path: "/app",
     label: "Dashboard",
-    icon: <Home />,
-  },
-  {
-    path: "/app/user-profile/settings",
-    label: "Settings",
-    icon: <Home />,
-  },
-  {
-    path: "/",
-    label: "Landing",
-    icon: <Home />,
+    icon: <Dashboard />,
   },
 ];
 
 const Header = () => {
-  const { data: user } = useUser();
+  const { data } = useUser();
   const logout = useLogout();
   const theme = ThemeStore((state) => state.theme);
   const location = useLocation();
 
-  const mobileNavItems: navItemProps[] = [
+  const mobileNavItems: mobileNavItemProps[] = [
     { path: "/app", label: "Dashboard", icon: <Home /> },
+    { path: "/pricing", label: "Pricing", icon: <Loyalty /> },
     {
       path: "/logout",
       label: "Logout",
@@ -98,7 +106,7 @@ const Header = () => {
                 </li>
               ))}
             </ul>
-            {user && user.user && <UserProfileTooltip />}
+            {data && data.user && <UserProfileTooltip />}
           </div>
 
           {/* MOBILE LIST OF LINKS */}
