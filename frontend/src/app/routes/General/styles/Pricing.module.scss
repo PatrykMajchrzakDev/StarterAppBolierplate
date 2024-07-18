@@ -1,0 +1,45 @@
+#pricing {
+  padding: 6rem 0;
+  background-image: url("@/assets/img/herobg.png");
+  color: white;
+}
+
+// Choose plan heading
+h2 {
+  font-size: $headerFontSize;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+// Unlock possibilities heading
+h3 {
+  font-size: $defaultFontSize;
+  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 8px;
+}
+
+// SECTION CARD WRAPPER
+.sectionWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  //   CARDS CONTAINER
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    margin-top: 4rem;
+
+    @include tablet {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+
+  //   SINGLE CARD
+  .card {
+  }
+}
