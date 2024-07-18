@@ -41,10 +41,17 @@ $breakpoint-desktop: 1300px;
 
 /* 13px - 16px */
 $topperFontSize: clamp(0.8125rem, 1.6vw, 1rem);
+
 // 16px - 24px
 $defaultFontSize: clamp(1rem, 2vw, 1.5rem);
+
+// Title font
+$titleFontSize: clamp(1.5rem, 3vw, 2rem);
+
 /* 31px - 49px */
 $headerFontSize: clamp(1.9375rem, 3.9vw, 3.0625rem);
+
+// 16px
 $bodyFontSize: 1rem;
 
 // Font styles
