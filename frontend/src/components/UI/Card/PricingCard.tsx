@@ -4,6 +4,8 @@
 import styles from "./styles/PricingCard.module.scss";
 
 // ======= COMPONENTS =========
+import { useUser } from "@/lib/auth";
+
 import { Chip, Button, Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -38,6 +40,9 @@ const PricingCard = ({
   currency,
   chipStyle,
 }: PricingCardProps) => {
+  const { data } = useUser();
+
+  const signInOrBuyLink = data?.user ? "/app" : "/signin";
   return (
     <div className={styles.card}>
       {chipStyle && (
@@ -56,7 +61,7 @@ const PricingCard = ({
           <span className={styles.priceValue}>{price}</span>
         </div>
         <Button variant="contained" className={styles.getStartedButton}>
-          <Link to={"/signin"} component={RouterLink}>
+          <Link to={signInOrBuyLink} component={RouterLink}>
             Get Started
           </Link>
         </Button>
