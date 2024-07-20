@@ -9,14 +9,14 @@ import styles from "./styles/Pricing.module.scss";
 const pricingCards = [
   {
     title: "Member",
-    titleColor: "",
+    titleColor: "white",
     currency: "ZŁ",
     price: 0,
     description: "For personal use and exploration of our application.",
   },
   {
     title: "Subscriber",
-    titleColor: "",
+    titleColor: "#7c50ff",
     currency: "ZŁ",
     price: 10,
     description: "For personal use and exploration of our application.",
@@ -29,7 +29,7 @@ const pricingCards = [
   },
   {
     title: "Pro",
-    titleColor: "",
+    titleColor: "blue",
     currency: "ZŁ",
     price: 30,
     description: "For personal use and exploration of our application.",
