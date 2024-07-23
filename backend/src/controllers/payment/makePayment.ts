@@ -11,10 +11,10 @@ const stripe = new Stripe(process.env.STRIPE_API_KEY || "", {
 export const makePayment = async (req: Request, res: Response, next: any) => {
   // Log payment
   const logger = getLogger("STRIPE_PAYMENT");
-
   //   use provided options from frontend
+
   try {
-    const { amount, currency, paymentMethodType } = req.body;
+    const { products } = req.body;
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency,
