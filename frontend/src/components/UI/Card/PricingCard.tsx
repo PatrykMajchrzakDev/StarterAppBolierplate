@@ -44,7 +44,7 @@ const PricingCard = ({
 
   const signInOrBuyLink = data?.user ? "/app" : "/signin";
   return (
-    <div className={styles.card}>
+    <div id={styles.card}>
       {chipStyle && (
         <Chip
           variant={chipStyle.variant}
