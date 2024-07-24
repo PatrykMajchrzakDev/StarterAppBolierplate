@@ -30,6 +30,7 @@ type PricingCardProps = {
   price: number;
   currency: string;
   chipStyle?: ChipStylesType;
+  linkToCheckout?: string;
 };
 
 const PricingCard = ({
@@ -38,11 +39,12 @@ const PricingCard = ({
   description,
   price,
   currency,
+  linkToCheckout,
   chipStyle,
 }: PricingCardProps) => {
   const { data } = useUser();
 
-  const signInOrBuyLink = data?.user ? "/app" : "/signin";
+  const signInOrBuyLink = data?.user ? `${linkToCheckout}` : "/signin";
   return (
     <div id={styles.card}>
       {chipStyle && (
