@@ -52,7 +52,7 @@ export const subscribe = async (req: Request, res: Response, next: any) => {
       // Cancelled redirect
       cancel_url: `${process.env.FRONTEND_BASE_URL}/payment/cancelled`,
     });
-    res.status(200).json({ url: session.url });
+    res.status(200).json(session.url);
   } catch (error) {
     console.log(error);
   }
