@@ -54,7 +54,7 @@ const Pricing = () => {
         <ul className={styles.cards}>
           {pricingCards.map((card) => (
             // CARD
-            <li className={styles.card}>
+            <li className={styles.card} key={card.title}>
               <PricingCard
                 title={card.title}
                 titleColor={card.titleColor}
