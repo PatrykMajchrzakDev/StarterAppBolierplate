@@ -1,13 +1,14 @@
 // This components functionality is to show pricing route
 
 // ========= MODULES ==========
+import axios from "axios";
 import styles from "./styles/PricingCard.module.scss";
 
 // ======= COMPONENTS =========
 import { useUser } from "@/lib/auth";
 
-import { Chip, Button, Link } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { Chip, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 type ChipStylesType = {
   variant: "outlined" | "filled";
@@ -43,8 +44,32 @@ const PricingCard = ({
   chipStyle,
 }: PricingCardProps) => {
   const { data } = useUser();
+  const navigate = useNavigate();
 
-  const signInOrBuyLink = data?.user ? `${linkToCheckout}` : "/signin";
+  const signInRedirect = "/signin";
+
+  const handleRedirect = async () => {
+    if (linkToCheckout) {
+      try {
+        // Response is a link to checkout
+        const response = await axios.get<string>(linkToCheckout);
+
+        const redirectLink = response.data; // The link received from the server
+        console.log(redirectLink);
+        if (data?.user) {
+          // If user is signed in, use the link provided by the server
+          window.location.href = redirectLink;
+        } else {
+          // If user is not signed in, redirect to the sign-in page
+          navigate(signInRedirect);
+        }
+      } catch (error) {
+        console.error("Error fetching redirect link:", error);
+        navigate(signInRedirect);
+      }
+    }
+  };
+
   return (
     <div id={styles.card}>
       {chipStyle && (
@@ -62,10 +87,12 @@ const PricingCard = ({
           <span className={styles.currency}>{currency}</span>
           <span className={styles.priceValue}>{price}</span>
         </div>
-        <Button variant="contained" className={styles.getStartedButton}>
-          <Link to={signInOrBuyLink} component={RouterLink}>
-            Get Started
-          </Link>
+        <Button
+          variant="contained"
+          className={styles.getStartedButton}
+          onClick={handleRedirect}
+        >
+          Get started
         </Button>
       </div>
     </div>
