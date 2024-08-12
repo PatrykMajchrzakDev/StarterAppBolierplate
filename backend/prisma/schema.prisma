@@ -64,4 +64,6 @@ enum Role {
   USER
   ADMIN
   MODERATOR
+  SUBSCRIBER
+  PRO
 }

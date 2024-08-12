@@ -19,6 +19,7 @@ import LandingLayout from "@/layouts/LandingLayout";
 import LandingPage from "@/app/routes/Landing/Landing";
 import AuthRedirect from "@/app/routes/AuthRedirect";
 import Pricing from "@/app/routes/General/Pricing";
+import PaymentFallback from "./General/PaymentFallback";
 
 const AppRoutes = () => {
   return (
@@ -85,6 +86,28 @@ const AppRoutes = () => {
         element={
           <LandingLayout>
             <Pricing />
+          </LandingLayout>
+        }
+      ></Route>
+
+      {/* ======= PAYMENT FALLBACK ======= */}
+
+      {/* Payment successfull */}
+      <Route
+        path="/payment/success"
+        element={
+          <LandingLayout>
+            <PaymentFallback isOk={true} />
+          </LandingLayout>
+        }
+      ></Route>
+
+      {/* Payment cancelled */}
+      <Route
+        path="/payment/cancelled"
+        element={
+          <LandingLayout>
+            <PaymentFallback isOk={false} />
           </LandingLayout>
         }
       ></Route>

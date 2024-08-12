@@ -76,6 +76,8 @@ Before you begin, ensure you have the following installed:
    - GOOGLE_OAUTH_CLIENT_ID = client id from google oauth credentials
    - GOOGLE_OAUTH_CLIENT_SECRET = client secret from google oauth credentials
    - SESSION SECRET = Random string (used for session initialization to serialize and deserialize user via passport)
+   - STRIPE_API_KEY = Upon making Business you get LIVE Stripe Key
+   - TEST_STRIPE_API_KEY = When "Test Mode" checked, TEST Stripe Key is available
    ```
 
    **NODEMAILER ZOHO EMAIL APP SETUP**

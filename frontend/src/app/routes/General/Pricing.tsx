@@ -19,7 +19,10 @@ const pricingCards = [
     titleColor: "#7c50ff",
     currency: "ZŁ",
     price: 10,
-    description: "For personal use and exploration of our application.",
+    description: "Get some good staff from this plan",
+    linkToCheckout: `${
+      import.meta.env.VITE_API_URL
+    }/payment/subscribe?plan=subscriber`,
     chipStyle: {
       variant: "outlined",
       color: "primary",
@@ -32,7 +35,10 @@ const pricingCards = [
     titleColor: "blue",
     currency: "ZŁ",
     price: 30,
-    description: "For personal use and exploration of our application.",
+    description: "Best stuff out there",
+    linkToCheckout: `${
+      import.meta.env.VITE_API_URL
+    }/payment/subscribe?plan=pro`,
   },
 ];
 
@@ -48,13 +54,14 @@ const Pricing = () => {
         <ul className={styles.cards}>
           {pricingCards.map((card) => (
             // CARD
-            <li className={styles.card}>
+            <li className={styles.card} key={card.title}>
               <PricingCard
                 title={card.title}
                 titleColor={card.titleColor}
                 currency={card.currency}
                 price={card.price}
                 description={card.description}
+                linkToCheckout={card.linkToCheckout}
                 key={card.title}
               />
             </li>

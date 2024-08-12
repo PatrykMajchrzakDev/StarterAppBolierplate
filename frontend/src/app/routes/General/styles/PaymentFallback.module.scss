@@ -1,0 +1,32 @@
+.box {
+  display: flex;
+  width: 400px;
+  height: 300px;
+  margin: 0 auto;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  margin: 10rem auto 4rem auto;
+  padding: 0 1rem;
+  box-shadow: $shadowElevation6;
+
+  span {
+    align-self: center;
+    margin: 1rem 0;
+    height: 60px;
+    width: 60px;
+    svg {
+      height: 60px;
+      width: 60px;
+    }
+  }
+  .button {
+    margin: 2rem auto;
+    width: 130px;
+
+    height: 35px;
+    a {
+      color: var(--secondary-text-color);
+    }
+  }
+}

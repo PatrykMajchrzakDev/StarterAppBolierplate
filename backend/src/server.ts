@@ -14,6 +14,7 @@ import "@/middleware/Auth/passport";
 // Routes
 import authRoutes from "@/routes/authRoutes";
 import usersRoutes from "@/routes/usersRoutes";
+import paymentRoutes from "@/routes/paymentRoutes";
 
 const app = express();
 
@@ -48,6 +49,9 @@ app.use("/auth", authRoutes);
 
 // User routes
 app.use("/users", usersRoutes);
+
+// Payment routes
+app.use("/payment", paymentRoutes);
 
 // TEST routes
 app.get("/test", async (req: Request, res: Response) => {
