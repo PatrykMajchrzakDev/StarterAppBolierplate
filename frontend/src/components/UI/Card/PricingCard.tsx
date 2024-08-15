@@ -45,14 +45,16 @@ const PricingCard = ({
 }: PricingCardProps) => {
   const { data } = useUser();
   const navigate = useNavigate();
+  const userId = data?.user.id;
 
   const signInRedirect = "/signin";
 
   const handleRedirect = async () => {
     if (linkToCheckout) {
       try {
+        const urlWithParams = `${linkToCheckout}&userId=${userId}`;
         // Response is a link to checkout
-        const response = await axios.get<string>(linkToCheckout);
+        const response = await axios.get<string>(urlWithParams);
 
         const redirectLink = response.data; // The link received from the server
         console.log(redirectLink);
