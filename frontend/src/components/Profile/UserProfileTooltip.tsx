@@ -140,6 +140,7 @@ const UserProfileTooltip = ({ onOpen, onClose }: UserProfileTooltipProps) => {
               alignItems: "center",
               justifyContent: "space-between",
               width: "100%",
+              marginRight: "2rem",
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -164,6 +165,16 @@ const UserProfileTooltip = ({ onOpen, onClose }: UserProfileTooltipProps) => {
           </Box>
           <ThemeToggler id="3" />
         </MenuItem>
+        <Box
+          sx={{
+            width: "100%",
+            marginX: "1rem",
+            marginBottom: "1rem",
+            color: "var(--accent-color)",
+          }}
+        >
+          <p>{user?.user.role}</p>
+        </Box>
         <Divider />
 
         {/* SETTINGS */}
