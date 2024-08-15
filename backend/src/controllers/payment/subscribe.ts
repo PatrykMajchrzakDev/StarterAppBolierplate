@@ -67,6 +67,18 @@ export const subscribe = async (req: Request, res: Response, next: any) => {
           data: { role: newRole },
         });
 
+        console.log(checkoutSession);
+
+        // Log payment
+        logger.info(
+          `New payment via Stripe || Client ID: ${checkoutSession.customer}
+       UserID: ${userId} NewRole: ${newRole} Date: ${new Date()} Session ID: ${
+            checkoutSession.id
+          } Email: ${checkoutSession.customer_details?.email} Name: ${
+            checkoutSession.customer_details?.name
+          }  InvoiceID: ${checkoutSession.invoice}`
+        );
+
         paymentComplete = true;
       } else {
         // Wait for a few seconds before checking again
@@ -91,14 +103,6 @@ export const subscribe = async (req: Request, res: Response, next: any) => {
     });
 
     pollPaymentStatus(session.id, userId);
-
-    // Log payment
-    logger.info(
-      `New payment via Stripe || Client ID: ${session.client_reference_id}
-       UserID: ${userId} NewRole: ${newRole} Date: ${new Date()} Session ID: ${
-        session.id
-      }`
-    );
 
     // Send the session URL to the client
     res.status(200).json(session.url);
