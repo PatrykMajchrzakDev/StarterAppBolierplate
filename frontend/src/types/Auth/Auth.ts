@@ -12,9 +12,11 @@ export type User = Entity<{
   id: string;
   name: string;
   email: string;
-  role: "ADMIN" | "USER" | "MODERATOR";
+  role: "ADMIN" | "USER" | "MODERATOR" | "SUBSCRIBER" | "PRO";
   created_at: Date;
   avatarUrl: string;
+  subscriptionExpirationDate: Date;
+  subscriptionId: string;
 }>;
 
 // Object returned if auth is success

@@ -23,20 +23,22 @@ datasource db {
 
 // DEFAULT USER SCHEMA
 model User {
-  id                 String              @id
-  email              String              @unique
-  password           String?
-  name               String              @unique
-  role               Role                @default(USER)
-  created_at         DateTime            @default(now())
-  avatarUrl          String?
-  isVerified         Boolean             @default(false)
-  verificationToken  String?
-  updated_at         DateTime            @default(now())
-  emailVerifications EmailVerification[]
-  passwordReset      PasswordReset[]
-  provider           String              @default("local")
-  googleId           String?             @unique
+  id                         String              @id
+  email                      String              @unique
+  password                   String?
+  name                       String              @unique
+  role                       Role                @default(USER)
+  created_at                 DateTime            @default(now())
+  avatarUrl                  String?
+  isVerified                 Boolean             @default(false)
+  verificationToken          String?
+  updated_at                 DateTime            @default(now())
+  emailVerifications         EmailVerification[]
+  passwordReset              PasswordReset[]
+  provider                   String              @default("local")
+  googleId                   String?             @unique
+  subscriptionExpirationDate DateTime            @default(now())
+  subscriptionId             String?
 }
 
 // SCHEMA FOR USER EMAIL VERIFICATIONS

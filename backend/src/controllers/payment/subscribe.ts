@@ -67,7 +67,29 @@ export const subscribe = async (req: Request, res: Response, next: any) => {
           data: { role: newRole },
         });
 
-        console.log(checkoutSession);
+        // Update user db row when subscription expires
+        let expirationDate;
+        // TS condition
+        if (typeof checkoutSession.subscription === "string") {
+          const subscriptionInformations = await stripe.subscriptions.retrieve(
+            checkoutSession.subscription
+          );
+
+          // Converts expiration date to date string
+          expirationDate = new Date(
+            subscriptionInformations.current_period_end * 1000
+          );
+          
+
+          // Updates db with expiration date
+          await prisma.user.update({
+            where: { id: userId },
+            data: {
+              subscriptionExpirationDate: expirationDate,
+              subscriptionId: checkoutSession.subscription
+            },
+          });
+        }
 
         // Log payment
         logger.info(
@@ -76,7 +98,9 @@ export const subscribe = async (req: Request, res: Response, next: any) => {
             checkoutSession.id
           } Email: ${checkoutSession.customer_details?.email} Name: ${
             checkoutSession.customer_details?.name
-          }  InvoiceID: ${checkoutSession.invoice}`
+          }  InvoiceID: ${
+            checkoutSession.invoice
+          } SubExpirationDate: ${expirationDate}`
         );
 
         paymentComplete = true;
