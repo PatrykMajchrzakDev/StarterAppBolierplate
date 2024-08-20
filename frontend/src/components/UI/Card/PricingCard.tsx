@@ -1,11 +1,12 @@
 // This components functionality is to show pricing route
-
+import { useQuery } from "@tanstack/react-query";
 // ========= MODULES ==========
-import axios from "axios";
 import styles from "./styles/PricingCard.module.scss";
 
 // ======= COMPONENTS =========
-import { useUser } from "@/lib/auth";
+import { useLogout, useUser } from "@/lib/auth";
+import { getRedirectLinkToCheckout } from "@/features/payments/makePayment";
+import { useNotificationState } from "@/store/UI/NotificationStore";
 
 import { Chip, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -43,32 +44,49 @@ const PricingCard = ({
   linkToCheckout,
   chipStyle,
 }: PricingCardProps) => {
-  const { data } = useUser();
   const navigate = useNavigate();
-  const userId = data?.user.id;
+  const logout = useLogout();
+  const { data: userData } = useUser();
+  const userId = userData?.user.id;
 
-  const signInRedirect = "/signin";
+  // Use the custom hook to fetch the redirect link
+  const { data: redirectLinkToCheckout } = useQuery({
+    queryKey: ["redirectLinkToCheckout", linkToCheckout, userId],
+    queryFn: () =>
+      getRedirectLinkToCheckout(linkToCheckout as string, userId as string),
+    // The query will not execute until the userId exists
+    enabled: !!userId && !!linkToCheckout,
+  });
 
+  // Function to handle the redirection logic
   const handleRedirect = async () => {
-    if (linkToCheckout) {
-      try {
-        const urlWithParams = `${linkToCheckout}&userId=${userId}`;
-        // Response is a link to checkout
-        const response = await axios.get<string>(urlWithParams);
+    if (!linkToCheckout || !userId) {
+      // Notify the user if required data is missing and redirect to signin
+      useNotificationState
+        .getState()
+        .setNotification(
+          `There was something missing. Please sign in again. Sorry for the inconvenience.`,
+          "error",
+          "outlined"
+        );
+      navigate("/signin");
+      logout.mutate({});
+    }
 
-        const redirectLink = response.data; // The link received from the server
-        console.log(redirectLink);
-        if (data?.user) {
-          // If user is signed in, use the link provided by the server
-          window.location.href = redirectLink;
-        } else {
-          // If user is not signed in, redirect to the sign-in page
-          navigate(signInRedirect);
-        }
-      } catch (error) {
-        console.error("Error fetching redirect link:", error);
-        navigate(signInRedirect);
-      }
+    if (redirectLinkToCheckout) {
+      // Redirect the user if the redirect link is available
+      window.location.href = redirectLinkToCheckout;
+    } else {
+      // Notify the user if redirect failed and redirect to signin
+      useNotificationState
+        .getState()
+        .setNotification(
+          `There was something missing. Please sign in again. Sorry for the inconvenience.`,
+          "error",
+          "outlined"
+        );
+      navigate("/signin");
+      logout.mutate({});
     }
   };
 
