@@ -6,6 +6,8 @@ import styles from "./styles/Pricing.module.scss";
 
 // ======= COMPONENTS =========
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const pricingCards = [
   {
     title: "Member",
@@ -20,9 +22,7 @@ const pricingCards = [
     currency: "ZŁ",
     price: 10,
     description: "Get some good staff from this plan",
-    linkToCheckout: `${
-      import.meta.env.VITE_API_URL
-    }/payment/subscribe?plan=subscriber`,
+    linkToCheckout: `${apiUrl}/payment/subscribe?plan=subscriber`,
     chipStyle: {
       variant: "outlined",
       color: "primary",
@@ -36,9 +36,7 @@ const pricingCards = [
     currency: "ZŁ",
     price: 30,
     description: "Best stuff out there",
-    linkToCheckout: `${
-      import.meta.env.VITE_API_URL
-    }/payment/subscribe?plan=pro`,
+    linkToCheckout: `${apiUrl}/payment/subscribe?plan=pro`,
   },
 ];
 
