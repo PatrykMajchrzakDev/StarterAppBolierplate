@@ -1,4 +1,5 @@
-// This components functionality is to show pricing route
+// This components functionality is to display pricing cards and redirect user
+// to Stripe checkout
 import { useQuery } from "@tanstack/react-query";
 // ========= MODULES ==========
 import styles from "./styles/PricingCard.module.scss";
@@ -50,16 +51,21 @@ const PricingCard = ({
   const userId = userData?.user.id;
 
   // Use the custom hook to fetch the redirect link
-  const { data: redirectLinkToCheckout } = useQuery({
+  const {
+    data: redirectLinkToCheckout,
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["redirectLinkToCheckout", linkToCheckout, userId],
     queryFn: () =>
       getRedirectLinkToCheckout(linkToCheckout as string, userId as string),
     // The query will not execute until the userId exists
-    enabled: !!userId && !!linkToCheckout,
+    enabled: false,
   });
 
   // Function to handle the redirection logic
   const handleRedirect = async () => {
+    refetch();
     if (!linkToCheckout || !userId) {
       // Notify the user if required data is missing and redirect to signin
       useNotificationState
@@ -111,6 +117,7 @@ const PricingCard = ({
           variant="contained"
           className={styles.getStartedButton}
           onClick={handleRedirect}
+          disabled={isLoading}
         >
           Get started
         </Button>

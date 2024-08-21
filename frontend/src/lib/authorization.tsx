@@ -1,7 +1,9 @@
 export enum ROLES {
   ADMIN = "ADMIN",
-  MOD = "MOD",
+  MODERATOR = "MODERATOR",
   USER = "USER",
+  SUBSCRIBER = "SUBSCRIBER",
+  PRO = "PRO",
 }
 
 type RoleTypes = keyof typeof ROLES;

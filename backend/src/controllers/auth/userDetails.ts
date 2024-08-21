@@ -30,6 +30,18 @@ export const getUserDetails = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "User not found" });
     }
 
+    // Check if user has valid subscription
+    const currentDate = new Date();
+
+    if (currentDate >= user.subscriptionExpirationDate) {
+      await prisma.user.update({
+        where: { id: userId },
+        data: {
+          role: "USER",
+        },
+      });
+    }
+
     // Destructure user object to exclude password
     const { password, verificationToken, ...userWithoutSensitiveInfo } = user;
 
