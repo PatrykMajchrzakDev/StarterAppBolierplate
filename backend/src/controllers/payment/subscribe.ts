@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Stripe from "stripe";
+import stripe from "@/utils/stripe";
 import { getLogger } from "@/utils/logger";
 import { PrismaClient } from "@prisma/client";
 
@@ -7,10 +7,6 @@ const prisma = new PrismaClient();
 
 import { Role } from "@prisma/client";
 const logger = getLogger("STRIPE_PAYMENT");
-// Stripe config
-const stripe = new Stripe(process.env.TEST_STRIPE_API_KEY || "", {
-  apiVersion: "2024-06-20",
-});
 
 // Function when user clicks make payment in frontend
 export const subscribe = async (req: Request, res: Response, next: any) => {
@@ -79,14 +75,13 @@ export const subscribe = async (req: Request, res: Response, next: any) => {
           expirationDate = new Date(
             subscriptionInformations.current_period_end * 1000
           );
-          
 
           // Updates db with expiration date
           await prisma.user.update({
             where: { id: userId },
             data: {
               subscriptionExpirationDate: expirationDate,
-              subscriptionId: checkoutSession.subscription
+              subscriptionId: checkoutSession.subscription,
             },
           });
         }
