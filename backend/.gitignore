@@ -4,3 +4,4 @@ dist
 firebaseServiceAccount.json
 error.log
 combined.log
+PAYMENTS.log

@@ -3,7 +3,10 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import stripe from "@/utils/stripe";
+import { getLogger } from "@/utils/logger";
 const prisma = new PrismaClient();
+
+const logger = getLogger("STRIPE_CANCEL_SUB", "PAYMENTS");
 
 export const cancelSubscription = async (req: Request, res: Response) => {
   const { subscriptionId, userId, token } = req.body;
@@ -51,6 +54,9 @@ export const cancelSubscription = async (req: Request, res: Response) => {
         cancel_at_period_end: true, // cancels at the end of the current period
       }
     );
+
+    // Log subscription cancellation
+    logger.info(`Sub cancelled for ${userId} | SubID: ${subscriptionId}`);
 
     res.json({
       message:

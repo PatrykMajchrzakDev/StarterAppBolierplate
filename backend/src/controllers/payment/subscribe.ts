@@ -6,7 +6,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 import { Role } from "@prisma/client";
-const logger = getLogger("STRIPE_PAYMENT");
+const logger = getLogger("STRIPE_PAYMENT", "PAYMENTS");
 
 // Function when user clicks make payment in frontend
 export const subscribe = async (req: Request, res: Response, next: any) => {
