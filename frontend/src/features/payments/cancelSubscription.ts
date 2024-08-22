@@ -29,7 +29,7 @@ export const cancelSubscription = async (
     useNotificationState
       .getState()
       .setNotification(
-        `You have successfully cancelled your subscription You will NOT be charged for  next month.`,
+        `You have successfully cancelled your subscription. You will NOT be charged next month.`,
         "success",
         "outlined"
       );
