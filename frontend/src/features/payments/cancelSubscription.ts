@@ -1,6 +1,7 @@
 // This file holds a function which makes a request to backend to cancel user's subscription
 
 import axios from "axios";
+import { useNotificationState } from "@/store/UI/NotificationStore";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 export const cancelSubscription = async (
@@ -24,6 +25,14 @@ export const cancelSubscription = async (
         },
       }
     );
+
+    useNotificationState
+      .getState()
+      .setNotification(
+        `You have successfully cancelled your subscription You will NOT be charged for  next month.`,
+        "success",
+        "outlined"
+      );
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {

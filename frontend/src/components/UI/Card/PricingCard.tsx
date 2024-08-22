@@ -65,18 +65,11 @@ const PricingCard = ({
 
   // Function to handle the redirection logic
   const handleRedirect = async () => {
-    refetch();
-    if (!linkToCheckout || !userId) {
-      // Notify the user if required data is missing and redirect to signin
-      useNotificationState
-        .getState()
-        .setNotification(
-          `There was something missing. Please sign in again. Sorry for the inconvenience.`,
-          "error",
-          "outlined"
-        );
-      navigate("/signin");
-      logout.mutate({});
+    await refetch();
+    // If button has not linkToCheckout (is for default user)
+    if (!linkToCheckout) {
+      navigate("/app");
+      return;
     }
 
     if (redirectLinkToCheckout) {
