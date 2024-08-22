@@ -51,11 +51,7 @@ const PricingCard = ({
   const userId = userData?.user.id;
 
   // Use the custom hook to fetch the redirect link
-  const {
-    data: redirectLinkToCheckout,
-    refetch,
-    isLoading,
-  } = useQuery({
+  const { refetch, isLoading } = useQuery({
     queryKey: ["redirectLinkToCheckout", linkToCheckout, userId],
     queryFn: () =>
       getRedirectLinkToCheckout(linkToCheckout as string, userId as string),
@@ -65,16 +61,16 @@ const PricingCard = ({
 
   // Function to handle the redirection logic
   const handleRedirect = async () => {
-    await refetch();
     // If button has not linkToCheckout (is for default user)
     if (!linkToCheckout) {
       navigate("/app");
       return;
     }
+    const { data: fetchedRedirectLink } = await refetch();
 
-    if (redirectLinkToCheckout) {
+    if (fetchedRedirectLink) {
       // Redirect the user if the redirect link is available
-      window.location.href = redirectLinkToCheckout;
+      window.location.href = fetchedRedirectLink;
     } else {
       // Notify the user if redirect failed and redirect to signin
       useNotificationState
